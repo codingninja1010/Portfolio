@@ -44,7 +44,7 @@ const Header = () => {
     const updateScrollPaddingVar = () => {
       const headerEl = document.querySelector('header');
       const headerHeight = headerEl ? headerEl.offsetHeight : 72;
-      const offset = headerHeight + 12; // breathing room
+      const offset = headerHeight + 32; // generous breathing room
       document.documentElement.style.setProperty('--app-scroll-padding', `${offset}px`);
     };
     updateScrollPaddingVar();
