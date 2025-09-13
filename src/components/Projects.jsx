@@ -23,6 +23,7 @@ const Projects = () => {
       description: "Real-time hand gesture recognition system for intuitive volume control with machine learning and computer vision.",
       icon: Hand,
       codeUrl: "https://github.com/rakesh-vajrapu/Gesture-Volume-Controller",
+      demoUrl: "https://github.com/rakesh-vajrapu/Gesture-Volume-Controller",
       technologies: ["Python", "OpenCV", "MediaPipe", "NumPy"],
       features: [
         "Real-time hand gesture recognition for intuitive volume control",
