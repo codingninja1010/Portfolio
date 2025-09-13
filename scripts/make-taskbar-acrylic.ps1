@@ -1,6 +1,22 @@
-# Sets Acrylic taskbar (Desktop) and Opaque when a window is maximized using TranslucentTB.
+# Sets a stylish, practical taskbar theme via TranslucentTB:
+#   • Desktop: Acrylic with a subtle dark tint (modern glass look)
+#   • Maximized window: Opaque with a slightly darker tint (clear & readable)
 # Also enables Windows' built-in transparency effects.
 # Usage: Right-click this file and choose "Run with PowerShell".
+
+# --- Easy customization ---
+# Choose accents: 'acrylic' | 'clear' | 'blur' | 'opaque' | 'normal'
+$DesktopAccent   = 'acrylic'
+$MaximizedAccent = 'opaque'
+
+# Colors support alpha. Format: #RRGGBBAA  (last two chars = opacity)
+# Examples: '#0f172a80' ~ slate-900 at 50% opacity; '#0b1020cc' ~ deep blue at ~80% opacity
+$DesktopColor    = '#0f172a80'
+$MaximizedColor  = '#0b1020cc'
+
+# Visual tweaks
+$ShowLine        = $false    # hide thin top line on Win11
+$BlurRadius      = 30        # 0-750 (primarily affects 'blur'; acrylic manages its own blur but value is safe)
 
 $ErrorActionPreference = 'SilentlyContinue'
 
@@ -53,13 +69,36 @@ $settingsPath = Join-Path $settingsDir 'settings.json'
 # Build settings (per official schema)
 $settingsObj = @{
   desktop_appearance = @{
-    accent    = 'acrylic'  # Fluent blur/glass
-    show_line = $false
+    accent      = $DesktopAccent
+    color       = $DesktopColor
+    show_line   = $ShowLine
+    blur_radius = $BlurRadius
   }
   maximized_window_appearance = @{
+    enabled     = $true
+    accent      = $MaximizedAccent
+    color       = $MaximizedColor
+    show_line   = $ShowLine
+    blur_radius = $BlurRadius
+  }
+  # Optional: keep overlays clean and readable
+  start_opened_appearance = @{
     enabled   = $true
-    accent    = 'opaque'   # readable when maximized
-    show_line = $false
+    accent    = 'opaque'
+    color     = $MaximizedColor
+    show_line = $ShowLine
+  }
+  search_opened_appearance = @{
+    enabled   = $true
+    accent    = 'opaque'
+    color     = $MaximizedColor
+    show_line = $ShowLine
+  }
+  task_view_opened_appearance = @{
+    enabled   = $true
+    accent    = 'opaque'
+    color     = $MaximizedColor
+    show_line = $ShowLine
   }
 }
 

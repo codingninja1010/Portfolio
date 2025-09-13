@@ -93,3 +93,18 @@ Yes, you can!
 To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
 
 Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
+
+## Windows: Acrylic/Transparent Taskbar (Optional)
+
+If you want an acrylic/transparent taskbar (like in the screenshots), this repo includes a convenience PowerShell script to configure it using TranslucentTB.
+
+Steps (Windows 10/11):
+- Right‑click `scripts/make-taskbar-acrylic.ps1` → Run with PowerShell.
+- The script will:
+	- Enable Windows “Transparency effects”.
+	- Install/launch TranslucentTB from the Microsoft Store (via winget if available).
+	- Configure: Desktop = Acrylic, Maximized window = Opaque, hide taskbar line.
+- After it runs, click the TranslucentTB tray icon and enable “Open at boot” (Store apps require the in‑app toggle for startup).
+
+Revert:
+- Exit or uninstall TranslucentTB (from the Microsoft Store), and optionally turn off “Transparency effects”.
