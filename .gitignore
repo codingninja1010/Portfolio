@@ -22,3 +22,6 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Package manager lockfiles (standardize on npm)
+bun.lockb

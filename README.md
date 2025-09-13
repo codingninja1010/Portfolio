@@ -60,6 +60,28 @@ This project is built with:
 - shadcn-ui
 - Tailwind CSS
 
+## Local development (npm)
+
+This project uses npm (see `package-lock.json`). To avoid tool conflicts, do not use bun or pnpm in this repo.
+
+Quick start:
+
+```powershell
+# install deps exactly as locked
+npm ci
+
+# start dev server
+npm run dev
+
+# build for production
+npm run build
+
+# preview the production build
+npm run preview
+```
+
+If you see `'vite' is not recognized` when running scripts, run `npm ci` to recreate `node_modules/.bin` shims.
+
 ## How can I deploy this project?
 
 Simply open [Lovable](https://lovable.dev/projects/d6e70a4d-6069-496a-b878-b6ff8a371684) and click on Share -> Publish.
