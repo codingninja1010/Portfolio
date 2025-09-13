@@ -150,7 +150,22 @@ All colors MUST be HSL.
     backdrop-filter: blur(12px);
     border: 1px solid hsl(var(--border));
     box-shadow: var(--shadow-card);
+    /* Smooth transform for global hover scaling */
+    transform: translateZ(0);
+    transition: transform 280ms ease, box-shadow 280ms ease;
+    will-change: transform;
   }
+
+  /* Larger, attractive hover scale for all glass cards */
+  .glass:hover {
+    transform: scale(1.08) !important;
+  }
+
+  /* Optional helper to make specific items even bigger on hover */
+  .hover-scale-lg {
+    transition: transform 280ms ease;
+  }
+  .hover-scale-lg:hover { transform: scale(1.12); }
 
   /* Glow effect utility */
   .glow {
