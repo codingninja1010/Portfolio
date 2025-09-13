@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
-import { Github, Linkedin, Mail, Code } from "lucide-react";
+import { Github, Linkedin, Mail } from "lucide-react";
+import { SiLeetcode } from "react-icons/si";
 
 const Hero = () => {
   return (
@@ -53,7 +54,7 @@ const Hero = () => {
               <Github className="w-6 h-6 text-primary" />
             </a>
             <a href="https://leetcode.com/u/rakeshvajrapu/" target="_blank" rel="noopener noreferrer" className="p-3 glass rounded-lg hover:shadow-glow transition-all duration-300 hover:scale-110">
-              <Code className="w-6 h-6 text-primary" />
+              <SiLeetcode className="w-6 h-6 text-primary" />
             </a>
           </div>
         </div>
