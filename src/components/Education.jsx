@@ -15,6 +15,13 @@ const Education = () => {
       period: "June'23 - April'27",
       location: "Chennai, India",
       description: "Advanced coursework in Programming Methodologies, Data Science, and Machine Learning"
+    },
+    {
+      degree: "AI Programming with Python Nanodegree",
+      institution: "Udacity (Sponsored by AWS)",
+      period: "Jun'24 - Oct'24",
+      location: "Online",
+      description: "Python, NumPy, Pandas, Neural Networks, and Deep Learning foundations"
     }
   ];
 
