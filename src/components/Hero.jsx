@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Github, Linkedin, Mail } from "lucide-react";
-import { SiLeetcode } from "react-icons/si";
+import { SiLeetcode, SiCodechef } from "react-icons/si";
 
 const Hero = () => {
   return (
@@ -55,6 +55,9 @@ const Hero = () => {
             </a>
             <a href="https://leetcode.com/u/rakeshvajrapu/" target="_blank" rel="noopener noreferrer" className="p-3 glass rounded-lg hover:shadow-glow transition-all duration-300 hover:scale-110">
               <SiLeetcode className="w-6 h-6 text-primary" />
+            </a>
+            <a href="https://www.codechef.com/users/rakeshvajrapu" target="_blank" rel="noopener noreferrer" className="p-3 glass rounded-lg hover:shadow-glow transition-all duration-300 hover:scale-110">
+              <SiCodechef className="w-6 h-6 text-primary" />
             </a>
           </div>
         </div>
