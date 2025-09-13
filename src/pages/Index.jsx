@@ -6,6 +6,7 @@ import Projects from "@/components/Projects";
 import Achievements from "@/components/Achievements";
 import Education from "@/components/Education";
 import Contact from "@/components/Contact";
+import Volunteering from "@/components/Volunteering";
 
 const Index = () => {
   return (
@@ -29,6 +30,10 @@ const Index = () => {
           <Experience />
         </section>
         
+        <section id="volunteering">
+          <Volunteering />
+        </section>
+
         <section id="projects">
           <Projects />
         </section>
