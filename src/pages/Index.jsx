@@ -7,11 +7,13 @@ import Achievements from "@/components/Achievements";
 import Education from "@/components/Education";
 import Contact from "@/components/Contact";
 import Volunteering from "@/components/Volunteering";
+import ScrollToTop from "@/components/ScrollToTop";
 
 const Index = () => {
   return (
     <div className="min-h-screen">
       <Header />
+      <ScrollToTop />
       
       <main>
   <section id="home" className="scroll-mt-32 md:scroll-mt-40 section-anchor">
