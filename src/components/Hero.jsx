@@ -1,13 +1,33 @@
-// Using a dedicated ProfileAvatar component (Framer Motion powered)
+import { useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Github, Linkedin, Mail } from "lucide-react";
 import { SiLeetcode, SiCodechef } from "react-icons/si";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import rakeshPhoto from "@/assets/rakesh-photo.jpg";
-import ProfileAvatar from "@/components/ProfileAvatar.react.jsx";
 
 const Hero = () => {
-  // No local state required; ProfileAvatar handles animation/tilt.
+  // state kept in case future interactions are needed
+  const [imgLoaded, setImgLoaded] = useState(false);
+  const containerRef = useRef(null);
+  const [tilt, setTilt] = useState({ rx: 0, ry: 0, tx: 0, ty: 0 });
+
+  const handleMouseMove = (e) => {
+    const el = containerRef.current;
+    if (!el) return;
+    const rect = el.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    const px = (x / rect.width - 0.5) * 2; // -1 to 1
+    const py = (y / rect.height - 0.5) * 2; // -1 to 1
+    const maxRot = 12; // degrees
+    const rx = -py * maxRot;
+    const ry = px * maxRot;
+    const tx = px * 12; // px translate for glow
+    const ty = py * 12;
+    setTilt({ rx, ry, tx, ty });
+  };
+
+  const handleMouseLeave = () => setTilt({ rx: 0, ry: 0, tx: 0, ty: 0 });
 
   return (
     <section className="min-h-screen flex items-center justify-center relative overflow-hidden mt-20">
@@ -20,7 +40,45 @@ const Hero = () => {
 
       {/* Big circular profile photo aligned to the right on desktop */}
       <div className="hidden md:block absolute right-6 lg:right-12 top-28 lg:top-32 z-20">
-        <ProfileAvatar src={rakeshPhoto} alt="Rakesh Vajrapu" size={256} />
+        <div
+          ref={containerRef}
+          onMouseMove={handleMouseMove}
+          onMouseLeave={handleMouseLeave}
+          className="hero-photo-3d relative inline-block will-change-transform overflow-hidden rounded-full"
+          style={{
+            transform: `perspective(700px) rotateX(${tilt.rx}deg) rotateY(${tilt.ry}deg)`,
+            transition: "transform 150ms ease-out",
+          }}
+        >
+          {/* Rotating rainbow gradient ring */}
+          <div className="glow-ring" aria-hidden="true" />
+          {/* Inner subtle ring */}
+          <div className="glow-ring-inner" aria-hidden="true" />
+
+          {/* Shine sweep overlay */}
+          <div className="shine-sweep" aria-hidden="true" />
+          {/* Parallax glow behind the photo */}
+          <div
+            className="pointer-events-none absolute inset-0 -z-10 transition-transform duration-200 ease-out"
+            style={{ transform: `translate(${tilt.tx}px, ${tilt.ty}px)` }}
+          >
+            <div
+              className="w-[120%] h-[120%] -left-[10%] -top-[10%] absolute rounded-full blur-xl opacity-30"
+              style={{
+                background:
+                  "radial-gradient(60% 60% at 50% 50%, rgba(59,130,246,0.45), rgba(59,130,246,0.15) 40%, rgba(59,130,246,0.0) 70%)",
+              }}
+            />
+          </div>
+
+          <img
+            src={rakeshPhoto}
+            alt="Rakesh Vajrapu"
+            onLoad={() => setImgLoaded(true)}
+            className={`w-40 h-40 md:w-44 md:h-44 lg:w-56 lg:h-56 xl:w-64 xl:h-64 rounded-full object-cover ring-2 ring-primary/40 shadow-primary bg-muted/30 
+              transition-transform duration-400 ease-out hover:scale-110 hover:shadow-glow motion-reduce:transform-none ${imgLoaded ? 'opacity-100' : 'opacity-0'}`}
+          />
+        </div>
       </div>
 
       <div className="container mx-auto px-6 relative z-10">
@@ -31,12 +89,11 @@ const Hero = () => {
               <h1 className="text-5xl md:text-7xl font-bold text-primary">
                 Rakesh Vajrapu
               </h1>
-              {/* Smaller avatar on mobile next to the name */}
-              <ProfileAvatar
+              {/* Smaller circular photo on mobile next to the name */}
+              <img
                 src={rakeshPhoto}
                 alt="Rakesh Vajrapu"
-                size={80}
-                className="md:hidden"
+                className="block md:hidden w-20 h-20 rounded-full object-cover border border-primary/30 shadow-sm bg-muted/30 transition-transform duration-300 ease-out hover:scale-105 active:scale-105"
               />
             </div>
             {/* On mobile, allow wrapping to avoid clipping. Apply typing animation only on sm+ */}
