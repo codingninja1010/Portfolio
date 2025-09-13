@@ -108,3 +108,12 @@ Steps (Windows 10/11):
 
 Revert:
 - Exit or uninstall TranslucentTB (from the Microsoft Store), and optionally turn off “Transparency effects”.
+
+### Switch themes quickly
+In `scripts/make-taskbar-acrylic.ps1`, set the `$Theme` variable near the top to one of:
+- `AcrylicGlass` (default): Acrylic with subtle dark tint (modern, readable)
+- `UltraClear`: Nearly clear desktop, opaque when maximized
+- `DarkTint`: Deeper tinted acrylic (moody glass look)
+- `HighContrast`: Solid dark opaque for maximum contrast
+
+You can also override colors and accents directly under the theme section if you want a custom palette.

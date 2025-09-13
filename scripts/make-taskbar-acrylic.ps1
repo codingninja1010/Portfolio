@@ -5,18 +5,52 @@
 # Usage: Right-click this file and choose "Run with PowerShell".
 
 # --- Easy customization ---
+# Pick a preset theme by name (recommended):
+#   'AcrylicGlass' (default) | 'UltraClear' | 'DarkTint' | 'HighContrast'
+$Theme = 'AcrylicGlass'
+
+# Or customize manually (used if you set values AFTER the theme block below)
 # Choose accents: 'acrylic' | 'clear' | 'blur' | 'opaque' | 'normal'
-$DesktopAccent   = 'acrylic'
-$MaximizedAccent = 'opaque'
+$DesktopAccent   = $null
+$MaximizedAccent = $null
 
 # Colors support alpha. Format: #RRGGBBAA  (last two chars = opacity)
 # Examples: '#0f172a80' ~ slate-900 at 50% opacity; '#0b1020cc' ~ deep blue at ~80% opacity
-$DesktopColor    = '#0f172a80'
-$MaximizedColor  = '#0b1020cc'
+$DesktopColor    = $null
+$MaximizedColor  = $null
 
 # Visual tweaks
 $ShowLine        = $false    # hide thin top line on Win11
 $BlurRadius      = 30        # 0-750 (primarily affects 'blur'; acrylic manages its own blur but value is safe)
+
+# Apply preset
+switch ($Theme) {
+  'UltraClear' {
+    $DesktopAccent   = 'clear'
+    $MaximizedAccent = 'opaque'
+    $DesktopColor    = '#00000040'  # very light tint 25%
+    $MaximizedColor  = '#0b1020cc'  # deep blue ~80%
+  }
+  'DarkTint' {
+    $DesktopAccent   = 'acrylic'
+    $MaximizedAccent = 'opaque'
+    $DesktopColor    = '#0b1020a6'  # deep blue ~65%
+    $MaximizedColor  = '#0b1020e6'  # deep blue ~90%
+  }
+  'HighContrast' {
+    $DesktopAccent   = 'opaque'
+    $MaximizedAccent = 'opaque'
+    $DesktopColor    = '#0a0a0aff'  # solid near-black
+    $MaximizedColor  = '#0a0a0aff'
+    $BlurRadius      = 0
+  }
+  Default { # AcrylicGlass
+    $DesktopAccent   = 'acrylic'
+    $MaximizedAccent = 'opaque'
+    $DesktopColor    = '#0f172a80'  # slate-900 50%
+    $MaximizedColor  = '#0b1020cc'  # deep blue ~80%
+  }
+}
 
 $ErrorActionPreference = 'SilentlyContinue'
 
