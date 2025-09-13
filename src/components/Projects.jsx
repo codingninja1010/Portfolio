@@ -7,6 +7,7 @@ const Projects = () => {
       title: "ShopSmart - React E-Commerce Platform",
       description: "Built a responsive shopping platform allowing users to explore products, manage carts, and simulate purchases.",
       icon: Heart,
+      codeUrl: "https://github.com/rakesh-vajrapu/ShopSmart",
       technologies: ["React JS", "Redux", "JavaScript", "Bootstrap", "Fake Store API"],
       features: [
         "Built a responsive shopping platform allowing users to explore products, manage carts, and simulate purchases",
@@ -20,6 +21,7 @@ const Projects = () => {
       title: "Gesture Based Volume Controller",
       description: "Real-time hand gesture recognition system for intuitive volume control with machine learning and computer vision.",
       icon: Hand,
+      codeUrl: "https://github.com/rakesh-vajrapu/Gesture-Volume-Controller",
       technologies: ["Python", "OpenCV", "MediaPipe", "NumPy"],
       features: [
         "Real-time hand gesture recognition for intuitive volume control",
@@ -96,10 +98,19 @@ const Projects = () => {
                 </div>
 
                 <div className="flex gap-3">
-                  <Button variant="outline" size="sm" className="flex-1 border-primary/20 hover:bg-primary/10">
-                    <Github className="w-4 h-4 mr-2" />
-                    View Code
-                  </Button>
+                  {project.codeUrl ? (
+                    <Button asChild variant="outline" size="sm" className="flex-1 border-primary/20 hover:bg-primary/10">
+                      <a href={project.codeUrl} target="_blank" rel="noopener noreferrer" aria-label={`View code for ${project.title}`}>
+                        <Github className="w-4 h-4 mr-2" />
+                        View Code
+                      </a>
+                    </Button>
+                  ) : (
+                    <Button variant="outline" size="sm" className="flex-1 border-primary/20" disabled>
+                      <Github className="w-4 h-4 mr-2" />
+                      View Code
+                    </Button>
+                  )}
                   <Button size="sm" className="flex-1 bg-gradient-primary hover:shadow-primary">
                     <ExternalLink className="w-4 h-4 mr-2" />
                     Live Demo
