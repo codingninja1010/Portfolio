@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Github, Linkedin, Mail } from "lucide-react";
 import { SiLeetcode, SiCodechef } from "react-icons/si";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 
 const Hero = () => {
   return (
@@ -43,23 +44,54 @@ const Hero = () => {
             </Button>
           </div>
 
-          <div className="flex justify-center space-x-6">
-            <a href="mailto:rakeshrb1411@gmail.com" className="p-3 glass rounded-lg hover:shadow-glow transition-all duration-300 hover:scale-110">
-              <Mail className="w-6 h-6 text-primary" />
-            </a>
-            <a href="https://www.linkedin.com/in/rakeshvajrapu/" target="_blank" rel="noopener noreferrer" className="p-3 glass rounded-lg hover:shadow-glow transition-all duration-300 hover:scale-110">
-              <Linkedin className="w-6 h-6 text-primary" />
-            </a>
-            <a href="https://github.com/rakesh-vajrapu" target="_blank" rel="noopener noreferrer" className="p-3 glass rounded-lg hover:shadow-glow transition-all duration-300 hover:scale-110">
-              <Github className="w-6 h-6 text-primary" />
-            </a>
-            <a href="https://leetcode.com/u/rakeshvajrapu/" target="_blank" rel="noopener noreferrer" className="p-3 glass rounded-lg hover:shadow-glow transition-all duration-300 hover:scale-110">
-              <SiLeetcode className="w-6 h-6 text-primary" />
-            </a>
-            <a href="https://www.codechef.com/users/rakeshvajrapu" target="_blank" rel="noopener noreferrer" className="p-3 glass rounded-lg hover:shadow-glow transition-all duration-300 hover:scale-110">
-              <SiCodechef className="w-6 h-6 text-primary" />
-            </a>
-          </div>
+          <TooltipProvider>
+            <div className="flex justify-center space-x-6">
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <a href="mailto:rakeshrb1411@gmail.com" className="p-3 glass rounded-lg hover:shadow-glow transition-all duration-300 hover:scale-110">
+                    <Mail className="w-6 h-6 text-primary" />
+                  </a>
+                </TooltipTrigger>
+                <TooltipContent>Mail</TooltipContent>
+              </Tooltip>
+
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <a href="https://www.linkedin.com/in/rakeshvajrapu/" target="_blank" rel="noopener noreferrer" className="p-3 glass rounded-lg hover:shadow-glow transition-all duration-300 hover:scale-110">
+                    <Linkedin className="w-6 h-6 text-primary" />
+                  </a>
+                </TooltipTrigger>
+                <TooltipContent>LinkedIn</TooltipContent>
+              </Tooltip>
+
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <a href="https://github.com/rakesh-vajrapu" target="_blank" rel="noopener noreferrer" className="p-3 glass rounded-lg hover:shadow-glow transition-all duration-300 hover:scale-110">
+                    <Github className="w-6 h-6 text-primary" />
+                  </a>
+                </TooltipTrigger>
+                <TooltipContent>GitHub</TooltipContent>
+              </Tooltip>
+
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <a href="https://leetcode.com/u/rakeshvajrapu/" target="_blank" rel="noopener noreferrer" className="p-3 glass rounded-lg hover:shadow-glow transition-all duration-300 hover:scale-110">
+                    <SiLeetcode className="w-6 h-6 text-primary" />
+                  </a>
+                </TooltipTrigger>
+                <TooltipContent>LeetCode</TooltipContent>
+              </Tooltip>
+
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <a href="https://www.codechef.com/users/rakeshvajrapu" target="_blank" rel="noopener noreferrer" className="p-3 glass rounded-lg hover:shadow-glow transition-all duration-300 hover:scale-110">
+                    <SiCodechef className="w-6 h-6 text-primary" />
+                  </a>
+                </TooltipTrigger>
+                <TooltipContent>CodeChef</TooltipContent>
+              </Tooltip>
+            </div>
+          </TooltipProvider>
         </div>
       </div>
     </section>
