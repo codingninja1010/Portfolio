@@ -90,7 +90,7 @@ const ChartTooltipContent = React.forwardRef(({ active, payload, className, indi
     }
 
     return <div className={cn("font-medium", labelClassName)}>{value}</div>
-  }, [label, labelFormatter, payload, hideLabel, labelClassName, labelKey])
+  }, [label, labelFormatter, payload, hideLabel, labelClassName, labelKey, config])
 
   if (!active || !payload?.length) {
     return null
