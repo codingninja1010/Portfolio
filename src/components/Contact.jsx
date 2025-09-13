@@ -1,19 +1,35 @@
-import { Mail, Phone, Linkedin, Github, MapPin, Send } from "lucide-react";
+import { Mail, Linkedin, Github, MapPin, Send } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 const Contact = () => {
+  // Submit handler to open the user's email client with a prefilled message
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const form = e.currentTarget;
+    const formData = new FormData(form);
+    const name = (formData.get('name') || '').toString().trim();
+    const email = (formData.get('email') || '').toString().trim();
+    const message = (formData.get('message') || '').toString().trim();
+
+    const subject = encodeURIComponent(`Portfolio contact from ${name || 'Visitor'}`);
+    const bodyLines = [
+      name ? `Name: ${name}` : null,
+      email ? `Email: ${email}` : null,
+      '',
+      message || ''
+    ].filter(Boolean);
+    const body = encodeURIComponent(bodyLines.join('\n'));
+    const mailto = `mailto:rakeshrb1411@gmail.com?subject=${subject}&body=${body}`;
+
+    // Open default mail client
+    window.location.href = mailto;
+  };
   const contactInfo = [
     {
       icon: Mail,
       label: "Email",
       value: "rakeshrb1411@gmail.com",
       href: "mailto:rakeshrb1411@gmail.com"
-    },
-    {
-      icon: Phone,
-      label: "Phone",
-      value: "+91 9110343290",
-      href: "tel:+919110343290"
     },
     {
       icon: Linkedin,
@@ -79,14 +95,16 @@ const Contact = () => {
             {/* Quick Contact Form */}
             <div className="glass rounded-xl p-8 animate-fadeInUp" style={{ animationDelay: '0.2s' }}>
               <h3 className="text-2xl font-bold mb-6">Send a Message</h3>
-              <form className="space-y-6">
+              <form className="space-y-6" onSubmit={handleSubmit}>
                 <div>
                   <label htmlFor="name" className="block text-sm font-medium mb-2">Your Name</label>
                   <input 
                     type="text" 
                     id="name"
+                    name="name"
                     className="w-full px-4 py-3 bg-muted/20 border border-border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition-all duration-300"
                     placeholder="Enter your name"
+                    required
                   />
                 </div>
                 <div>
@@ -94,20 +112,24 @@ const Contact = () => {
                   <input 
                     type="email" 
                     id="email"
+                    name="email"
                     className="w-full px-4 py-3 bg-muted/20 border border-border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition-all duration-300"
                     placeholder="Enter your email"
+                    required
                   />
                 </div>
                 <div>
                   <label htmlFor="message" className="block text-sm font-medium mb-2">Message</label>
                   <textarea 
                     id="message"
+                    name="message"
                     rows={4}
                     className="w-full px-4 py-3 bg-muted/20 border border-border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition-all duration-300 resize-none"
                     placeholder="Tell me about your project or opportunity..."
+                    required
                   ></textarea>
                 </div>
-                <Button className="w-full bg-gradient-primary hover:shadow-primary transition-all duration-300 hover:scale-105">
+                <Button type="submit" className="w-full bg-gradient-primary hover:shadow-primary transition-all duration-300 hover:scale-105">
                   <Send className="w-4 h-4 mr-2" />
                   Send Message
                 </Button>
@@ -125,9 +147,11 @@ const Contact = () => {
               Open to remote opportunities, freelance projects, and collaborative ventures worldwide
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button size="lg" className="bg-gradient-primary hover:shadow-primary transition-all duration-300 hover:scale-105">
-                <Mail className="w-4 h-4 mr-2" />
-                Start a Conversation
+              <Button asChild size="lg" className="bg-gradient-primary hover:shadow-primary transition-all duration-300 hover:scale-105">
+                <a href="mailto:rakeshrb1411@gmail.com?subject=Hello%20Rakesh&body=Hi%20Rakesh%2C%20I'd%20like%20to%20connect%20about%20...">
+                  <Mail className="w-4 h-4 mr-2" />
+                  Start a Conversation
+                </a>
               </Button>
               <Button variant="outline" size="lg" className="border-primary/20 hover:bg-primary/10 transition-all duration-300">
                 <Github className="w-4 h-4 mr-2" />
