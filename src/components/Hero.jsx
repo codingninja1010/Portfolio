@@ -44,19 +44,26 @@ const Hero = () => {
           ref={containerRef}
           onMouseMove={handleMouseMove}
           onMouseLeave={handleMouseLeave}
-          className="relative inline-block will-change-transform"
+          className="hero-photo-3d relative inline-block will-change-transform overflow-hidden rounded-full"
           style={{
             transform: `perspective(700px) rotateX(${tilt.rx}deg) rotateY(${tilt.ry}deg)`,
             transition: "transform 150ms ease-out",
           }}
         >
+          {/* Rotating rainbow gradient ring */}
+          <div className="glow-ring" aria-hidden="true" />
+          {/* Inner subtle ring */}
+          <div className="glow-ring-inner" aria-hidden="true" />
+
+          {/* Shine sweep overlay */}
+          <div className="shine-sweep" aria-hidden="true" />
           {/* Parallax glow behind the photo */}
           <div
             className="pointer-events-none absolute inset-0 -z-10 transition-transform duration-200 ease-out"
             style={{ transform: `translate(${tilt.tx}px, ${tilt.ty}px)` }}
           >
             <div
-              className="w-full h-full rounded-full blur-2xl opacity-40"
+              className="w-[120%] h-[120%] -left-[10%] -top-[10%] absolute rounded-full blur-xl opacity-30"
               style={{
                 background:
                   "radial-gradient(60% 60% at 50% 50%, rgba(59,130,246,0.45), rgba(59,130,246,0.15) 40%, rgba(59,130,246,0.0) 70%)",
@@ -68,8 +75,8 @@ const Hero = () => {
             src={rakeshPhoto}
             alt="Rakesh Vajrapu"
             onLoad={() => setImgLoaded(true)}
-            className={`w-40 h-40 md:w-44 md:h-44 lg:w-56 lg:h-56 xl:w-64 xl:h-64 rounded-full object-cover ring-2 ring-primary/40 shadow-primary bg-muted/30 
-              transition-all duration-500 ease-out hover:scale-110 hover:shadow-glow motion-reduce:transform-none animate-float ${imgLoaded ? 'opacity-100' : 'opacity-0'}`}
+            className={`photo-breathe w-40 h-40 md:w-44 md:h-44 lg:w-56 lg:h-56 xl:w-64 xl:h-64 rounded-full object-cover ring-2 ring-primary/40 shadow-primary bg-muted/30 
+              transition-transform duration-400 ease-out hover:scale-110 hover:shadow-glow motion-reduce:transform-none animate-float-brief ${imgLoaded ? 'opacity-100' : 'opacity-0'}`}
           />
         </div>
       </div>
@@ -86,7 +93,7 @@ const Hero = () => {
               <img
                 src={rakeshPhoto}
                 alt="Rakesh Vajrapu"
-                className="block md:hidden w-20 h-20 rounded-full object-cover border border-primary/30 shadow-sm bg-muted/30 animate-float transition-transform duration-300 ease-out hover:scale-105 active:scale-105"
+                className="block md:hidden w-20 h-20 rounded-full object-cover border border-primary/30 shadow-sm bg-muted/30 animate-float-brief transition-transform duration-300 ease-out hover:scale-105 active:scale-105"
               />
             </div>
             {/* On mobile, allow wrapping to avoid clipping. Apply typing animation only on sm+ */}
