@@ -1,6 +1,7 @@
 import { Award, Trophy, Star, Users } from "lucide-react";
 import pythonLogo from "@/assets/python-logo.png";
-import azureLogo from "@/assets/azure-logo.png";
+// Import as URL with a version query to bust browser cache
+import azureLogo from "@/assets/azure-logo.png?url&v=2";
 import metaLogo from "@/assets/meta-logo.png";
 import udacityLogo from "@/assets/udacity-logo.png";
 
