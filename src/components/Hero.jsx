@@ -17,7 +17,8 @@ const Hero = () => {
             <h1 className="text-5xl md:text-7xl font-bold mb-4 text-primary">
               Rakesh Vajrapu
             </h1>
-            <div className="text-2xl md:text-3xl font-semibold text-primary/80 tracking-wide italic mb-2 animate-typing">
+            {/* On mobile, allow wrapping to avoid clipping. Apply typing animation only on sm+ */}
+            <div className="text-xl sm:text-2xl md:text-3xl font-semibold text-primary/80 tracking-wide italic mb-2 whitespace-normal break-words sm:whitespace-nowrap sm:animate-typing">
               Full-Stack Developer & AI Enthusiast
             </div>
           </div>

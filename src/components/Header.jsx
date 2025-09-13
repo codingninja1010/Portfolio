@@ -19,6 +19,18 @@ const Header = () => {
     return () => window.removeEventListener("scroll", handleScrollProgress);
   }, []);
 
+  // Lock body scroll when mobile menu is open
+  useEffect(() => {
+    if (isMobileMenuOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [isMobileMenuOpen]);
+
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 50);
@@ -64,7 +76,7 @@ const Header = () => {
         borderRadius: '0 2px 2px 0',
         boxShadow: '0 1px 4px rgba(0,0,0,0.08)'
       }} />
-      <div className="container mx-auto px-6">
+    <div className="container mx-auto px-6">
   <div className="flex items-center justify-between h-16">
           {/* Logo */}
           <div className="text-xl font-bold bg-gradient-primary bg-clip-text text-transparent mr-8">
@@ -97,6 +109,9 @@ const Header = () => {
           <button
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             className="md:hidden p-2 hover:bg-muted/20 rounded-lg transition-colors duration-300"
+            aria-label="Toggle navigation menu"
+            aria-expanded={isMobileMenuOpen}
+            aria-controls="mobile-menu"
           >
             {isMobileMenuOpen ? (
               <X className="w-6 h-6" />
@@ -106,26 +121,31 @@ const Header = () => {
           </button>
         </div>
 
-        {/* Mobile Menu */}
+        {/* Mobile Menu - full screen overlay for clarity */}
         {isMobileMenuOpen && (
-          <div className="md:hidden absolute top-full left-0 w-full glass backdrop-blur-lg border-b border-border/50 animate-fadeInUp">
-            <nav className="py-4 space-y-2">
-              {navItems.map((item) => (
-                <button
-                  key={item.name}
-                  onClick={() => scrollToSection(item.href)}
-                  className="block w-full text-left px-6 py-3 text-sm font-medium text-muted-foreground hover:text-primary hover:bg-primary/10 transition-all duration-300"
-                >
-                  {item.name}
-                </button>
-              ))}
-              <div className="px-6 py-3">
-                <Button variant="outline" size="sm" className="w-full border-primary/20 hover:bg-primary/10">
-                  <Download className="w-4 h-4 mr-2" />
-                  Download Resume
-                </Button>
-              </div>
-            </nav>
+          <div className="md:hidden fixed inset-0 top-16 z-40 animate-fadeInUp">
+            {/* Backdrop */}
+            <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={() => setIsMobileMenuOpen(false)}></div>
+            {/* Sheet */}
+            <div id="mobile-menu" className="relative z-10 bg-[hsl(var(--background))] border-t border-border/50 shadow-xl h-[calc(100vh-4rem)] overflow-y-auto">
+              <nav className="py-4 space-y-2">
+                {navItems.map((item) => (
+                  <button
+                    key={item.name}
+                    onClick={() => scrollToSection(item.href)}
+                    className="block w-full text-left px-6 py-4 text-base font-medium text-foreground/80 hover:text-primary hover:bg-primary/10 transition-colors"
+                  >
+                    {item.name}
+                  </button>
+                ))}
+                <div className="px-6 py-4">
+                  <Button variant="outline" size="sm" className="w-full border-primary/20 hover:bg-primary/10">
+                    <Download className="w-4 h-4 mr-2" />
+                    Download Resume
+                  </Button>
+                </div>
+              </nav>
+            </div>
           </div>
         )}
       </div>
