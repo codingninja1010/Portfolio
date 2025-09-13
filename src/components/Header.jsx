@@ -123,7 +123,7 @@ const Header = () => {
       }} />
     <div className="container mx-auto px-6">
   <div className="flex items-center justify-between h-16">
-          {/* Logo */}
+          {/* Logo (text only) */}
           <div className="text-xl font-bold bg-gradient-primary bg-clip-text text-transparent mr-8">
             Rakesh Vajrapu
           </div>

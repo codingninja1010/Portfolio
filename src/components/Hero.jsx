@@ -1,9 +1,21 @@
+import { useMemo, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Github, Linkedin, Mail } from "lucide-react";
 import { SiLeetcode, SiCodechef } from "react-icons/si";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 
 const Hero = () => {
+  // Try multiple possible filenames to make it easy to drop any of them into /public
+  const imageCandidates = useMemo(() => [
+    "/rakesh.jpg",
+    "/rakesh.jpeg",
+    "/rakesh.png",
+    "/profile.jpg",
+    "/profile.jpeg",
+    "/profile.png",
+  ], []);
+  const [imgIndex, setImgIndex] = useState(0);
+
   return (
     <section className="min-h-screen flex items-center justify-center relative overflow-hidden mt-20">
       {/* Animated background elements */}
@@ -16,11 +28,36 @@ const Hero = () => {
       <div className="container mx-auto px-6 relative z-10">
         <div className="text-center animate-fadeInUp">
           <div className="mb-8">
-            <h1 className="text-5xl md:text-7xl font-bold mb-4 text-primary">
-              Rakesh Vajrapu
-            </h1>
+            {/* Name with image on the right */}
+            <div className="flex items-center justify-center gap-4 mb-4 flex-wrap sm:flex-nowrap">
+              <h1 className="text-5xl md:text-7xl font-bold text-primary">
+                Rakesh Vajrapu
+              </h1>
+              <img
+                src={imageCandidates[Math.min(imgIndex, imageCandidates.length - 1)]}
+                onError={() => {
+                  if (imgIndex < imageCandidates.length - 1) {
+                    setImgIndex((i) => i + 1);
+                  }
+                }}
+                onLoad={(e) => {
+                  // If dev server cached a 404 as an empty circle, ensure we loaded a real image
+                  if (!e.currentTarget.complete || e.currentTarget.naturalWidth === 0) {
+                    if (imgIndex < imageCandidates.length - 1) setImgIndex((i) => i + 1);
+                  }
+                }}
+                alt="Profile photo"
+                className="w-16 h-16 md:w-24 md:h-24 rounded-full object-cover border border-primary/30 shadow-sm bg-muted/30"
+                onErrorCapture={(e) => {
+                  // If all candidates fail, fall back to placeholder
+                  if (imgIndex >= imageCandidates.length - 1 && !e.currentTarget.src.endsWith("placeholder.svg")) {
+                    e.currentTarget.src = "/placeholder.svg";
+                  }
+                }}
+              />
+            </div>
             {/* On mobile, allow wrapping to avoid clipping. Apply typing animation only on sm+ */}
-            <div className="text-xl sm:text-2xl md:text-3xl font-semibold text-primary/80 tracking-wide italic mb-2 whitespace-normal break-words sm:whitespace-nowrap sm:animate-typing">
+            <div className="text-xl sm:text-2xl md:text-3xl font-semibold text-muted-foreground tracking-wide italic mb-2 whitespace-normal break-words sm:whitespace-nowrap sm:animate-typing">
               Full-Stack Developer & AI Enthusiast
             </div>
           </div>
