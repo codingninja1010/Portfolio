@@ -24,7 +24,7 @@ const Volunteering = () => {
     },
     {
       title: "Core Member",
-      organization: "VIIT ACM Student Chapter",
+      organization: "Vignan's IIT ACM Student Chapter",
       period: "Sep'23 - Aug'24",
       domain: "Science and Technology",
       highlights: [
