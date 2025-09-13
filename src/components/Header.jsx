@@ -39,6 +39,28 @@ const Header = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  // When the page loads with a hash or when the hash changes, adjust scroll to account for header height
+  useEffect(() => {
+    const adjustForHash = () => {
+      if (window.location.hash) {
+        const id = window.location.hash;
+        // Reuse our offset scrolling
+        const el = document.querySelector(id);
+        if (el) {
+          const headerEl = document.querySelector('header');
+          const headerHeight = headerEl ? headerEl.offsetHeight : 72;
+          const offset = headerHeight + 12;
+          const y = el.getBoundingClientRect().top + window.scrollY - offset;
+          window.scrollTo({ top: y });
+        }
+      }
+    };
+    // run after first paint
+    setTimeout(adjustForHash, 0);
+    window.addEventListener('hashchange', adjustForHash);
+    return () => window.removeEventListener('hashchange', adjustForHash);
+  }, []);
+
   const navItems = [
     { name: "Home", href: "#home" },
     { name: "About", href: "#about" },
