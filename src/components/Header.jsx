@@ -52,7 +52,12 @@ const Header = () => {
   const scrollToSection = (href) => {
     const element = document.querySelector(href);
     if (element) {
-      element.scrollIntoView({ behavior: "smooth" });
+      // Offset scroll for fixed header so headings aren't hidden
+      const headerEl = document.querySelector('header');
+      const headerHeight = headerEl ? headerEl.offsetHeight : 72; // fallback
+      const offset = headerHeight + 12; // small breathing room
+      const y = element.getBoundingClientRect().top + window.scrollY - offset;
+      window.scrollTo({ top: y, behavior: 'smooth' });
     }
     setIsMobileMenuOpen(false);
   };
