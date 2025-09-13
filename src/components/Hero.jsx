@@ -1,20 +1,33 @@
-import { useMemo, useState } from "react";
+import { useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Github, Linkedin, Mail } from "lucide-react";
 import { SiLeetcode, SiCodechef } from "react-icons/si";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
+import rakeshPhoto from "@/assets/rakesh-photo.jpg";
 
 const Hero = () => {
-  // Try multiple possible filenames to make it easy to drop any of them into /public
-  const imageCandidates = useMemo(() => [
-    "/rakesh.jpg",
-    "/rakesh.jpeg",
-    "/rakesh.png",
-    "/profile.jpg",
-    "/profile.jpeg",
-    "/profile.png",
-  ], []);
-  const [imgIndex, setImgIndex] = useState(0);
+  // state kept in case future interactions are needed
+  const [imgLoaded, setImgLoaded] = useState(false);
+  const containerRef = useRef(null);
+  const [tilt, setTilt] = useState({ rx: 0, ry: 0, tx: 0, ty: 0 });
+
+  const handleMouseMove = (e) => {
+    const el = containerRef.current;
+    if (!el) return;
+    const rect = el.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    const px = (x / rect.width - 0.5) * 2; // -1 to 1
+    const py = (y / rect.height - 0.5) * 2; // -1 to 1
+    const maxRot = 12; // degrees
+    const rx = -py * maxRot;
+    const ry = px * maxRot;
+    const tx = px * 12; // px translate for glow
+    const ty = py * 12;
+    setTilt({ rx, ry, tx, ty });
+  };
+
+  const handleMouseLeave = () => setTilt({ rx: 0, ry: 0, tx: 0, ty: 0 });
 
   return (
     <section className="min-h-screen flex items-center justify-center relative overflow-hidden mt-20">
@@ -25,6 +38,42 @@ const Hero = () => {
         <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-accent/5 rounded-full blur-3xl animate-float" style={{ animationDelay: '4s' }}></div>
       </div>
 
+      {/* Big circular profile photo aligned to the right on desktop */}
+      <div className="hidden md:block absolute right-6 lg:right-12 top-28 lg:top-32 z-20">
+        <div
+          ref={containerRef}
+          onMouseMove={handleMouseMove}
+          onMouseLeave={handleMouseLeave}
+          className="relative inline-block will-change-transform"
+          style={{
+            transform: `perspective(700px) rotateX(${tilt.rx}deg) rotateY(${tilt.ry}deg)`,
+            transition: "transform 150ms ease-out",
+          }}
+        >
+          {/* Parallax glow behind the photo */}
+          <div
+            className="pointer-events-none absolute inset-0 -z-10 transition-transform duration-200 ease-out"
+            style={{ transform: `translate(${tilt.tx}px, ${tilt.ty}px)` }}
+          >
+            <div
+              className="w-full h-full rounded-full blur-2xl opacity-40"
+              style={{
+                background:
+                  "radial-gradient(60% 60% at 50% 50%, rgba(59,130,246,0.45), rgba(59,130,246,0.15) 40%, rgba(59,130,246,0.0) 70%)",
+              }}
+            />
+          </div>
+
+          <img
+            src={rakeshPhoto}
+            alt="Rakesh Vajrapu"
+            onLoad={() => setImgLoaded(true)}
+            className={`w-40 h-40 md:w-44 md:h-44 lg:w-56 lg:h-56 xl:w-64 xl:h-64 rounded-full object-cover ring-2 ring-primary/40 shadow-primary bg-muted/30 
+              transition-all duration-500 ease-out hover:scale-110 hover:shadow-glow motion-reduce:transform-none animate-float ${imgLoaded ? 'opacity-100' : 'opacity-0'}`}
+          />
+        </div>
+      </div>
+
       <div className="container mx-auto px-6 relative z-10">
         <div className="text-center animate-fadeInUp">
           <div className="mb-8">
@@ -33,27 +82,11 @@ const Hero = () => {
               <h1 className="text-5xl md:text-7xl font-bold text-primary">
                 Rakesh Vajrapu
               </h1>
+              {/* Smaller circular photo on mobile next to the name */}
               <img
-                src={imageCandidates[Math.min(imgIndex, imageCandidates.length - 1)]}
-                onError={() => {
-                  if (imgIndex < imageCandidates.length - 1) {
-                    setImgIndex((i) => i + 1);
-                  }
-                }}
-                onLoad={(e) => {
-                  // If dev server cached a 404 as an empty circle, ensure we loaded a real image
-                  if (!e.currentTarget.complete || e.currentTarget.naturalWidth === 0) {
-                    if (imgIndex < imageCandidates.length - 1) setImgIndex((i) => i + 1);
-                  }
-                }}
-                alt="Profile photo"
-                className="w-16 h-16 md:w-24 md:h-24 rounded-full object-cover border border-primary/30 shadow-sm bg-muted/30"
-                onErrorCapture={(e) => {
-                  // If all candidates fail, fall back to placeholder
-                  if (imgIndex >= imageCandidates.length - 1 && !e.currentTarget.src.endsWith("placeholder.svg")) {
-                    e.currentTarget.src = "/placeholder.svg";
-                  }
-                }}
+                src={rakeshPhoto}
+                alt="Rakesh Vajrapu"
+                className="block md:hidden w-20 h-20 rounded-full object-cover border border-primary/30 shadow-sm bg-muted/30 animate-float transition-transform duration-300 ease-out hover:scale-105 active:scale-105"
               />
             </div>
             {/* On mobile, allow wrapping to avoid clipping. Apply typing animation only on sm+ */}
