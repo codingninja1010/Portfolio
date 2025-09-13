@@ -84,7 +84,7 @@ const Projects = () => {
                     <span className="text-sm font-bold text-accent">{project.impact}</span>
                   </div>
                   <div className="flex flex-wrap gap-2">
-                    {project.technologies.map((tech, techIndex) => (
+                    {project.technologies.map((tech) => (
                       <span 
                         key={tech}
                         className="px-3 py-1 bg-muted/20 rounded-full text-xs hover:bg-primary/20 transition-colors duration-300"

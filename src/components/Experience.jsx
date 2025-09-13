@@ -1,4 +1,4 @@
-import { Calendar, MapPin, Briefcase, Code2 } from "lucide-react";
+import { Calendar, MapPin, Briefcase } from "lucide-react";
 
 const Experience = () => {
   const experiences = [
@@ -98,7 +98,7 @@ const Experience = () => {
                   </ul>
 
                   <div className="flex flex-wrap gap-2">
-                    {exp.technologies.map((tech, techIndex) => (
+                    {exp.technologies.map((tech) => (
                       <span 
                         key={tech}
                         className="px-3 py-1 bg-muted/20 rounded-full text-xs hover:bg-primary/20 transition-colors duration-300"
