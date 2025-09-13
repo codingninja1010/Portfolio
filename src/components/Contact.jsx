@@ -148,14 +148,16 @@ const Contact = () => {
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Button asChild size="lg" className="bg-gradient-primary hover:shadow-primary transition-all duration-300 hover:scale-105">
-                <a href="mailto:rakeshrb1411@gmail.com?subject=Hello%20Rakesh&body=Hi%20Rakesh%2C%20I'd%20like%20to%20connect%20about%20...">
+                <a href="https://www.linkedin.com/in/rakeshvajrapu/" target="_blank" rel="noopener noreferrer">
                   <Mail className="w-4 h-4 mr-2" />
                   Start a Conversation
                 </a>
               </Button>
-              <Button variant="outline" size="lg" className="border-primary/20 hover:bg-primary/10 transition-all duration-300">
-                <Github className="w-4 h-4 mr-2" />
-                View My Work
+              <Button asChild variant="outline" size="lg" className="border-primary/20 hover:bg-primary/10 transition-all duration-300">
+                <a href="https://github.com/rakesh-vajrapu" target="_blank" rel="noopener noreferrer">
+                  <Github className="w-4 h-4 mr-2" />
+                  View My Work
+                </a>
               </Button>
             </div>
           </div>
