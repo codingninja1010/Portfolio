@@ -63,10 +63,10 @@ const Header = () => {
         const id = window.location.hash;
         // Reuse our offset scrolling
         const el = document.querySelector(id);
-        if (el) {
-          const headerEl = document.querySelector('header');
-          const headerHeight = headerEl ? headerEl.offsetHeight : 72;
-          const offset = headerHeight + 12;
+          if (el) {
+            const headerEl = document.querySelector('header');
+            const headerHeight = headerEl ? headerEl.offsetHeight : 72;
+            const offset = headerHeight + 20; // extra breathing room
           const y = el.getBoundingClientRect().top + window.scrollY - offset;
           window.scrollTo({ top: y });
         }
@@ -94,7 +94,7 @@ const Header = () => {
       // Offset scroll for fixed header so headings aren't hidden
       const headerEl = document.querySelector('header');
       const headerHeight = headerEl ? headerEl.offsetHeight : 72; // fallback
-      const offset = headerHeight + 12; // small breathing room
+          const offset = headerHeight + 20; // extra breathing room
       const y = element.getBoundingClientRect().top + window.scrollY - offset;
       window.scrollTo({ top: y, behavior: 'smooth' });
     }
