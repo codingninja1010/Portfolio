@@ -39,6 +39,23 @@ const Header = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  // Keep a CSS variable updated with the header height so CSS scroll-padding/scroll-margin can use it
+  useEffect(() => {
+    const updateScrollPaddingVar = () => {
+      const headerEl = document.querySelector('header');
+      const headerHeight = headerEl ? headerEl.offsetHeight : 72;
+      const offset = headerHeight + 12; // breathing room
+      document.documentElement.style.setProperty('--app-scroll-padding', `${offset}px`);
+    };
+    updateScrollPaddingVar();
+    window.addEventListener('resize', updateScrollPaddingVar);
+    window.addEventListener('scroll', updateScrollPaddingVar, { passive: true });
+    return () => {
+      window.removeEventListener('resize', updateScrollPaddingVar);
+      window.removeEventListener('scroll', updateScrollPaddingVar);
+    };
+  }, []);
+
   // When the page loads with a hash or when the hash changes, adjust scroll to account for header height
   useEffect(() => {
     const adjustForHash = () => {

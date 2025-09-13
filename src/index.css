@@ -128,6 +128,17 @@ All colors MUST be HSL.
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
   }
 
+  /* Ensure anchors and scrollIntoView leave space for the fixed header */
+  html {
+    /* Default fallback; will be updated dynamically by JS */
+    scroll-padding-top: var(--app-scroll-padding, 6.5rem);
+  }
+
+  /* Extra safety: when navigating to an element with a hash, ensure it keeps space from the top */
+  :target {
+    scroll-margin-top: 6.5rem;
+  }
+
   /* Glass morphism utility */
   .glass {
     background: var(--gradient-card);
