@@ -8,6 +8,7 @@ const Projects = () => {
       description: "Built a responsive shopping platform allowing users to explore products, manage carts, and simulate purchases.",
       icon: Heart,
       codeUrl: "https://github.com/rakesh-vajrapu/ShopSmart",
+      demoUrl: "https://shopsmartweb.netlify.app/",
       technologies: ["React JS", "Redux", "JavaScript", "Bootstrap", "Fake Store API"],
       features: [
         "Built a responsive shopping platform allowing users to explore products, manage carts, and simulate purchases",
@@ -111,10 +112,19 @@ const Projects = () => {
                       View Code
                     </Button>
                   )}
-                  <Button size="sm" className="flex-1 bg-gradient-primary hover:shadow-primary">
-                    <ExternalLink className="w-4 h-4 mr-2" />
-                    Live Demo
-                  </Button>
+                  {project.demoUrl ? (
+                    <Button asChild size="sm" className="flex-1 bg-gradient-primary hover:shadow-primary">
+                      <a href={project.demoUrl} target="_blank" rel="noopener noreferrer" aria-label={`Live demo for ${project.title}`}>
+                        <ExternalLink className="w-4 h-4 mr-2" />
+                        Live Demo
+                      </a>
+                    </Button>
+                  ) : (
+                    <Button size="sm" className="flex-1 bg-gradient-primary" disabled>
+                      <ExternalLink className="w-4 h-4 mr-2" />
+                      Live Demo
+                    </Button>
+                  )}
                 </div>
               </div>
             );
