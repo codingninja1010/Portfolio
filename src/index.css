@@ -134,6 +134,11 @@ All colors MUST be HSL.
     scroll-padding-top: var(--app-scroll-padding, 6.5rem);
   }
 
+  /* Utility class to apply dynamic scroll margin for anchored sections */
+  .section-anchor {
+    scroll-margin-top: var(--app-scroll-padding, 6.5rem);
+  }
+
   /* Extra safety: when navigating to an element with a hash, ensure it keeps space from the top */
   :target {
     scroll-margin-top: 6.5rem;

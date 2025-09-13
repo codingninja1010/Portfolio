@@ -14,35 +14,35 @@ const Index = () => {
       <Header />
       
       <main>
-  <section id="home" className="scroll-mt-32 md:scroll-mt-40">
+  <section id="home" className="scroll-mt-32 md:scroll-mt-40 section-anchor">
           <Hero />
         </section>
         
-  <section id="about" className="scroll-mt-32 md:scroll-mt-40">
+  <section id="about" className="scroll-mt-32 md:scroll-mt-40 section-anchor">
           <Education />
         </section>
         
-  <section id="skills" className="scroll-mt-32 md:scroll-mt-40">
+  <section id="skills" className="scroll-mt-32 md:scroll-mt-40 section-anchor">
           <Skills />
         </section>
         
-  <section id="experience" className="scroll-mt-32 md:scroll-mt-40">
+  <section id="experience" className="scroll-mt-32 md:scroll-mt-40 section-anchor">
           <Experience />
         </section>
         
-  <section id="volunteering" className="scroll-mt-32 md:scroll-mt-40">
+  <section id="volunteering" className="scroll-mt-32 md:scroll-mt-40 section-anchor">
           <Volunteering />
         </section>
 
-  <section id="projects" className="scroll-mt-32 md:scroll-mt-40">
+  <section id="projects" className="scroll-mt-32 md:scroll-mt-40 section-anchor">
           <Projects />
         </section>
         
-  <section id="achievements" className="scroll-mt-32 md:scroll-mt-40">
+  <section id="achievements" className="scroll-mt-32 md:scroll-mt-40 section-anchor">
           <Achievements />
         </section>
         
-  <section id="contact" className="scroll-mt-32 md:scroll-mt-40">
+  <section id="contact" className="scroll-mt-32 md:scroll-mt-40 section-anchor">
           <Contact />
         </section>
       </main>
