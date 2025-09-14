@@ -288,6 +288,54 @@ All colors MUST be HSL.
     box-shadow: var(--shadow-glow);
   }
 
+  /* --- Fancy button hover effects --- */
+  .btn-border-animate {
+    position: relative;
+    overflow: hidden;
+    border: 1px solid hsl(var(--border));
+  }
+  .btn-border-animate::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: 1px;
+    background: conic-gradient(
+      from 0deg,
+      hsl(var(--primary) / 0),
+      hsl(var(--primary) / 0.8) 20%,
+      hsl(var(--secondary) / 0.8) 55%,
+      hsl(var(--accent) / 0.8) 80%,
+      hsl(var(--primary) / 0) 100%
+    );
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+            mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+            mask-composite: exclude;
+    opacity: 0;
+    transition: opacity 160ms ease;
+  }
+  .btn-border-animate:hover::after { opacity: 1; animation: spinBorder 2.4s linear infinite; }
+
+  .btn-shine {
+    position: relative;
+    overflow: hidden;
+  }
+  .btn-shine::before {
+    content: "";
+    position: absolute;
+    top: -50%;
+    left: -30%;
+    width: 40%;
+    height: 200%;
+    transform: rotate(25deg) translateX(-120%);
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.25), transparent);
+    filter: blur(2px);
+    transition: transform 600ms ease;
+    pointer-events: none;
+  }
+  .btn-shine:hover::before { transform: rotate(25deg) translateX(260%); }
+
   /* Gradient text utility with enhanced visibility */
   .gradient-text-enhanced {
     background: var(--gradient-primary);

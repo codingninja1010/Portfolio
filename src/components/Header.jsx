@@ -104,15 +104,14 @@ const Header = () => {
           </div>
 
           {/* Desktop Navigation */}
-          <nav className="hidden md:flex items-center space-x-8">
+          <nav className="hidden md:flex items-center space-x-2">
             {navItems.map((item) => (
               <button
                 key={item.name}
                 onClick={() => scrollToSection(item.href)}
-                className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors duration-300 relative group"
+                className="px-3 py-2 text-sm font-medium text-muted-foreground rounded-lg border border-transparent hover:text-primary hover:border-primary/40 hover:bg-primary/5 transition-colors duration-200"
               >
                 {item.name}
-                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-full"></span>
               </button>
             ))}
           </nav>

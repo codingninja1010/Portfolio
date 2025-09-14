@@ -2,7 +2,8 @@ import { useRef, useState } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import Typewriter from "@/components/ui/Typewriter";
-import { Github, Linkedin, Mail } from "lucide-react";
+import { Github, Linkedin, Mail, Download as DownloadIcon } from "lucide-react";
+import AnimatedDownloadButton from "@/components/ui/AnimatedDownloadButton";
 import { SiLeetcode, SiCodechef } from "react-icons/si";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import rakeshPhoto from "@/assets/rakesh-photo.jpg";
@@ -152,12 +153,7 @@ const Hero = () => {
                 Get In Touch
               </a>
             </Button>
-            <Button asChild variant="outline" size="lg" className="border-primary/20 hover:bg-primary/10 transition-all duration-300">
-              <a href="https://github.com/rakesh-vajrapu?tab=repositories" target="_blank" rel="noopener noreferrer">
-                <Github className="w-4 h-4 mr-2" />
-                View Projects
-              </a>
-            </Button>
+            <AnimatedDownloadButton className="ml-0 sm:ml-0" />
           </div>
 
           <TooltipProvider delayDuration={0} skipDelayDuration={0}>
