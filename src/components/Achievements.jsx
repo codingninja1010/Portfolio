@@ -147,40 +147,75 @@ const Achievements = () => {
         </motion.div>
 
         {/* Certifications Section */}
-        <div className="max-w-4xl mx-auto">
-          <div className="glass rounded-xl p-8 animate-fadeInUp" style={{ animationDelay: '0.4s' }}>
-            <div className="flex items-center mb-6">
-              <div className="p-3 bg-gradient-secondary rounded-lg mr-4">
-                <Users className="w-6 h-6 text-white" />
-              </div>
-              <h3 className="text-2xl font-bold">Professional Certifications</h3>
-            </div>
-            
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              {certifications.map((cert, index) => (
-                <a 
-                  key={cert.title}
-                  href={cert.link}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="block hover:no-underline"
-                >
-                  <div 
-                    className="flex items-center p-4 bg-muted/10 rounded-lg hover:bg-primary/10 transition-all duration-300 hover:scale-105"
-                    style={{ animationDelay: `${0.5 + (index * 0.1)}s` }}
+        <motion.div 
+          className="max-w-4xl mx-auto"
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true, margin: "-100px" }}
+          transition={{ delay: 0.2 }}
+        >
+          <Magnetic className="block">
+            <TiltCard className="certification-card glass rounded-xl p-8 relative overflow-hidden">
+              {/* Aurora beams */}
+              <span aria-hidden className="aurora aurora-cert-a" />
+              <span aria-hidden className="aurora aurora-cert-b" />
+              
+              <motion.div 
+                className="flex items-center mb-6 relative z-[2]"
+                variants={{ hidden: { opacity: 0, x: -20 }, show: { opacity: 1, x: 0 } }}
+              >
+                <div className="icon-ring p-3 bg-gradient-secondary rounded-lg mr-4">
+                  <motion.span
+                    whileHover={{ rotate: 12, scale: 1.1 }}
+                    transition={{ type: "spring", stiffness: 200, damping: 15 }}
+                    className="inline-block"
                   >
-                    <img 
-                      src={cert.logo} 
-                      alt={`${cert.title} logo`}
-                      className="w-8 h-8 object-contain mr-4 flex-shrink-0"
-                    />
-                    <span className="text-sm font-medium">{cert.title}</span>
-                  </div>
-                </a>
-              ))}
-            </div>
-          </div>
-        </div>
+                    <Users className="w-6 h-6 text-white" />
+                  </motion.span>
+                  {/* Rotating halo ring */}
+                  <span aria-hidden className="ring-spin" />
+                </div>
+                <h3 className="text-2xl font-bold">Professional Certifications</h3>
+              </motion.div>
+              
+              <motion.div 
+                className="grid grid-cols-1 md:grid-cols-2 gap-4 relative z-[2]"
+                variants={{ hidden: { opacity: 0 }, show: { opacity: 1, transition: { staggerChildren: 0.08 } } }}
+              >
+                {certifications.map((cert, index) => (
+                  <motion.div
+                    key={cert.title}
+                    variants={{ hidden: { opacity: 0, y: 10 }, show: { opacity: 1, y: 0 } }}
+                  >
+                    <Magnetic>
+                      <a 
+                        href={cert.link}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="block hover:no-underline"
+                      >
+                        <motion.div 
+                          className="cert-item flex items-center p-4 bg-muted/10 rounded-lg hover:bg-primary/10 transition-all duration-300"
+                          whileHover={{ scale: 1.02, x: 4 }}
+                          whileTap={{ scale: 0.98 }}
+                        >
+                          <motion.img 
+                            src={cert.logo} 
+                            alt={`${cert.title} logo`}
+                            className="w-8 h-8 object-contain mr-4 flex-shrink-0"
+                            whileHover={{ rotate: 5, scale: 1.1 }}
+                            transition={{ type: "spring", stiffness: 200, damping: 15 }}
+                          />
+                          <span className="text-sm font-medium">{cert.title}</span>
+                        </motion.div>
+                      </a>
+                    </Magnetic>
+                  </motion.div>
+                ))}
+              </motion.div>
+            </TiltCard>
+          </Magnetic>
+        </motion.div>
       </div>
     </section>
   );

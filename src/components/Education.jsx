@@ -51,20 +51,17 @@ const Education = () => {
             <motion.div
               key={index}
               variants={{ hidden: { opacity: 0, y: 20 }, show: { opacity: 1, y: 0 } }}
+              className="h-full"
             >
-              <Magnetic className="block">
-                <TiltCard className="education-card glass rounded-xl p-8 hover:shadow-glow transition-all duration-500 relative overflow-hidden group">
+              <Magnetic className="block h-full">
+                <TiltCard className="education-card glass rounded-xl p-8 hover:shadow-glow transition-all duration-500 relative overflow-hidden group h-full">
                   {/* Decorative aurora beams */}
                   <span aria-hidden className="aurora aurora-edu-a" />
                   <span aria-hidden className="aurora aurora-edu-b" />
-                  {/* Floating degree badge */}
-                  <span aria-hidden className="degree-badge">
-                    <GraduationCap className="w-4 h-4" />
-                  </span>
                   {/* Timeline dot */}
                   <span aria-hidden className="timeline-dot" />
                   
-                  <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between relative z-[2]">
+                  <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between relative z-[2] h-full">
                     <div className="flex items-start mb-4 lg:mb-0">
                       <div className="icon-ring p-3 bg-gradient-primary rounded-lg mr-4 flex-shrink-0">
                         <motion.span

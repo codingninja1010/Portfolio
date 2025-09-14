@@ -526,6 +526,63 @@ All colors MUST be HSL.
     .aurora-a, .aurora-b, .orb-1, .orb-2 { animation: none; }
   }
 
+  /* ==================== Additional Card Effects ==================== */
+  
+  /* Education Cards */
+  .education-card { position: relative; isolation: isolate; }
+  .education-card .aurora-edu-a { position: absolute; inset: -15%; border-radius: 20px; filter: blur(20px); opacity: 0.08; pointer-events: none; z-index: 0; background: radial-gradient(50% 40% at 20% 0%, hsl(var(--primary) / .9), transparent 65%); animation: auroraShift 10s ease-in-out infinite alternate; }
+  .education-card .aurora-edu-b { position: absolute; inset: -15%; border-radius: 20px; filter: blur(20px); opacity: 0.08; pointer-events: none; z-index: 0; background: radial-gradient(50% 40% at 80% 100%, hsl(var(--secondary) / .9), transparent 65%); animation: auroraShift 12s ease-in-out infinite alternate-reverse; }
+  .education-card .degree-badge { position: absolute; top: 6px; right: 8px; width: 24px; height: 24px; border-radius: 9999px; background: hsl(var(--accent) / 0.15); color: hsl(var(--accent)); display: flex; align-items: center; justify-content: center; z-index: 1; animation: float 8s ease-in-out infinite; }
+  .education-card .timeline-dot { position: absolute; top: -2px; left: -4px; width: 8px; height: 8px; border-radius: 9999px; background: hsl(var(--primary)); opacity: 0.7; z-index: 1; animation: pulseGlow 2s ease-in-out infinite; }
+
+  /* Experience Cards */
+  .experience-card { position: relative; isolation: isolate; }
+  .experience-card .aurora-exp-a { position: absolute; inset: -15%; border-radius: 20px; filter: blur(18px); opacity: 0.09; pointer-events: none; z-index: 0; background: radial-gradient(60% 50% at 0% 30%, hsl(var(--accent) / .8), transparent 60%); animation: auroraShift 9s ease-in-out infinite alternate; }
+  .experience-card .aurora-exp-b { position: absolute; inset: -15%; border-radius: 20px; filter: blur(18px); opacity: 0.09; pointer-events: none; z-index: 0; background: radial-gradient(60% 50% at 100% 70%, hsl(var(--primary) / .8), transparent 60%); animation: auroraShift 11s ease-in-out infinite alternate-reverse; }
+  .experience-card .company-glow { position: absolute; top: 0; right: 0; width: 60px; height: 60px; border-radius: 9999px; background: radial-gradient(circle, hsl(var(--secondary) / 0.12), transparent 70%); filter: blur(12px); z-index: 0; animation: float 6s ease-in-out infinite; }
+  .timeline-connector { background: linear-gradient(180deg, hsl(var(--primary) / .3), hsl(var(--secondary) / .3)); filter: drop-shadow(0 0 6px hsl(var(--primary) / .3)); animation: rainbowFlow 8s linear infinite; }
+  .timeline-icon .pulse-ring { animation: pulseRing 2s cubic-bezier(0.455, 0.03, 0.515, 0.955) infinite; }
+  @keyframes pulseRing { 0% { transform: scale(0.8); opacity: 1; } 100% { transform: scale(1.4); opacity: 0; } }
+  .experience-badge { transition: all 200ms ease; }
+  .tech-chip { position: relative; transition: all 200ms ease; }
+  .tech-chip:hover { box-shadow: 0 4px 12px hsl(var(--primary) / 0.2); }
+
+  /* Project Cards */
+  .project-card { position: relative; isolation: isolate; }
+  .project-card .aurora-proj-a { position: absolute; inset: -18%; border-radius: 24px; filter: blur(22px); opacity: 0.1; pointer-events: none; z-index: 0; background: radial-gradient(70% 60% at 10% 10%, hsl(var(--secondary) / .9), transparent 65%); animation: auroraShift 11s ease-in-out infinite alternate; }
+  .project-card .aurora-proj-b { position: absolute; inset: -18%; border-radius: 24px; filter: blur(22px); opacity: 0.1; pointer-events: none; z-index: 0; background: radial-gradient(70% 60% at 90% 90%, hsl(var(--accent) / .9), transparent 65%); animation: auroraShift 13s ease-in-out infinite alternate-reverse; }
+  .project-card .category-badge { animation: float 7s ease-in-out infinite; }
+  .project-button { position: relative; overflow: hidden; }
+  .project-button::before { content: ""; position: absolute; top: 50%; left: 50%; width: 0; height: 0; border-radius: 9999px; background: radial-gradient(circle, rgba(255,255,255,0.3), transparent 70%); transform: translate(-50%, -50%); transition: width 0.3s ease, height 0.3s ease; pointer-events: none; }
+  .project-button:hover::before { width: 100px; height: 100px; }
+
+  /* Achievement Cards */
+  .achievement-card { position: relative; isolation: isolate; }
+  .achievement-card .aurora-ach-a { position: absolute; inset: -20%; border-radius: 24px; filter: blur(24px); opacity: 0.08; pointer-events: none; z-index: 0; background: radial-gradient(60% 50% at 30% 0%, hsl(var(--primary) / .9), transparent 70%); animation: auroraShift 8s ease-in-out infinite alternate; }
+  .achievement-card .aurora-ach-b { position: absolute; inset: -20%; border-radius: 24px; filter: blur(24px); opacity: 0.08; pointer-events: none; z-index: 0; background: radial-gradient(60% 50% at 70% 100%, hsl(var(--accent) / .9), transparent 70%); animation: auroraShift 10s ease-in-out infinite alternate-reverse; }
+  .achievement-card .medal-shine { position: absolute; top: -30%; left: -20%; width: 60%; height: 160%; background: linear-gradient(45deg, transparent 30%, rgba(255,215,0,0.2) 50%, transparent 70%); transform: translateX(-120%) rotate(25deg); transition: transform 1s ease; pointer-events: none; z-index: 1; }
+  .achievement-card:hover .medal-shine { transform: translateX(180%) rotate(25deg); }
+  .trophy-container { position: relative; }
+
+  /* Certification Cards */
+  .certification-card { position: relative; isolation: isolate; }
+  .certification-card .aurora-cert-a { position: absolute; inset: -15%; border-radius: 20px; filter: blur(16px); opacity: 0.06; pointer-events: none; z-index: 0; background: radial-gradient(80% 40% at 20% 20%, hsl(var(--secondary) / .8), transparent 60%); animation: auroraShift 14s ease-in-out infinite alternate; }
+  .certification-card .aurora-cert-b { position: absolute; inset: -15%; border-radius: 20px; filter: blur(16px); opacity: 0.06; pointer-events: none; z-index: 0; background: radial-gradient(80% 40% at 80% 80%, hsl(var(--primary) / .8), transparent 60%); animation: auroraShift 16s ease-in-out infinite alternate-reverse; }
+  .cert-item { position: relative; overflow: hidden; border: 1px solid transparent; transition: all 200ms ease; }
+  .cert-item:hover { border-color: hsl(var(--primary) / 0.3); box-shadow: 0 6px 20px hsl(var(--primary) / 0.15); }
+  .cert-item::before { content: ""; position: absolute; top: 0; left: -100%; width: 100%; height: 100%; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent); transition: left 0.5s ease; pointer-events: none; }
+  .cert-item:hover::before { left: 100%; }
+
+  /* Reduced motion fallbacks */
+  @media (prefers-reduced-motion: reduce) {
+    .aurora-edu-a, .aurora-edu-b, .aurora-exp-a, .aurora-exp-b, .aurora-proj-a, .aurora-proj-b, .aurora-ach-a, .aurora-ach-b, .aurora-cert-a, .aurora-cert-b { animation: none; }
+    .degree-badge, .company-glow, .category-badge { animation: none; }
+    .timeline-connector { animation: none; background: linear-gradient(180deg, hsl(var(--primary) / .2), hsl(var(--secondary) / .2)); }
+    .timeline-icon .pulse-ring { animation: none; }
+    .medal-shine { transition: none; }
+    .cert-item::before { transition: none; }
+  }
+
   /* Animation utilities */
   .animate-float {
     animation: float 6s ease-in-out infinite;
