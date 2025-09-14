@@ -166,9 +166,11 @@ All colors MUST be HSL.
     will-change: transform;
   }
 
-  /* Larger, attractive hover scale for all glass cards */
-  .glass:hover {
-    transform: scale(1.08) !important;
+  /* Larger, attractive hover scale for glass cards on pointer devices only */
+  @media (hover: hover) and (pointer: fine) {
+    .glass:hover {
+      transform: scale(1.06) !important;
+    }
   }
 
   /* --- Icon button press animation utility --- */

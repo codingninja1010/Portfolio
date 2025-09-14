@@ -2,14 +2,16 @@ import Header from "@/components/Header";
 import Hero from "@/components/Hero";
 import Skills from "@/components/Skills";
 import Experience from "@/components/Experience";
-import Projects from "@/components/Projects";
-import Achievements from "@/components/Achievements";
 import Education from "@/components/Education";
 import Contact from "@/components/Contact";
 import Volunteering from "@/components/Volunteering";
 import ScrollToTop from "@/components/ScrollToTop";
 import SectionDivider from "@/components/SectionDivider";
 import { motion } from "framer-motion";
+import { Suspense, lazy } from "react";
+
+const Projects = lazy(() => import("@/components/Projects"));
+const Achievements = lazy(() => import("@/components/Achievements"));
 
 const Index = () => {
   const sectionVariants = {
@@ -54,12 +56,16 @@ const Index = () => {
         <SectionDivider />
 
           <motion.section id="projects" className="scroll-mt-32 md:scroll-mt-40 section-anchor" variants={sectionVariants}>
-            <Projects />
+            <Suspense fallback={<div className="container mx-auto px-6 py-8">Loading projects…</div>}>
+              <Projects />
+            </Suspense>
           </motion.section>
         <SectionDivider />
         
           <motion.section id="achievements" className="scroll-mt-32 md:scroll-mt-40 section-anchor" variants={sectionVariants}>
-            <Achievements />
+            <Suspense fallback={<div className="container mx-auto px-6 py-8">Loading achievements…</div>}>
+              <Achievements />
+            </Suspense>
           </motion.section>
         <SectionDivider />
         

@@ -1,4 +1,4 @@
-import React, { useRef, forwardRef } from "react";
+import { useRef, forwardRef } from "react";
 import { motion, useMotionValue, useSpring, useReducedMotion } from "framer-motion";
 
 const Magnetic = forwardRef(function Magnetic(

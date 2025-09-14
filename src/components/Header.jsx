@@ -1,5 +1,7 @@
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
+import { toast } from "@/components/ui/sonner";
+import { RESUME_URL } from "@/config/site";
 import { Menu, X, Download } from "lucide-react";
 
 const Header = () => {
@@ -118,10 +120,24 @@ const Header = () => {
 
           {/* Desktop CTA */}
           <div className="hidden md:block">
-            <Button variant="outline" size="sm" className="border-primary/20 hover:bg-primary/10">
-              <Download className="w-4 h-4 mr-2" />
-              Resume
-            </Button>
+            {RESUME_URL ? (
+              <Button asChild variant="outline" size="sm" className="border-primary/20 hover:bg-primary/10">
+                <a href={RESUME_URL} target={RESUME_URL.startsWith("http") ? "_blank" : undefined} rel="noopener noreferrer" aria-label="Download Resume">
+                  <Download className="w-4 h-4 mr-2" />
+                  Resume
+                </a>
+              </Button>
+            ) : (
+              <Button
+                variant="outline"
+                size="sm"
+                className="border-primary/20 hover:bg-primary/10"
+                onClick={() => toast("Resume unavailable", { description: "Set RESUME_URL in src/config/site.js" })}
+              >
+                <Download className="w-4 h-4 mr-2" />
+                Resume
+              </Button>
+            )}
           </div>
 
           {/* Mobile Menu Button */}
@@ -158,10 +174,24 @@ const Header = () => {
                   </button>
                 ))}
                 <div className="px-6 py-4">
-                  <Button variant="outline" size="sm" className="w-full border-primary/20 hover:bg-primary/10">
-                    <Download className="w-4 h-4 mr-2" />
-                    Download Resume
-                  </Button>
+                  {RESUME_URL ? (
+                    <Button asChild variant="outline" size="sm" className="w-full border-primary/20 hover:bg-primary/10">
+                      <a href={RESUME_URL} target={RESUME_URL.startsWith("http") ? "_blank" : undefined} rel="noopener noreferrer" aria-label="Download Resume">
+                        <Download className="w-4 h-4 mr-2" />
+                        Download Resume
+                      </a>
+                    </Button>
+                  ) : (
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      className="w-full border-primary/20 hover:bg-primary/10"
+                      onClick={() => toast("Resume unavailable", { description: "Set RESUME_URL in src/config/site.js" })}
+                    >
+                      <Download className="w-4 h-4 mr-2" />
+                      Download Resume
+                    </Button>
+                  )}
                 </div>
               </nav>
             </div>

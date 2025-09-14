@@ -1,130 +1,85 @@
-# Welcome to your Lovable project
+# Rakesh Vajrapu – Portfolio
 
-## Project info
+Modern, fast, and accessible personal portfolio built with React, Vite, and Tailwind CSS.
 
-**URL**: https://lovable.dev/projects/d6e70a4d-6069-496a-b878-b6ff8a371684
+Live Site: [your-portfolio.example.com](https://your-portfolio.example.com)
 
-## How can I edit this code?
+Website: [your-website.example.com](https://your-website.example.com)
 
-There are several ways of editing your application.
+Contact: [your.email@example.com](mailto:your.email@example.com)
 
-**Use Lovable**
+## Overview
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/d6e70a4d-6069-496a-b878-b6ff8a371684) and start prompting.
+This is the source code for my portfolio website. It showcases my skills, experience, projects, achievements, education, and ways to get in touch. The site is a single-page app with smooth section navigation, subtle animations, and a strong focus on performance and accessibility.
 
-Changes made via Lovable will be committed automatically to this repo.
+## Features
 
-**Use your preferred IDE**
+- Responsive, mobile-first layout with polished UI
+- Smooth in-page navigation with scroll offset handling
+- Page transition animations and scroll progress bar
+- Accessible components (tooltips, toasts, buttons, inputs)
+- Error boundary for graceful runtime error handling
+- Optimized, cached static assets (Vite build)
+- Dark-friendly palette and glassmorphism accents
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+## Tech Stack
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+- React 18 + Vite 5
+- Tailwind CSS 3 (+ tailwindcss-animate)
+- Framer Motion 10/12 for animations
+- Radix UI primitives via custom components
+- React Router v6 (client-side routing)
+- @tanstack/react-query for data fetching primitives
+- ESLint 9 for code quality
 
-Follow these steps:
+## Getting Started
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+Prerequisites:
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+- Node.js 18+ and npm (this repo uses npm + package-lock.json)
 
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
-```
-
-**Edit a file directly in GitHub**
-
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
-
-**Use GitHub Codespaces**
-
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
-
-## What technologies are used for this project?
-
-This project is built with:
-
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
-
-## Local development (npm)
-
-This project uses npm (see `package-lock.json`). To avoid tool conflicts, do not use bun or pnpm in this repo.
-
-Quick start:
+Install and run:
 
 ```powershell
-# install deps exactly as locked
+# install dependencies
 npm ci
 
-# start dev server
+# start dev server (auto-open)
 npm run dev
 
 # build for production
 npm run build
 
-# preview the production build
+# preview production build locally
 npm run preview
 ```
 
-If you see `'vite' is not recognized` when running scripts, run `npm ci` to recreate `node_modules/.bin` shims.
+## Usage
 
-## UI Notes: Icon hover behavior
+- Edit content in the React components under `src/components` and `src/pages`.
+- Update profile links and images in:
+  - `src/components/Hero.jsx`
+  - `src/components/Projects.jsx`
+  - `src/components/Contact.jsx`
+  - `src/components/Achievements.jsx`
+- Replace placeholder URLs in this README with your actual website and portfolio links.
 
-The social/contact icon row in `src/components/Hero.jsx` uses a group hover pattern so that:
-- The hovered icon scales up and gets a subtle primary background and glow.
-- Sibling icons gently dim while one is hovered.
+## Contributing
 
-Implementation details:
-- Parent container has class `group/iconrow`.
-- Each icon anchor has `group-hover/iconrow:opacity-60 hover:opacity-100 hover:scale-125 hover:bg-primary/10 hover:shadow-glow`.
-- This keeps focus styles accessible and the effect smooth on all devices.
+Contributions, suggestions, and bug reports are welcome. Please:
 
-## How can I deploy this project?
+1. Fork the repo
+2. Create a feature branch: `git checkout -b feat/your-feature`
+3. Commit changes with clear messages
+4. Open a Pull Request describing your changes
 
-Simply open [Lovable](https://lovable.dev/projects/d6e70a4d-6069-496a-b878-b6ff8a371684) and click on Share -> Publish.
+## License
 
-## Can I connect a custom domain to my Lovable project?
+This project is licensed under the MIT License. See `LICENSE` (add if not present) for details.
 
-Yes, you can!
+## Links
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
-
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
-
-## Windows: Acrylic/Transparent Taskbar (Optional)
-
-If you want an acrylic/transparent taskbar (like in the screenshots), this repo includes a convenience PowerShell script to configure it using TranslucentTB.
-
-Steps (Windows 10/11):
-- Right‑click `scripts/make-taskbar-acrylic.ps1` → Run with PowerShell.
-- The script will:
-	- Enable Windows “Transparency effects”.
-	- Install/launch TranslucentTB from the Microsoft Store (via winget if available).
-	- Configure: Desktop = Acrylic, Maximized window = Opaque, hide taskbar line.
-- After it runs, click the TranslucentTB tray icon and enable “Open at boot” (Store apps require the in‑app toggle for startup).
-
-Revert:
-- Exit or uninstall TranslucentTB (from the Microsoft Store), and optionally turn off “Transparency effects”.
-
-### Switch themes quickly
-In `scripts/make-taskbar-acrylic.ps1`, set the `$Theme` variable near the top to one of:
-- `AcrylicGlass` (default): Acrylic with subtle dark tint (modern, readable)
-- `UltraClear`: Nearly clear desktop, opaque when maximized
-- `DarkTint`: Deeper tinted acrylic (moody glass look)
-- `HighContrast`: Solid dark opaque for maximum contrast
-
-You can also override colors and accents directly under the theme section if you want a custom palette.
+- Portfolio: [your-portfolio.example.com](https://your-portfolio.example.com)
+- Website/Blog: [your-website.example.com](https://your-website.example.com)
+- LinkedIn: [linkedin.com/in/your-handle](https://www.linkedin.com/in/your-handle)
+- GitHub: [github.com/your-handle](https://github.com/your-handle)

@@ -12,7 +12,7 @@ export default tseslint.config(
     extends: [js.configs.recommended],
     files: ["**/*.{js,jsx}"],
     languageOptions: {
-      ecmaVersion: 2020,
+      ecmaVersion: 2022,
       globals: globals.browser,
       sourceType: "module",
       parserOptions: {
@@ -63,7 +63,7 @@ export default tseslint.config(
     extends: [js.configs.recommended, ...tseslint.configs.recommended],
     files: ["**/*.{ts,tsx}"],
     languageOptions: {
-      ecmaVersion: 2020,
+      ecmaVersion: 2022,
       globals: globals.browser,
       sourceType: "module",
       parserOptions: {
@@ -91,6 +91,19 @@ export default tseslint.config(
         "warn",
         { vars: "all", args: "after-used", varsIgnorePattern: "^_", argsIgnorePattern: "^_" },
       ],
+    },
+  },
+  // Node/config files
+  {
+    files: ["**/vite.config.*", "**/tailwind.config.*", "**/postcss.config.*", "**/eslint.config.*"],
+    languageOptions: {
+      ecmaVersion: 2022,
+      globals: { ...globals.node },
+      sourceType: "module",
+    },
+    rules: {
+      // Allow process/env and node-style globals in config files
+      "no-undef": "off",
     },
   }
 );

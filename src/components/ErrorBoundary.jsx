@@ -4,6 +4,7 @@ export default class ErrorBoundary extends React.Component {
   constructor(props) {
     super(props);
     this.state = { hasError: false, error: null, info: null };
+    this.handleReload = this.handleReload.bind(this);
   }
 
   static getDerivedStateFromError(error) {
@@ -16,10 +17,10 @@ export default class ErrorBoundary extends React.Component {
     this.setState({ info });
   }
 
-  handleReload = () => {
+  handleReload() {
     this.setState({ hasError: false, error: null, info: null });
     window.location.reload();
-  };
+  }
 
   render() {
     if (this.state.hasError) {

@@ -19,8 +19,7 @@ export default function ScrollProgress() {
   const hueMV = useTransform(scrollYProgress, [0, 1], [0, 90]);
   const filterMV = useMotionTemplate`hue-rotate(${hueMV}deg)`;
 
-  // Dot indicator position at the end of the bar
-  const dotLeft = useTransform(scrollYProgress, (v) => `${v * 100}%`);
+  // (removed) dot indicator position value was unused
 
   // Keep a CSS variable updated for global styling hooks (e.g., scrollbar)
   useEffect(() => {
