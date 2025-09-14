@@ -79,7 +79,7 @@ const Achievements = () => {
           viewport={{ once: true, margin: "-100px" }}
           transition={{ staggerChildren: 0.1 }}
         >
-          {achievements.map((achievement, index) => {
+          {achievements.map((achievement) => {
             const Icon = achievement.icon;
             const achievementCard = (
               <Magnetic className="block h-full">
@@ -182,7 +182,7 @@ const Achievements = () => {
                 className="grid grid-cols-1 md:grid-cols-2 gap-4 relative z-[2]"
                 variants={{ hidden: { opacity: 0 }, show: { opacity: 1, transition: { staggerChildren: 0.08 } } }}
               >
-                {certifications.map((cert, index) => (
+                {certifications.map((cert) => (
                   <motion.div
                     key={cert.title}
                     variants={{ hidden: { opacity: 0, y: 10 }, show: { opacity: 1, y: 0 } }}

@@ -1,8 +1,8 @@
 import { ExternalLink, Github, Heart, Hand } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
-import TiltCard from "@/components/ui/TiltCard";
-import Magnetic from "@/components/ui/Magnetic";
+import TiltCard from "@/components/ui/TiltCard.jsx";
+import Magnetic from "@/components/ui/Magnetic.jsx";
 
 const Projects = () => {
   const projects = [

@@ -42,7 +42,7 @@ export default function Typewriter({
 
   const [idx, setIdx] = useState(shouldReduce ? currentText.length : 0);
   const [mode, setMode] = useState("typing"); // "typing" | "deleting"
-  const [loopsDone, setLoopsDone] = useState(0);
+  const loopsDoneRef = useRef(0);
   const timerRef = useRef(null);
 
   useEffect(() => {
@@ -61,8 +61,8 @@ export default function Typewriter({
     // Strict Mode-safe: schedule typing and cleanup properly.
     // Always reset to 0 when (re)starting the animation.
     setIdx(0);
-    setMode("typing");
-    setLoopsDone(0);
+  setMode("typing");
+  loopsDoneRef.current = 0;
     let cancelled = false;
 
     const randJitter = () => 1 + ((Math.random() * 2 - 1) * speedJitter);
@@ -92,7 +92,7 @@ export default function Typewriter({
           timerRef.current = setTimeout(typeTick, getDelayForNext(nextChar));
         } else {
           // finished this word
-          if (series.length > 1 && (loop || loopsDone < (typeof loop === 'number' ? loop : 0))) {
+          if (series.length > 1 && (loop || loopsDoneRef.current < (typeof loop === 'number' ? loop : 0))) {
             // hold then delete
             timerRef.current = setTimeout(() => {
               setMode("deleting");
@@ -123,7 +123,7 @@ export default function Typewriter({
           // advance to next word
           const nextWordIndex = (wordIndex + 1) % series.length;
           const wrapped = nextWordIndex === 0;
-          if (wrapped) setLoopsDone((c) => c + 1);
+          if (wrapped) loopsDoneRef.current = loopsDoneRef.current + 1;
           setWordIndex(nextWordIndex);
           setMode("typing");
           timerRef.current = setTimeout(typeTick, Math.max(80, delay));

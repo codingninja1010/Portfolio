@@ -78,7 +78,7 @@ const Contact = () => {
                 </p>
 
                 <div className="space-y-4">
-                  {contactInfo.map((contact, index) => {
+                  {contactInfo.map((contact) => {
                     const Icon = contact.icon;
                     return (
                       <motion.a 

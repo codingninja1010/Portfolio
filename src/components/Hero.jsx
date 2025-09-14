@@ -90,7 +90,7 @@ const Hero = () => {
             alt="Rakesh Vajrapu"
             onLoad={() => setImgLoaded(true)}
             decoding="async"
-            fetchpriority="high"
+            fetchPriority="high"
             width="256"
             height="256"
             className={`w-40 h-40 md:w-44 md:h-44 lg:w-56 lg:h-56 xl:w-64 xl:h-64 rounded-full object-cover ring-2 ring-primary/40 shadow-primary bg-muted/30 
