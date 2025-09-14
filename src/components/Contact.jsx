@@ -75,10 +75,11 @@ const Contact = () => {
                       <a 
                         key={contact.label}
                         href={contact.href}
-                        className="flex items-center p-4 bg-muted/10 rounded-lg hover:bg-primary/10 transition-all duration-300 hover:scale-105 group"
+                        className="flex items-center p-4 bg-muted/10 rounded-lg transition-all duration-300 group/icon
+                                   group-hover:opacity-80 hover:opacity-100 hover:bg-primary/10 hover:scale-110 hover:shadow-glow"
                         style={{ animationDelay: `${index * 0.1}s` }}
                       >
-                        <div className="p-2 bg-gradient-primary rounded-lg mr-4 group-hover:animate-glow">
+                        <div className="p-2 bg-gradient-primary rounded-lg mr-4 group-hover/icon:animate-glow">
                           <Icon className="w-5 h-5 text-white" />
                         </div>
                         <div>

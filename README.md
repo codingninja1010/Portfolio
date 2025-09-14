@@ -82,6 +82,17 @@ npm run preview
 
 If you see `'vite' is not recognized` when running scripts, run `npm ci` to recreate `node_modules/.bin` shims.
 
+## UI Notes: Icon hover behavior
+
+The social/contact icon row in `src/components/Hero.jsx` uses a group hover pattern so that:
+- The hovered icon scales up and gets a subtle primary background and glow.
+- Sibling icons gently dim while one is hovered.
+
+Implementation details:
+- Parent container has class `group/iconrow`.
+- Each icon anchor has `group-hover/iconrow:opacity-60 hover:opacity-100 hover:scale-125 hover:bg-primary/10 hover:shadow-glow`.
+- This keeps focus styles accessible and the effect smooth on all devices.
+
 ## How can I deploy this project?
 
 Simply open [Lovable](https://lovable.dev/projects/d6e70a4d-6069-496a-b878-b6ff8a371684) and click on Share -> Publish.

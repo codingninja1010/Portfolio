@@ -161,6 +161,39 @@ All colors MUST be HSL.
     transform: scale(1.08) !important;
   }
 
+  /* --- Icon button press animation utility --- */
+  .icon-button {
+    /* Shrink on press; tweak as needed */
+    --press-scale: 0.9;
+    inline-size: 44px;
+    block-size: 44px;
+    display: inline-grid;
+    place-items: center;
+    border-radius: 12px;
+    /* Keep existing glass visuals if used together */
+    transition: transform 140ms ease, background-color 140ms ease, box-shadow 140ms ease;
+    will-change: transform;
+    user-select: none;
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  /* If combined with .glass, avoid global glass hover scale here to prevent double-scaling */
+  .icon-button.glass:hover {
+    transform: none !important;
+  }
+
+  .icon-button.pressed,
+  .icon-button:active {
+    transform: scale(var(--press-scale));
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .icon-button { transition: none; }
+    .icon-button.pressed,
+    .icon-button:active { transform: none; }
+  }
+
   /* Prevent layout/visual shift on the fixed site header when hovering over it.
      The global .glass:hover scale looks nice on cards but makes the header appear
      to "push apart" its contents as the whole bar scales. Keep header static. */
