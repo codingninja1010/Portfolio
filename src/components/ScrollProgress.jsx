@@ -1,4 +1,5 @@
 import { motion, useScroll, useSpring, useTransform, useReducedMotion, useMotionTemplate } from "framer-motion";
+import { useEffect } from "react";
 
 export default function ScrollProgress() {
   const { scrollYProgress } = useScroll();
@@ -20,6 +21,14 @@ export default function ScrollProgress() {
 
   // Dot indicator position at the end of the bar
   const dotLeft = useTransform(scrollYProgress, (v) => `${v * 100}%`);
+
+  // Keep a CSS variable updated for global styling hooks (e.g., scrollbar)
+  useEffect(() => {
+    const unsubscribe = scrollYProgress.on("change", (v) => {
+      document.documentElement.style.setProperty("--scroll-progress", `${Math.round(v * 100)}%`);
+    });
+    return () => unsubscribe();
+  }, [scrollYProgress]);
 
   return (
     <div className="fixed inset-x-0 top-0 z-[1200] pointer-events-none select-none">

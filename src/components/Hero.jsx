@@ -2,7 +2,7 @@ import { useRef, useState } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import Typewriter from "@/components/ui/Typewriter";
-import { Github, Linkedin, Mail, Download as DownloadIcon } from "lucide-react";
+import { Github, Linkedin, Mail } from "lucide-react";
 import { SiLeetcode, SiCodechef } from "react-icons/si";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import rakeshPhoto from "@/assets/rakesh-photo.jpg";
@@ -145,26 +145,12 @@ const Hero = () => {
             Passionate Software Engineer with expertise in Python, JavaScript, AI/ML, and Data Science, skilled in leveraging Cloud Technologies to build innovative solutions. I thrive on bridging the gap between complex problems and elegant code, crafting intelligent systems that combine scalability, performance, and data-driven insights.
           </p>
 
-          <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
-            <Button asChild size="lg" className="bg-gradient-primary hover:shadow-primary transition-all duration-300 hover:scale-105">
-              <a href="mailto:rakeshrb1411@gmail.com">
-                <Mail className="w-4 h-4 mr-2" />
-                Get In Touch
-              </a>
-            </Button>
-            <Button asChild variant="outline" size="lg" className="border-primary/20 hover:bg-primary/10 transition-all duration-300">
-              <a href="/resume.pdf" download>
-                <DownloadIcon className="w-4 h-4 mr-2" />
-                Download Resume
-              </a>
-            </Button>
-          </div>
-
+          {/* Moved icon row up to replace the buttons */}
           <TooltipProvider delayDuration={0} skipDelayDuration={0}>
-            <div className="flex justify-center space-x-6">
+            <div className="flex justify-center space-x-6 mb-12">
               <Tooltip>
                 <TooltipTrigger asChild>
-                  <Magnetic>
+                  <Magnetic whileHover={{ y: -4, scale: 1.05 }} whileTap={{ scale: 0.98 }}>
                     <a
                       href="mailto:rakeshrb1411@gmail.com"
                       aria-label="Email"
@@ -180,7 +166,7 @@ const Hero = () => {
 
               <Tooltip>
                 <TooltipTrigger asChild>
-                  <Magnetic>
+                  <Magnetic whileHover={{ y: -4, scale: 1.05 }} whileTap={{ scale: 0.98 }}>
                     <a
                       href="https://www.linkedin.com/in/rakeshvajrapu/"
                       target="_blank"
@@ -198,7 +184,7 @@ const Hero = () => {
 
               <Tooltip>
                 <TooltipTrigger asChild>
-                  <Magnetic>
+                  <Magnetic whileHover={{ y: -4, scale: 1.05 }} whileTap={{ scale: 0.98 }}>
                     <a
                       href="https://github.com/rakesh-vajrapu"
                       target="_blank"
@@ -216,7 +202,7 @@ const Hero = () => {
 
               <Tooltip>
                 <TooltipTrigger asChild>
-                  <Magnetic>
+                  <Magnetic whileHover={{ y: -4, scale: 1.05 }} whileTap={{ scale: 0.98 }}>
                     <a
                       href="https://leetcode.com/u/rakeshvajrapu/"
                       target="_blank"
@@ -234,7 +220,7 @@ const Hero = () => {
 
               <Tooltip>
                 <TooltipTrigger asChild>
-                  <Magnetic>
+                  <Magnetic whileHover={{ y: -4, scale: 1.05 }} whileTap={{ scale: 0.98 }}>
                     <a
                       href="https://www.codechef.com/users/rakeshvajrapu"
                       target="_blank"
@@ -251,6 +237,8 @@ const Hero = () => {
               </Tooltip>
             </div>
           </TooltipProvider>
+
+          {/* (Icons moved above) */}
         </motion.div>
       </div>
     </section>

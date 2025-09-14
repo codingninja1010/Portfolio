@@ -58,11 +58,34 @@ const Magnetic = forwardRef(function Magnetic(
     }
   };
 
+  const handlePointerDown = (e) => {
+    rest.onPointerDown?.(e);
+    const el = localRef.current;
+    if (!el) return;
+    el.classList.add("pressed");
+    const child = el.firstElementChild;
+    if (child) child.classList.add("pressed");
+  };
+
+  const handlePointerUp = (e) => {
+    rest.onPointerUp?.(e);
+    const el = localRef.current;
+    if (!el) return;
+    // small delay to let the press be perceived
+    setTimeout(() => {
+      el.classList.remove("pressed");
+      const child = el.firstElementChild;
+      if (child) child.classList.remove("pressed");
+    }, 120);
+  };
+
   return (
     <motion.span
       ref={setRefs}
       onMouseMove={handleMove}
       onMouseLeave={handleLeave}
+      onPointerDown={handlePointerDown}
+      onPointerUp={handlePointerUp}
       style={{ display: "inline-block", x: sx, y: sy, ...style }}
       className={className}
       {...rest}
