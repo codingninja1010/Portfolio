@@ -38,12 +38,10 @@ export default function ScrollProgress() {
 
         {/* Fill with animated gradient */}
         <motion.div
-          className="absolute inset-y-0 left-0 origin-left rounded-full"
+          className="absolute inset-y-0 left-0 origin-left rounded-full rainbow-flow"
           style={{
             width: widthMV,
-            backgroundImage:
-              "linear-gradient(90deg, hsl(var(--primary)), hsl(var(--secondary)), hsl(var(--accent)))",
-            backgroundSize: "200% 100%",
+            // We keep backgroundPositionX in addition to the CSS animation; it layers nicely
             backgroundPositionX: prefersReducedMotion ? "50%" : bgPosX,
             filter: prefersReducedMotion ? "none" : filterMV,
           }}

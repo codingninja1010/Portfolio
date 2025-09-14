@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { toast } from "@/components/ui/sonner";
 import { RESUME_URL } from "@/config/site";
 import { Menu, X, Download } from "lucide-react";
+import { motion } from "framer-motion";
 
 const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -121,22 +122,33 @@ const Header = () => {
           {/* Desktop CTA */}
           <div className="hidden md:block">
             {RESUME_URL ? (
-              <Button asChild variant="outline" size="sm" className="border-primary/20 hover:bg-primary/10">
-                <a href={RESUME_URL} target={RESUME_URL.startsWith("http") ? "_blank" : undefined} rel="noopener noreferrer" aria-label="Download Resume">
-                  <Download className="w-4 h-4 mr-2" />
-                  Resume
-                </a>
-              </Button>
+              <motion.div className="inline-block" whileHover={{ y: -2, scale: 1.03 }} whileTap={{ scale: 0.98 }}>
+                <Button asChild variant="outline" size="sm" className="relative overflow-hidden border-primary/25 hover:bg-primary/10">
+                  <motion.a
+                    href={RESUME_URL}
+                    target={RESUME_URL.startsWith("http") ? "_blank" : undefined}
+                    rel="noopener noreferrer"
+                    aria-label="Download Resume"
+                    className="group"
+                    whileHover={{}}
+                  >
+                    <Download className="w-4 h-4 mr-2 transition-transform duration-300 group-hover:rotate-[-12deg]" />
+                    Resume
+                  </motion.a>
+                </Button>
+              </motion.div>
             ) : (
-              <Button
-                variant="outline"
-                size="sm"
-                className="border-primary/20 hover:bg-primary/10"
-                onClick={() => toast("Resume unavailable", { description: "Set RESUME_URL in src/config/site.js" })}
-              >
-                <Download className="w-4 h-4 mr-2" />
-                Resume
-              </Button>
+              <motion.div className="inline-block" whileHover={{ y: -2, scale: 1.03 }} whileTap={{ scale: 0.98 }}>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  className="relative overflow-hidden border-primary/25 hover:bg-primary/10"
+                  onClick={() => toast("Resume unavailable", { description: "Set RESUME_URL in src/config/site.js" })}
+                >
+                  <Download className="w-4 h-4 mr-2 transition-transform duration-300" />
+                  Resume
+                </Button>
+              </motion.div>
             )}
           </div>
 
@@ -175,22 +187,26 @@ const Header = () => {
                 ))}
                 <div className="px-6 py-4">
                   {RESUME_URL ? (
-                    <Button asChild variant="outline" size="sm" className="w-full border-primary/20 hover:bg-primary/10">
-                      <a href={RESUME_URL} target={RESUME_URL.startsWith("http") ? "_blank" : undefined} rel="noopener noreferrer" aria-label="Download Resume">
-                        <Download className="w-4 h-4 mr-2" />
-                        Download Resume
-                      </a>
-                    </Button>
+                    <motion.div whileHover={{ y: -1, scale: 1.02 }} whileTap={{ scale: 0.98 }}>
+                      <Button asChild variant="outline" size="sm" className="w-full relative overflow-hidden border-primary/25 hover:bg-primary/10">
+                        <motion.a href={RESUME_URL} target={RESUME_URL.startsWith("http") ? "_blank" : undefined} rel="noopener noreferrer" aria-label="Download Resume" className="group">
+                          <Download className="w-4 h-4 mr-2 transition-transform duration-300 group-hover:rotate-[-12deg]" />
+                          Download Resume
+                        </motion.a>
+                      </Button>
+                    </motion.div>
                   ) : (
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      className="w-full border-primary/20 hover:bg-primary/10"
-                      onClick={() => toast("Resume unavailable", { description: "Set RESUME_URL in src/config/site.js" })}
-                    >
-                      <Download className="w-4 h-4 mr-2" />
-                      Download Resume
-                    </Button>
+                    <motion.div whileHover={{ y: -1, scale: 1.02 }} whileTap={{ scale: 0.98 }}>
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        className="w-full relative overflow-hidden border-primary/25 hover:bg-primary/10"
+                        onClick={() => toast("Resume unavailable", { description: "Set RESUME_URL in src/config/site.js" })}
+                      >
+                        <Download className="w-4 h-4 mr-2 transition-transform duration-300" />
+                        Download Resume
+                      </Button>
+                    </motion.div>
                   )}
                 </div>
               </nav>

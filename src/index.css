@@ -577,6 +577,8 @@ All colors MUST be HSL.
     opacity: 1;
   }
 
+  /* removed orbiters and sparkles */
+
   /* Animated Scrollbar (WebKit) + Themed (Firefox) */
   /* --- Glowing ripple rings around the photo --- */
   @keyframes rippleRing {
@@ -752,8 +754,32 @@ All colors MUST be HSL.
     100% { background-position: 0% 0%; }
   }
 
+  /* Reusable flowing rainbow gradient for progress bars */
+  @keyframes rainbowFlow {
+    0% { background-position: 0% 50%; }
+    100% { background-position: 200% 50%; }
+  }
+  .rainbow-flow {
+    background-image: linear-gradient(90deg,
+      rgba(255, 0, 76, 0.7) 0%,   /* red */
+      rgba(255, 122, 0, 0.7) 12.5%, /* orange */
+      rgba(255, 211, 0, 0.7) 25%,  /* yellow */
+      rgba(0, 230, 118, 0.7) 37.5%,/* green */
+      rgba(0, 229, 255, 0.7) 50%,  /* cyan */
+      rgba(41, 121, 255, 0.7) 62.5%,/* blue */
+      rgba(124, 77, 255, 0.7) 75%, /* indigo */
+      rgba(213, 0, 249, 0.7) 87.5%,/* violet */
+      rgba(255, 0, 76, 0.7) 100%
+    );
+    background-size: 200% 100%;
+    animation: rainbowFlow 6s linear infinite;
+    filter: saturate(0.95);
+    opacity: 0.96;
+  }
+
   /* Respect reduced motion preferences */
   @media (prefers-reduced-motion: reduce) {
     *::-webkit-scrollbar-thumb { animation: none; }
+    .rainbow-flow { animation: none; }
   }
 }
