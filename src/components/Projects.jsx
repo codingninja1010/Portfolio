@@ -1,5 +1,7 @@
 import { ExternalLink, Github, Heart, Hand } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { motion } from "framer-motion";
+import TiltCard from "@/components/ui/TiltCard";
 
 const Projects = () => {
   const projects = [
@@ -47,15 +49,18 @@ const Projects = () => {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 max-w-6xl mx-auto">
-          {projects.map((project, index) => {
+        <motion.div
+          className="grid grid-cols-1 lg:grid-cols-2 gap-8 max-w-6xl mx-auto"
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true, margin: "-100px" }}
+          transition={{ staggerChildren: 0.12 }}
+        >
+          {projects.map((project) => {
             const Icon = project.icon;
             return (
-              <div 
-                key={project.title}
-                className="glass rounded-xl p-8 hover:shadow-glow transition-all duration-500 animate-fadeInUp group hover:scale-105"
-                style={{ animationDelay: `${index * 0.2}s` }}
-              >
+              <motion.div key={project.title} variants={{ hidden: { opacity: 0, y: 20 }, show: { opacity: 1, y: 0 } }}>
+                <TiltCard className="glass rounded-xl p-8 hover:shadow-glow transition-all duration-300 group">
                 <div className="flex items-center mb-6">
                   <div className="p-4 bg-gradient-primary rounded-xl mr-4 group-hover:animate-glow">
                     <Icon className="w-8 h-8 text-white" />
@@ -127,10 +132,11 @@ const Projects = () => {
                     </Button>
                   )}
                 </div>
-              </div>
+                </TiltCard>
+              </motion.div>
             );
           })}
-        </div>
+        </motion.div>
       </div>
     </section>
   );

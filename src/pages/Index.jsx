@@ -9,51 +9,64 @@ import Contact from "@/components/Contact";
 import Volunteering from "@/components/Volunteering";
 import ScrollToTop from "@/components/ScrollToTop";
 import SectionDivider from "@/components/SectionDivider";
+import { motion } from "framer-motion";
 
 const Index = () => {
+  const sectionVariants = {
+    hidden: { opacity: 0, y: 24 },
+    show: { opacity: 1, y: 0 },
+  };
+
   return (
     <div className="min-h-screen">
       <Header />
       <ScrollToTop />
       
       <main>
-  <section id="home" className="scroll-mt-32 md:scroll-mt-40 section-anchor">
-          <Hero />
-        </section>
+        <motion.div
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true, margin: "-100px" }}
+          transition={{ staggerChildren: 0.08 }}
+        >
+          <motion.section id="home" className="scroll-mt-32 md:scroll-mt-40 section-anchor" variants={sectionVariants}>
+            <Hero />
+          </motion.section>
         
-  <section id="about" className="scroll-mt-32 md:scroll-mt-40 section-anchor">
-          <Education />
-        </section>
+          <motion.section id="about" className="scroll-mt-32 md:scroll-mt-40 section-anchor" variants={sectionVariants}>
+            <Education />
+          </motion.section>
         <SectionDivider />
         
-  <section id="skills" className="scroll-mt-32 md:scroll-mt-40 section-anchor">
-          <Skills />
-        </section>
+          <motion.section id="skills" className="scroll-mt-32 md:scroll-mt-40 section-anchor" variants={sectionVariants}>
+            <Skills />
+          </motion.section>
         <SectionDivider />
         
-  <section id="experience" className="scroll-mt-32 md:scroll-mt-40 section-anchor">
-          <Experience />
-        </section>
+          <motion.section id="experience" className="scroll-mt-32 md:scroll-mt-40 section-anchor" variants={sectionVariants}>
+            <Experience />
+          </motion.section>
         <SectionDivider />
         
-  <section id="volunteering" className="scroll-mt-32 md:scroll-mt-40 section-anchor">
-          <Volunteering />
-        </section>
+          <motion.section id="volunteering" className="scroll-mt-32 md:scroll-mt-40 section-anchor" variants={sectionVariants}>
+            <Volunteering />
+          </motion.section>
         <SectionDivider />
 
-  <section id="projects" className="scroll-mt-32 md:scroll-mt-40 section-anchor">
-          <Projects />
-        </section>
+          <motion.section id="projects" className="scroll-mt-32 md:scroll-mt-40 section-anchor" variants={sectionVariants}>
+            <Projects />
+          </motion.section>
         <SectionDivider />
         
-  <section id="achievements" className="scroll-mt-32 md:scroll-mt-40 section-anchor">
-          <Achievements />
-        </section>
+          <motion.section id="achievements" className="scroll-mt-32 md:scroll-mt-40 section-anchor" variants={sectionVariants}>
+            <Achievements />
+          </motion.section>
         <SectionDivider />
         
-  <section id="contact" className="scroll-mt-32 md:scroll-mt-40 section-anchor">
-          <Contact />
-        </section>
+          <motion.section id="contact" className="scroll-mt-32 md:scroll-mt-40 section-anchor" variants={sectionVariants}>
+            <Contact />
+          </motion.section>
+        </motion.div>
       </main>
       
       {/* Footer */}
