@@ -140,8 +140,12 @@ All colors MUST be HSL.
   html {
     /* Default fallback; will be updated dynamically by JS */
     scroll-padding-top: var(--app-scroll-padding, 6.5rem);
-  /* Reserve space on one side only so a left white gutter does not appear */
-  scrollbar-gutter: stable;
+    /* Reserve space for the scrollbar so layout doesn't shift */
+    scrollbar-gutter: stable;
+    /* IMPORTANT: give the root the same dark background so the reserved gutter isn't white */
+    background: var(--gradient-background);
+    /* Hint to the UA to use dark-themed form controls/scrollbars where applicable */
+    color-scheme: dark;
   }
 
   /* Utility class to apply dynamic scroll margin for anchored sections */

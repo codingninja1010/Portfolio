@@ -45,20 +45,24 @@ export default function Typewriter({
     setIdx(0);
     let cancelled = false;
 
+    const tick = () => {
+      if (cancelled) return;
+      setIdx((i) => {
+        const next = i + 1;
+        const done = next >= text.length;
+        if (!done) {
+          timerRef.current = setTimeout(tick, Math.max(8, speed));
+        } else {
+          timerRef.current = null;
+          onDone?.();
+        }
+        return Math.min(next, text.length);
+      });
+    };
+
     const kickoff = () => {
       if (cancelled) return;
-      const intervalMs = Math.max(8, speed);
-      timerRef.current = setInterval(() => {
-        setIdx((i) => {
-          const next = i + 1;
-          if (next >= text.length) {
-            if (timerRef.current) clearInterval(timerRef.current);
-            timerRef.current = null;
-            onDone?.();
-          }
-          return Math.min(next, text.length);
-        });
-      }, intervalMs);
+      timerRef.current = setTimeout(tick, Math.max(8, speed));
     };
 
     let timeoutId = null;
@@ -71,7 +75,7 @@ export default function Typewriter({
     return () => {
       cancelled = true;
       if (timeoutId) clearTimeout(timeoutId);
-      if (timerRef.current) clearInterval(timerRef.current);
+      if (timerRef.current) clearTimeout(timerRef.current);
     };
   }, [start, delay, speed, text, text.length, shouldReduce, onDone]);
 
