@@ -1,6 +1,5 @@
 import { useRef, useState } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
-import { Button } from "@/components/ui/button";
 import Typewriter from "@/components/ui/Typewriter";
 import { Github, Linkedin, Mail } from "lucide-react";
 import { SiLeetcode, SiCodechef } from "react-icons/si";
@@ -142,12 +141,12 @@ const Hero = () => {
           </div>
           
           <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto mb-8 leading-relaxed">
-            Passionate Software Engineer with expertise in Python, JavaScript, AI/ML, and Data Science, skilled in leveraging Cloud Technologies to build innovative solutions. I thrive on bridging the gap between complex problems and elegant code, crafting intelligent systems that combine scalability, performance, and data-driven insights.
+            Software Engineer specializing in Python, JavaScript, and AI/ML. I build scalable, data-driven products that turn complex problems into elegant, reliable solutions.
           </p>
 
-          {/* Moved icon row up to replace the buttons */}
+          {/* Icon row placed where the button was */}
           <TooltipProvider delayDuration={0} skipDelayDuration={0}>
-            <div className="flex justify-center space-x-6 mb-12">
+            <div className="flex justify-center space-x-6 mb-8">
               <Tooltip>
                 <TooltipTrigger asChild>
                   <Magnetic whileHover={{ y: -4, scale: 1.05 }} whileTap={{ scale: 0.98 }}>
