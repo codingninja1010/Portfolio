@@ -1,5 +1,6 @@
 import { Mail, Linkedin, Github, MapPin, Send } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { motion } from "framer-motion";
 
 const Contact = () => {
   // Submit handler to open the user's email client with a prefilled message
@@ -61,7 +62,15 @@ const Contact = () => {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
             {/* Contact Information */}
             <div className="space-y-6">
-              <div className="glass rounded-xl p-8 animate-fadeInUp">
+              <motion.div
+                className="glass rounded-xl p-8 hover:shadow-glow"
+                initial={{ opacity: 0, y: 16 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.4 }}
+                transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+                whileHover={{ y: -4, scale: 1.01 }}
+                whileTap={{ scale: 0.995 }}
+              >
                 <h3 className="text-2xl font-bold mb-6">Get In Touch</h3>
                 <p className="text-muted-foreground mb-8 leading-relaxed">
                   I'm always interested in hearing about new opportunities, innovative projects, 
@@ -72,12 +81,13 @@ const Contact = () => {
                   {contactInfo.map((contact, index) => {
                     const Icon = contact.icon;
                     return (
-                      <a 
+                      <motion.a 
                         key={contact.label}
                         href={contact.href}
                         className="flex items-center p-4 bg-muted/10 rounded-lg transition-all duration-300 group/icon
-                                   group-hover:opacity-80 hover:opacity-100 hover:bg-primary/10 hover:scale-110 hover:shadow-glow"
-                        style={{ animationDelay: `${index * 0.1}s` }}
+                                   hover:bg-primary/10 hover:shadow-glow"
+                        whileHover={{ x: 4, scale: 1.02 }}
+                        whileTap={{ scale: 0.995 }}
                       >
                         <div className="p-2 bg-gradient-primary rounded-lg mr-4 group-hover/icon:animate-glow">
                           <Icon className="w-5 h-5 text-white" />
@@ -86,15 +96,23 @@ const Contact = () => {
                           <div className="text-sm text-muted-foreground">{contact.label}</div>
                           <div className="font-medium">{contact.value}</div>
                         </div>
-                      </a>
+                      </motion.a>
                     );
                   })}
                 </div>
-              </div>
+              </motion.div>
             </div>
 
             {/* Quick Contact Form */}
-            <div className="glass rounded-xl p-8 animate-fadeInUp" style={{ animationDelay: '0.2s' }}>
+            <motion.div
+              className="glass rounded-xl p-8 hover:shadow-glow"
+              initial={{ opacity: 0, y: 24 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.4 }}
+              transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1], delay: 0.1 }}
+              whileHover={{ y: -4, scale: 1.01 }}
+              whileTap={{ scale: 0.997 }}
+            >
               <h3 className="text-2xl font-bold mb-6">Send a Message</h3>
               <form className="space-y-6" onSubmit={handleSubmit}>
                 <div>
@@ -135,7 +153,7 @@ const Contact = () => {
                   Send Message
                 </Button>
               </form>
-            </div>
+            </motion.div>
           </div>
 
           {/* Call to Action */}

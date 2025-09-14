@@ -8,7 +8,7 @@ import Volunteering from "@/components/Volunteering";
 import ScrollToTop from "@/components/ScrollToTop";
 import SectionDivider from "@/components/SectionDivider";
 import { motion } from "framer-motion";
-import { Suspense, lazy } from "react";
+import { Suspense, lazy, useEffect } from "react";
 
 const Projects = lazy(() => import("@/components/Projects"));
 const Achievements = lazy(() => import("@/components/Achievements"));
@@ -23,6 +23,9 @@ const Index = () => {
     <div className="min-h-screen">
   <Header />
   <ScrollToTop />
+      {/** Prefetch below-the-fold lazy sections shortly after mount to avoid showing fallbacks */}
+      {/** This runs only on the client and won't block the first paint. */}
+      <PrefetchLazyChunks />
       
       <main>
         <motion.div
@@ -93,3 +96,15 @@ const Index = () => {
 };
 
 export default Index;
+
+// Tiny helper component to avoid re-running effects on React StrictMode double render in dev
+function PrefetchLazyChunks() {
+  useEffect(() => {
+    const id = setTimeout(() => {
+      import("@/components/Projects");
+      import("@/components/Achievements");
+    }, 100);
+    return () => clearTimeout(id);
+  }, []);
+  return null;
+}

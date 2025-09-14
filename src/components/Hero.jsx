@@ -89,6 +89,10 @@ const Hero = () => {
             src={rakeshPhoto}
             alt="Rakesh Vajrapu"
             onLoad={() => setImgLoaded(true)}
+            decoding="async"
+            fetchpriority="high"
+            width="256"
+            height="256"
             className={`w-40 h-40 md:w-44 md:h-44 lg:w-56 lg:h-56 xl:w-64 xl:h-64 rounded-full object-cover ring-2 ring-primary/40 shadow-primary bg-muted/30 
               transition-transform duration-500 ease-out hover:scale-110 hover:shadow-glow motion-reduce:transform-none 
               ${imgLoaded ? 'opacity-100' : 'opacity-0'}`}
@@ -131,6 +135,9 @@ const Hero = () => {
               <img
                 src={rakeshPhoto}
                 alt="Rakesh Vajrapu"
+                decoding="async"
+                width="80"
+                height="80"
                 className="block md:hidden w-20 h-20 rounded-full object-cover border border-primary/30 shadow-sm bg-muted/30 transition-transform duration-300 ease-out hover:scale-105 active:scale-105"
               />
             </div>
