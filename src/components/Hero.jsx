@@ -1,9 +1,11 @@
 import { useRef, useState } from "react";
+import { motion, useScroll, useTransform } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Github, Linkedin, Mail } from "lucide-react";
 import { SiLeetcode, SiCodechef } from "react-icons/si";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import rakeshPhoto from "@/assets/rakesh-photo.jpg";
+import Magnetic from "@/components/ui/Magnetic";
 
 const Hero = () => {
   // state kept in case future interactions are needed
@@ -29,13 +31,19 @@ const Hero = () => {
 
   const handleMouseLeave = () => setTilt({ rx: 0, ry: 0, tx: 0, ty: 0 });
 
+  // Scroll-based parallax for background orbs
+  const { scrollYProgress } = useScroll();
+  const ySmall = useTransform(scrollYProgress, [0, 1], [0, -40]);
+  const yMedium = useTransform(scrollYProgress, [0, 1], [0, -80]);
+  const yLarge = useTransform(scrollYProgress, [0, 1], [0, -120]);
+
   return (
     <section className="min-h-screen flex items-center justify-center relative overflow-hidden mt-20">
       {/* Animated background elements */}
       <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute -top-40 -right-40 w-80 h-80 bg-primary/10 rounded-full blur-3xl animate-float"></div>
-        <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-secondary/10 rounded-full blur-3xl animate-float" style={{ animationDelay: '2s' }}></div>
-        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-accent/5 rounded-full blur-3xl animate-float" style={{ animationDelay: '4s' }}></div>
+        <motion.div style={{ y: ySmall }} className="absolute -top-40 -right-40 w-80 h-80 bg-primary/10 rounded-full blur-3xl animate-float" />
+        <motion.div style={{ y: yMedium }} className="absolute -bottom-40 -left-40 w-80 h-80 bg-secondary/10 rounded-full blur-3xl animate-float" />
+        <motion.div style={{ y: yLarge }} className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-accent/5 rounded-full blur-3xl animate-float" />
       </div>
 
       {/* Big circular profile photo aligned to the right on desktop */}
@@ -89,7 +97,13 @@ const Hero = () => {
       </div>
 
       <div className="container mx-auto px-6 relative z-10">
-        <div className="text-center animate-fadeInUp">
+        <motion.div
+          className="text-center"
+          initial={{ opacity: 0, y: 24 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.6 }}
+          transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+        >
           <div className="mb-8">
             {/* Name with image on the right */}
             <div className="flex items-center justify-center gap-4 mb-4 flex-wrap sm:flex-nowrap">
@@ -132,79 +146,89 @@ const Hero = () => {
             <div className="flex justify-center space-x-6">
               <Tooltip>
                 <TooltipTrigger asChild>
-                  <a
-                    href="mailto:rakeshrb1411@gmail.com"
-                    aria-label="Email"
-                    className="icon-button glass rounded-lg hover:shadow-glow focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40"
-                  >
-                    <Mail className="w-7 h-7 text-primary" />
-                  </a>
+                  <Magnetic>
+                    <a
+                      href="mailto:rakeshrb1411@gmail.com"
+                      aria-label="Email"
+                      className="icon-button glass rounded-lg hover:shadow-glow focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40"
+                    >
+                      <Mail className="w-7 h-7 text-primary" />
+                    </a>
+                  </Magnetic>
                 </TooltipTrigger>
                 <TooltipContent>Mail</TooltipContent>
               </Tooltip>
 
               <Tooltip>
                 <TooltipTrigger asChild>
-                  <a
-                    href="https://www.linkedin.com/in/rakeshvajrapu/"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    aria-label="LinkedIn"
-                    className="icon-button glass rounded-lg hover:shadow-glow focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40"
-                  >
-                    <Linkedin className="w-7 h-7 text-primary" />
-                  </a>
+                  <Magnetic>
+                    <a
+                      href="https://www.linkedin.com/in/rakeshvajrapu/"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label="LinkedIn"
+                      className="icon-button glass rounded-lg hover:shadow-glow focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40"
+                    >
+                      <Linkedin className="w-7 h-7 text-primary" />
+                    </a>
+                  </Magnetic>
                 </TooltipTrigger>
                 <TooltipContent>LinkedIn</TooltipContent>
               </Tooltip>
 
               <Tooltip>
                 <TooltipTrigger asChild>
-                  <a
-                    href="https://github.com/rakesh-vajrapu"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    aria-label="GitHub"
-                    className="icon-button glass rounded-lg hover:shadow-glow focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40"
-                  >
-                    <Github className="w-7 h-7 text-primary" />
-                  </a>
+                  <Magnetic>
+                    <a
+                      href="https://github.com/rakesh-vajrapu"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label="GitHub"
+                      className="icon-button glass rounded-lg hover:shadow-glow focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40"
+                    >
+                      <Github className="w-7 h-7 text-primary" />
+                    </a>
+                  </Magnetic>
                 </TooltipTrigger>
                 <TooltipContent>GitHub</TooltipContent>
               </Tooltip>
 
               <Tooltip>
                 <TooltipTrigger asChild>
-                  <a
-                    href="https://leetcode.com/u/rakeshvajrapu/"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    aria-label="LeetCode"
-                    className="icon-button glass rounded-lg hover:shadow-glow focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40"
-                  >
-                    <SiLeetcode className="w-7 h-7 text-primary" />
-                  </a>
+                  <Magnetic>
+                    <a
+                      href="https://leetcode.com/u/rakeshvajrapu/"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label="LeetCode"
+                      className="icon-button glass rounded-lg hover:shadow-glow focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40"
+                    >
+                      <SiLeetcode className="w-7 h-7 text-primary" />
+                    </a>
+                  </Magnetic>
                 </TooltipTrigger>
                 <TooltipContent>LeetCode</TooltipContent>
               </Tooltip>
 
               <Tooltip>
                 <TooltipTrigger asChild>
-                  <a
-                    href="https://www.codechef.com/users/rakeshvajrapu"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    aria-label="CodeChef"
-                    className="icon-button glass rounded-lg hover:shadow-glow focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40"
-                  >
-                    <SiCodechef className="w-7 h-7 text-primary" />
-                  </a>
+                  <Magnetic>
+                    <a
+                      href="https://www.codechef.com/users/rakeshvajrapu"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label="CodeChef"
+                      className="icon-button glass rounded-lg hover:shadow-glow focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40"
+                    >
+                      <SiCodechef className="w-7 h-7 text-primary" />
+                    </a>
+                  </Magnetic>
                 </TooltipTrigger>
                 <TooltipContent>CodeChef</TooltipContent>
               </Tooltip>
             </div>
           </TooltipProvider>
-        </div>
+        </motion.div>
       </div>
     </section>
   );

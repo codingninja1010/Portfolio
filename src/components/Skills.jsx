@@ -1,4 +1,5 @@
 import { Code, Database, Cloud, Cpu, Globe, GitBranch } from "lucide-react";
+import { motion } from "framer-motion";
 
 const Skills = () => {
   const skillCategories = [
@@ -52,14 +53,21 @@ const Skills = () => {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {skillCategories.map((category, index) => {
+        <motion.div
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true, margin: "-100px" }}
+          transition={{ staggerChildren: 0.08 }}
+        >
+          {skillCategories.map((category) => {
             const Icon = category.icon;
             return (
-              <div 
+              <motion.div
                 key={category.title}
-                className="glass rounded-xl p-6 hover:shadow-glow transition-all duration-500 animate-fadeInUp hover:scale-105"
-                style={{ animationDelay: `${index * 0.1}s` }}
+                variants={{ hidden: { opacity: 0, y: 16 }, show: { opacity: 1, y: 0 } }}
+                whileHover={{ y: -2 }}
+                className="glass rounded-xl p-6 hover:shadow-glow transition-all duration-300"
               >
                 <div className="flex items-center mb-4">
                   <div className={`p-3 rounded-lg bg-gradient-primary mr-4`}>
@@ -73,16 +81,16 @@ const Skills = () => {
                     <span 
                       key={skill}
                       className="px-3 py-1 bg-muted/30 rounded-full text-sm transition-all duration-300 hover:bg-primary/20 hover:scale-105"
-                      style={{ animationDelay: `${(index * 0.1) + (skillIndex * 0.05)}s` }}
+                      style={{ animationDelay: `${skillIndex * 0.03}s` }}
                     >
                       {skill}
                     </span>
                   ))}
                 </div>
-              </div>
+              </motion.div>
             );
           })}
-        </div>
+        </motion.div>
       </div>
     </section>
   );
