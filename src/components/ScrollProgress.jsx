@@ -4,8 +4,9 @@ export default function ScrollProgress() {
   const { scrollYProgress } = useScroll();
   const prefersReducedMotion = useReducedMotion();
 
-  // Smooth progress for width
-  const scaleX = useSpring(scrollYProgress, { stiffness: 200, damping: 28, mass: 0.25 });
+  // Smooth progress value for width
+  const progress = useSpring(scrollYProgress, { stiffness: 200, damping: 28, mass: 0.25 });
+  const widthMV = useTransform(progress, (v) => `${v * 100}%`);
 
   // Fade in the bar after a tiny scroll, and slightly grow its thickness
   const opacity = useTransform(scrollYProgress, [0, 0.02], [0, 1]);
@@ -23,17 +24,17 @@ export default function ScrollProgress() {
   return (
     <div className="fixed inset-x-0 top-0 z-[1200] pointer-events-none select-none">
       <motion.div
-        className="relative mx-auto h-1.5 w-full"
+        className="relative mx-auto h-1.5 w-full overflow-hidden rounded-full"
         style={{ opacity, scaleY: prefersReducedMotion ? 1 : scaleYMV, originY: 0 }}
       >
   {/* Track */}
-  <div className="absolute inset-0 bg-white/6 dark:bg-white/10 backdrop-blur-[1px]" />
+        <div className="absolute inset-0 bg-white/6 dark:bg-white/10 backdrop-blur-[1px] rounded-full" />
 
         {/* Fill with animated gradient */}
         <motion.div
-          className="absolute inset-y-0 left-0 right-0 origin-left"
+          className="absolute inset-y-0 left-0 origin-left rounded-full"
           style={{
-            scaleX,
+            width: widthMV,
             backgroundImage:
               "linear-gradient(90deg, hsl(var(--primary)), hsl(var(--secondary)), hsl(var(--accent)))",
             backgroundSize: "200% 100%",
@@ -44,26 +45,14 @@ export default function ScrollProgress() {
 
         {/* Soft glow under the fill */}
         <motion.div
-          className="absolute inset-y-0 left-0 right-0 origin-left"
+          className="absolute inset-y-0 left-0 origin-left rounded-full"
           style={{
-            scaleX,
+            width: widthMV,
             boxShadow: "0 6px 18px hsl(var(--primary) / 0.35)",
-            opacity: 0.6,
+            opacity: 0.5,
           }}
-        />
-
-        {/* Progress dot at the end */}
-        <motion.div
-          className="absolute top-1/2 -translate-y-1/2 h-3 w-3 rounded-full"
-          style={{
-            left: dotLeft,
-            translateX: "-50%",
-            background: "white",
-            boxShadow: "0 0 0 2px hsl(var(--primary)), 0 0 18px hsl(var(--primary) / 0.6)",
-            opacity: 0.95,
-          }}
-          animate={prefersReducedMotion ? undefined : { scale: [1, 1.12, 1] }}
-          transition={prefersReducedMotion ? undefined : { duration: 1.6, repeat: Infinity, ease: "easeInOut" }}
+          animate={prefersReducedMotion ? undefined : { opacity: [0.35, 0.6, 0.35] }}
+          transition={prefersReducedMotion ? undefined : { duration: 2.2, repeat: Infinity, ease: "easeInOut" }}
         />
       </motion.div>
     </div>

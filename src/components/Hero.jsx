@@ -1,6 +1,7 @@
 import { useRef, useState } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { Button } from "@/components/ui/button";
+import Typewriter from "@/components/ui/Typewriter";
 import { Github, Linkedin, Mail } from "lucide-react";
 import { SiLeetcode, SiCodechef } from "react-icons/si";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
@@ -105,10 +106,22 @@ const Hero = () => {
           transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
         >
           <div className="mb-8">
-            {/* Greeting line: Hi, I'm Rakesh Vajrapu (name highlighted) */}
+            {/* Greeting line with typewriter; name uses gradient like before */}
             <p className="text-2xl sm:text-3xl md:text-4xl font-semibold mb-4 text-foreground/90">
-              Hi, I'm {" "}
-              <span className="bg-gradient-primary bg-clip-text text-transparent">Rakesh Vajrapu</span>
+              <Typewriter
+                as="span"
+                text={"Hi, I'm "}
+                speed={28}
+                delay={200}
+                showCaret={false}
+              />
+              <Typewriter
+                as="span"
+                className="bg-gradient-primary bg-clip-text text-transparent"
+                text={"Rakesh Vajrapu"}
+                speed={28}
+                delay={500}
+              />
             </p>
             {/* Mobile-only small photo under the greeting */}
             <div className="flex items-center justify-center mb-4">
@@ -118,10 +131,14 @@ const Hero = () => {
                 className="block md:hidden w-20 h-20 rounded-full object-cover border border-primary/30 shadow-sm bg-muted/30 transition-transform duration-300 ease-out hover:scale-105 active:scale-105"
               />
             </div>
-            {/* On mobile, allow wrapping to avoid clipping. Apply typing animation only on sm+ */}
-            <div className="text-xl sm:text-2xl md:text-3xl font-semibold text-muted-foreground tracking-wide italic mb-2 whitespace-normal break-words sm:whitespace-nowrap sm:animate-typing">
-              Full-Stack Developer & AI Enthusiast
-            </div>
+            {/* Subtitle typewriter */}
+            <Typewriter
+              as="div"
+              className="text-xl sm:text-2xl md:text-3xl font-semibold text-muted-foreground tracking-wide italic mb-2"
+              text={"Full-Stack Developer & AI Enthusiast"}
+              speed={22}
+              delay={1600}
+            />
           </div>
           
           <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto mb-8 leading-relaxed">

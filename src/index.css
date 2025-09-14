@@ -182,13 +182,65 @@ All colors MUST be HSL.
   .icon-button.glass {
     box-shadow: 0 2px 10px hsl(var(--background) / 0.35), inset 0 1px 0 hsl(var(--foreground) / 0.05);
     border-color: hsl(var(--border) / 0.55);
+    position: relative;
+    overflow: hidden;
   }
 
   /* If combined with .glass, avoid global glass hover scale here to prevent double-scaling */
   .icon-button.glass:hover {
     transform: none !important;
     box-shadow: 0 4px 14px hsl(var(--background) / 0.4), inset 0 1px 0 hsl(var(--foreground) / 0.06);
+    /* slight tint to base */
+    background: linear-gradient(180deg, hsl(var(--foreground) / 0.02), hsl(var(--foreground) / 0.01));
   }
+
+  /* Dynamic spotlight that follows the cursor (variables set inline on the element) */
+  .icon-button.glass::before {
+    content: "";
+    position: absolute;
+    inset: -1px;
+    border-radius: inherit;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 180ms ease;
+    background: radial-gradient(
+      140px 140px at var(--mx, 50%) var(--my, 50%),
+      hsl(var(--primary) / 0.18),
+      transparent 60%
+    );
+  }
+  .icon-button.glass:hover::before { opacity: 1; }
+
+  /* Animated gradient border highlight on hover */
+  .icon-button.glass::after {
+    content: "";
+    position: absolute;
+    inset: 0; /* keep inside bounds (masked) */
+    border-radius: inherit;
+    padding: 1px; /* perceived border width */
+    background: conic-gradient(
+      from var(--angle, 0deg),
+      hsl(var(--primary) / 0),
+      hsl(var(--primary) / 0.75) 20%,
+      hsl(var(--secondary) / 0.75) 55%,
+      hsl(var(--accent) / 0.75) 80%,
+      hsl(var(--primary) / 0) 100%
+    );
+    /* Mask to show as border only */
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+            mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+            mask-composite: exclude;
+    opacity: 0; /* hidden until hover */
+    filter: drop-shadow(0 2px 10px hsl(var(--primary) / 0.35));
+    transition: opacity 160ms ease;
+  }
+  .icon-button.glass:hover::after {
+    opacity: 1;
+    animation: spinBorder 2.2s linear infinite;
+  }
+
+  @keyframes spinBorder { to { transform: rotate(360deg); } }
 
   .icon-button.pressed,
   .icon-button:active {
