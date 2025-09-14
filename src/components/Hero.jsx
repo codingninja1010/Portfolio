@@ -146,7 +146,7 @@ const Hero = () => {
 
           {/* Icon row placed where the button was */}
           <TooltipProvider delayDuration={0} skipDelayDuration={0}>
-            <div className="flex justify-center space-x-6 mb-16">
+            <div className="flex justify-center space-x-6 mt-4 md:mt-6 mb-16">
               <Tooltip>
                 <TooltipTrigger asChild>
                   <Magnetic whileHover={{ y: -4, scale: 1.05 }} whileTap={{ scale: 0.98 }}>
