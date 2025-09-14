@@ -61,7 +61,7 @@ const Skills = () => {
         </div>
 
         <motion.div
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 auto-rows-fr gap-8 items-stretch"
           initial="hidden"
           whileInView="show"
           viewport={{ once: true, margin: "-100px" }}
@@ -71,8 +71,8 @@ const Skills = () => {
             const Icon = category.icon;
             return (
               <motion.div key={category.title} variants={cardVariants}>
-                <Magnetic className="block">
-                  <TiltCard className="skill-card glass group rounded-xl p-6 hover:shadow-glow transition-all duration-300 relative overflow-hidden">
+                <Magnetic className="block w-full h-full">
+                  <TiltCard className="skill-card glass group rounded-xl p-6 hover:shadow-glow transition-all duration-300 relative overflow-hidden w-full h-full">
                     {/* Decorative drifting grid background */}
                     <span aria-hidden className="card-grid" />
                     {/* Ambient soft dots */}

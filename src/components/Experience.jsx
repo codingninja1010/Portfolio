@@ -83,14 +83,17 @@ const Experience = () => {
 
                 {/* Enhanced experience card */}
                 <div className="flex-1">
-                  <Magnetic className="block">
-                    <TiltCard className="experience-card glass rounded-xl p-6 hover:shadow-glow transition-all duration-500 relative overflow-hidden group">
+                  <Magnetic className="block w-full">
+                    <TiltCard className="experience-card glass glow-border rounded-xl p-6 hover:shadow-glow transition-all duration-500 relative overflow-hidden group w-full max-w-full">
                       {/* Aurora overlays */}
                       <span aria-hidden className="aurora aurora-exp-a" />
                       <span aria-hidden className="aurora aurora-exp-b" />
                       {/* Additional graphics */}
                       <span aria-hidden className="exp-diag-lines" />
                       <span aria-hidden className="exp-particles" />
+                      {/* Shine + spotlight */}
+                      <span aria-hidden className="shine-rect" />
+                      <span aria-hidden className="spotlight-overlay" />
                       {/* Company logo placeholder glow */}
                       <span aria-hidden className="company-glow" />
                       

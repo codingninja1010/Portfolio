@@ -63,7 +63,7 @@ const Projects = () => {
             return (
               <motion.div key={project.title} variants={{ hidden: { opacity: 0, y: 20 }, show: { opacity: 1, y: 0 } }}>
                 <Magnetic className="block">
-                  <TiltCard className="project-card glass rounded-xl p-6 hover:shadow-glow transition-all duration-300 group relative overflow-hidden">
+                  <TiltCard className="project-card glass glow-border rounded-xl p-6 hover:shadow-glow transition-all duration-300 group relative overflow-hidden">
                     {/* Aurora beams */}
                     <span aria-hidden className="aurora aurora-proj-a" />
                     <span aria-hidden className="aurora aurora-proj-b" />
@@ -71,6 +71,9 @@ const Projects = () => {
                     <span aria-hidden className="proj-scanlines" />
                     <span aria-hidden className="corner-bracket tl" />
                     <span aria-hidden className="corner-bracket br" />
+                    {/* Sweep + spotlight */}
+                    <span aria-hidden className="shine-rect" />
+                    <span aria-hidden className="spotlight-overlay" />
                     {/* Category badge floating */}
                     <span aria-hidden className="category-badge absolute top-4 right-4 z-[1] text-xs px-2 py-1 rounded-full bg-gradient-primary/20 text-primary border border-primary/30">
                       {project.category}

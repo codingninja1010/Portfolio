@@ -52,20 +52,24 @@ const Volunteering = () => {
           </p>
         </div>
 
-        <div className="max-w-4xl mx-auto space-y-8">
+  {/* Cards container: vertical single-column stack, centered via container, children stretch full width */}
+  <div className="max-w-5xl mx-auto flex flex-col items-stretch space-y-8">
           {items.map((item, index) => {
             const Icon = item.icon || Users;
             return (
-              <Magnetic key={index}>
+              <Magnetic key={index} className="w-full">
                 <TiltCard
-                  className="volunteer-card glass rounded-xl p-5 hover:shadow-glow transition-all duration-500 animate-fadeInUp relative overflow-hidden group h-auto md:h-[260px] min-h-[220px] w-full flex flex-col"
+                  className="volunteer-card glass glow-border rounded-xl p-6 hover:shadow-glow transition-all duration-500 animate-fadeInUp relative overflow-hidden group w-full h-auto flex flex-col max-w-full"
                   style={{ animationDelay: `${index * 0.15}s` }}
+                  hoverScale={1}
                 >
                   {/* Soft halos, ripple and sparkles */}
                   <span aria-hidden className="vol-halo" />
                   <span aria-hidden className="vol-halo-2" />
                   <span aria-hidden className="vol-ripple" />
                   <span aria-hidden className="vol-sparkles" />
+                  <span aria-hidden className="shine-rect" />
+                  <span aria-hidden className="spotlight-overlay" />
 
                   <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 relative z-[2]">
                     <div className="flex items-start">
@@ -73,13 +77,13 @@ const Volunteering = () => {
                         <Icon className="w-6 h-6 text-white" />
                       </div>
                       <div>
-                        <h3 className="text-xl font-bold mb-1">{item.title}</h3>
-                        <h4 className="text-lg font-semibold text-primary mb-1">{item.organization}</h4>
+                        <h3 className="text-xl font-bold mb-1 break-words">{item.title}</h3>
+                        <h4 className="text-lg font-semibold text-primary mb-1 break-words">{item.organization}</h4>
                         <div className="flex items-center text-sm text-muted-foreground">
                           <Calendar className="w-4 h-4 mr-2" />
                           {item.period}
                         </div>
-                        <div className="mt-2 inline-flex items-center px-2 py-1 rounded-full text-xs bg-primary/20 text-primary">
+                        <div className="mt-2 inline-flex items-center px-2 py-1 rounded-full text-xs bg-primary/20 text-primary max-w-full break-words">
                           {item.domain}
                         </div>
                       </div>
@@ -89,11 +93,11 @@ const Volunteering = () => {
                   </div>
 
                   {item.highlights.length > 0 && (
-                    <ul className="mt-4 space-y-2 relative z-[2] md:max-h-[108px] overflow-hidden flex-1">
+                    <ul className="mt-4 space-y-2 relative z-[2]">
                       {item.highlights.map((h, i) => (
                         <li key={i} className="flex items-start">
                           <div className="w-2 h-2 bg-secondary rounded-full mt-2 mr-3 flex-shrink-0"></div>
-                          <span className="text-sm text-muted-foreground line-clamp-1">{h}</span>
+                          <span className="text-sm text-muted-foreground break-words">{h}</span>
                         </li>
                       ))}
                     </ul>

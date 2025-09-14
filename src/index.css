@@ -151,6 +151,12 @@ All colors MUST be HSL.
     color-scheme: dark;
   }
 
+  /* Remove horizontal scrollbar globally (prevents stray overflows from animations/transforms) */
+  html, body, #root {
+    max-width: 100vw;
+    overflow-x: hidden;
+  }
+
   /* Utility class to apply dynamic scroll margin for anchored sections */
   .section-anchor {
     scroll-margin-top: var(--app-scroll-padding, 6.5rem);
@@ -173,10 +179,14 @@ All colors MUST be HSL.
     will-change: transform;
   }
 
-  /* Larger, attractive hover scale for glass cards on pointer devices only */
+  /* Hover feedback for glass cards without changing their size
+     (avoid conflict with Framer Motion "whileHover" scale on TiltCard) */
   @media (hover: hover) and (pointer: fine) {
     .glass:hover {
-      transform: scale(1.06) !important;
+      /* Keep scale at 1 to prevent oversized growth */
+      transform: none !important;
+      /* Provide subtle visual feedback instead */
+      box-shadow: var(--shadow-card), 0 8px 20px hsl(var(--primary) / 0.18);
     }
   }
 
@@ -304,6 +314,9 @@ All colors MUST be HSL.
     transition: transform 280ms ease;
   }
   .hover-scale-lg:hover { transform: scale(1.12); }
+
+  /* Utility to explicitly disable hover scaling where applied by components */
+  .no-hover-scale:hover { transform: none !important; }
 
   /* Glow effect utility */
   .glow {
@@ -521,7 +534,7 @@ All colors MUST be HSL.
   }
 
   /* Aurora beams overlay */
-  .aurora { position: absolute; inset: -20%; border-radius: 24px; filter: blur(26px); opacity: 0.12; pointer-events: none; z-index: 0; }
+  .aurora { position: absolute; inset: -20%; border-radius: 24px; filter: blur(26px); opacity: 0.09; pointer-events: none; z-index: 0; }
   .aurora-a { background: radial-gradient(60% 50% at 0% 0%, hsl(var(--secondary) / .8), transparent 60%); animation: auroraShift 12s ease-in-out infinite alternate; }
   .aurora-b { background: radial-gradient(60% 50% at 100% 100%, hsl(var(--accent) / .8), transparent 60%); animation: auroraShift 14s ease-in-out infinite alternate-reverse; }
   @keyframes auroraShift { 0% { transform: translate(-4%, -3%) rotate(0deg); } 100% { transform: translate(4%, 3%) rotate(6deg); } }
@@ -532,9 +545,23 @@ All colors MUST be HSL.
   .orb-2 { width: 34px; height: 34px; bottom: 16%; right: 12%; animation: orbFloat 12s ease-in-out infinite reverse; }
   @keyframes orbFloat { 0%,100% { transform: translateY(0) translateX(0); } 50% { transform: translateY(-10px) translateX(6px); } }
 
-  /* Shine sweep over entire card */
-  .shine-rect { position: absolute; inset: 0; border-radius: inherit; background: linear-gradient(115deg, transparent 35%, rgba(255,255,255,.16) 50%, transparent 65%); transform: translateX(-130%); transition: transform .85s ease; pointer-events: none; z-index: 1; }
-  .skill-card:hover .shine-rect { transform: translateX(130%); }
+  /* Shine sweep over entire card (softened) */
+  .shine-rect { position: absolute; inset: 0; border-radius: inherit; background: linear-gradient(115deg, transparent 35%, rgba(255,255,255,var(--shine-center-alpha, .10)) 50%, transparent 65%); transform: translateX(-130%); transition: transform .85s ease; pointer-events: none; z-index: 1; }
+  /* Enable sweep on multiple card types */
+  .skill-card:hover .shine-rect,
+  .education-card:hover .shine-rect,
+  .experience-card:hover .shine-rect,
+  .project-card:hover .shine-rect,
+  .volunteer-card:hover .shine-rect { transform: translateX(130%); }
+
+  /* Spotlight follows cursor (driven by --mx/--my variables set by Magnetic) — softened */
+  .spotlight-overlay { position: absolute; inset: 0; border-radius: inherit; pointer-events: none; z-index: 1; opacity: 0; transition: opacity .25s ease; background: radial-gradient(160px 160px at var(--mx, 50%) var(--my, 50%), rgba(255,255,255,var(--spotlight-alpha, .08)), rgba(255,255,255,0) 60%); }
+  .group:hover .spotlight-overlay { opacity: var(--spotlight-opacity-hover, .45); }
+
+  /* Animated glow border using conic gradient — softened */
+  .glow-border { position: relative; }
+  .glow-border::before { content: ""; position: absolute; inset: -1px; border-radius: inherit; pointer-events: none; z-index: 0; background: conic-gradient(from 0deg, hsl(var(--primary) /.0) 0%, hsl(var(--primary)/.35) 25%, hsl(var(--secondary)/.35) 50%, hsl(var(--accent)/.35) 75%, hsl(var(--primary)/.0) 100%); filter: blur(8px); opacity: 0; transition: opacity .35s ease, filter .35s ease; }
+  .glow-border:hover::before { opacity: var(--glow-opacity-hover, .30); filter: blur(10px); }
 
   /* Skill count badge */
   .skill-count { font-size: 12px; line-height: 1; padding: 6px 10px; border-radius: 9999px; background: linear-gradient(135deg, hsl(var(--primary) / .18), hsl(var(--secondary) / .18)); border: 1px solid hsl(var(--border) / .7); box-shadow: 0 4px 12px hsl(var(--background) / .4); }
@@ -567,15 +594,15 @@ All colors MUST be HSL.
   
   /* Education Cards */
   .education-card { position: relative; isolation: isolate; }
-  .education-card .aurora-edu-a { position: absolute; inset: -15%; border-radius: 20px; filter: blur(20px); opacity: 0.08; pointer-events: none; z-index: 0; background: radial-gradient(50% 40% at 20% 0%, hsl(var(--primary) / .9), transparent 65%); animation: auroraShift 10s ease-in-out infinite alternate; }
-  .education-card .aurora-edu-b { position: absolute; inset: -15%; border-radius: 20px; filter: blur(20px); opacity: 0.08; pointer-events: none; z-index: 0; background: radial-gradient(50% 40% at 80% 100%, hsl(var(--secondary) / .9), transparent 65%); animation: auroraShift 12s ease-in-out infinite alternate-reverse; }
+  .education-card .aurora-edu-a { position: absolute; inset: -15%; border-radius: 20px; filter: blur(20px); opacity: 0.06; pointer-events: none; z-index: 0; background: radial-gradient(50% 40% at 20% 0%, hsl(var(--primary) / .9), transparent 65%); animation: auroraShift 10s ease-in-out infinite alternate; }
+  .education-card .aurora-edu-b { position: absolute; inset: -15%; border-radius: 20px; filter: blur(20px); opacity: 0.06; pointer-events: none; z-index: 0; background: radial-gradient(50% 40% at 80% 100%, hsl(var(--secondary) / .9), transparent 65%); animation: auroraShift 12s ease-in-out infinite alternate-reverse; }
   .education-card .degree-badge { position: absolute; top: 6px; right: 8px; width: 24px; height: 24px; border-radius: 9999px; background: hsl(var(--accent) / 0.15); color: hsl(var(--accent)); display: flex; align-items: center; justify-content: center; z-index: 1; animation: float 8s ease-in-out infinite; }
   .education-card .timeline-dot { position: absolute; top: -2px; left: -4px; width: 8px; height: 8px; border-radius: 9999px; background: hsl(var(--primary)); opacity: 0.7; z-index: 1; animation: pulseGlow 2s ease-in-out infinite; }
 
   /* Experience Cards */
   .experience-card { position: relative; isolation: isolate; }
-  .experience-card .aurora-exp-a { position: absolute; inset: -15%; border-radius: 20px; filter: blur(18px); opacity: 0.09; pointer-events: none; z-index: 0; background: radial-gradient(60% 50% at 0% 30%, hsl(var(--accent) / .8), transparent 60%); animation: auroraShift 9s ease-in-out infinite alternate; }
-  .experience-card .aurora-exp-b { position: absolute; inset: -15%; border-radius: 20px; filter: blur(18px); opacity: 0.09; pointer-events: none; z-index: 0; background: radial-gradient(60% 50% at 100% 70%, hsl(var(--primary) / .8), transparent 60%); animation: auroraShift 11s ease-in-out infinite alternate-reverse; }
+  .experience-card .aurora-exp-a { position: absolute; inset: -15%; border-radius: 20px; filter: blur(18px); opacity: 0.07; pointer-events: none; z-index: 0; background: radial-gradient(60% 50% at 0% 30%, hsl(var(--accent) / .8), transparent 60%); animation: auroraShift 9s ease-in-out infinite alternate; }
+  .experience-card .aurora-exp-b { position: absolute; inset: -15%; border-radius: 20px; filter: blur(18px); opacity: 0.07; pointer-events: none; z-index: 0; background: radial-gradient(60% 50% at 100% 70%, hsl(var(--primary) / .8), transparent 60%); animation: auroraShift 11s ease-in-out infinite alternate-reverse; }
   .experience-card .company-glow { position: absolute; top: 0; right: 0; width: 60px; height: 60px; border-radius: 9999px; background: radial-gradient(circle, hsl(var(--secondary) / 0.12), transparent 70%); filter: blur(12px); z-index: 0; animation: float 6s ease-in-out infinite; }
   /* NEW: diagonal scanlines + soft particles */
   .experience-card .exp-diag-lines { position: absolute; inset: 0; border-radius: inherit; pointer-events: none; z-index: 0; opacity: .12; background: repeating-linear-gradient(45deg, hsl(var(--foreground) / 0.06) 0 1px, transparent 1px 12px); animation: diagDrift 14s linear infinite; }
@@ -591,8 +618,8 @@ All colors MUST be HSL.
 
   /* Project Cards */
   .project-card { position: relative; isolation: isolate; }
-  .project-card .aurora-proj-a { position: absolute; inset: -18%; border-radius: 24px; filter: blur(22px); opacity: 0.1; pointer-events: none; z-index: 0; background: radial-gradient(70% 60% at 10% 10%, hsl(var(--secondary) / .9), transparent 65%); animation: auroraShift 11s ease-in-out infinite alternate; }
-  .project-card .aurora-proj-b { position: absolute; inset: -18%; border-radius: 24px; filter: blur(22px); opacity: 0.1; pointer-events: none; z-index: 0; background: radial-gradient(70% 60% at 90% 90%, hsl(var(--accent) / .9), transparent 65%); animation: auroraShift 13s ease-in-out infinite alternate-reverse; }
+  .project-card .aurora-proj-a { position: absolute; inset: -18%; border-radius: 24px; filter: blur(22px); opacity: 0.08; pointer-events: none; z-index: 0; background: radial-gradient(70% 60% at 10% 10%, hsl(var(--secondary) / .9), transparent 65%); animation: auroraShift 11s ease-in-out infinite alternate; }
+  .project-card .aurora-proj-b { position: absolute; inset: -18%; border-radius: 24px; filter: blur(22px); opacity: 0.08; pointer-events: none; z-index: 0; background: radial-gradient(70% 60% at 90% 90%, hsl(var(--accent) / .9), transparent 65%); animation: auroraShift 13s ease-in-out infinite alternate-reverse; }
   .project-card .category-badge { animation: float 7s ease-in-out infinite; }
   /* NEW: subtle vertical scanlines and neon corner brackets */
   .project-card .proj-scanlines { position: absolute; inset: 0; border-radius: inherit; pointer-events: none; z-index: 0; opacity: .10; background: repeating-linear-gradient(0deg, hsl(var(--foreground) / .06) 0 1px, transparent 1px 10px); animation: scanScroll 16s linear infinite; }
@@ -633,7 +660,7 @@ All colors MUST be HSL.
       radial-gradient(2px 2px at 30% 30%, rgba(255,255,255,.35) 50%, transparent 51%),
       radial-gradient(1.5px 1.5px at 70% 60%, rgba(255,255,255,.3) 50%, transparent 51%),
       radial-gradient(2px 2px at 50% 80%, rgba(255,255,255,.25) 50%, transparent 51%);
-    opacity: .35;
+    opacity: .25;
     animation: sparkleFloat 10s ease-in-out infinite;
   }
   @keyframes sparkleFloat { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }

@@ -10,7 +10,8 @@ const Education = () => {
       institution: "Vignan's Institute of Information Technology",
       period: "Nov'22 - Apr'26",
       location: "Visakhapatnam, India",
-      description: "Focused on Software Engineering, Data Structures, Algorithms, and Modern Web Technologies"
+      description: "Focused on Software Engineering, Data Structures, Algorithms, and Modern Web Technologies",
+      cgpa: "9.2/10"
     },
     {
       degree: "Bachelor of Science in Programming and Data Science",
@@ -54,14 +55,17 @@ const Education = () => {
               variants={{ hidden: { opacity: 0, y: 20 }, show: { opacity: 1, y: 0 } }}
               className="h-full"
             >
-              <Magnetic className="block h-full">
-                <TiltCard className="education-card glass rounded-xl p-6 hover:shadow-glow transition-all duration-500 relative overflow-hidden group h-full w-full min-h-[180px]">
+              <Magnetic className="block w-full h-full">
+                <TiltCard className="education-card glass glow-border rounded-xl p-6 hover:shadow-glow transition-all duration-500 relative overflow-hidden group h-full w-full max-w-full min-h-[180px]">
                   {/* Decorative aurora beams */}
                   <span aria-hidden className="aurora aurora-edu-a" />
                   <span aria-hidden className="aurora aurora-edu-b" />
                   {/* Chalk grid + sparkles */}
                   <span aria-hidden className="edu-grid" />
                   <span aria-hidden className="edu-sparkles" />
+                  {/* Interactive light sweep + spotlight */}
+                  <span aria-hidden className="shine-rect" />
+                  <span aria-hidden className="spotlight-overlay" />
                   {/* Timeline dot */}
                   <span aria-hidden className="timeline-dot" />
                   
@@ -102,6 +106,16 @@ const Education = () => {
                         <MapPin className="w-4 h-4 mr-2" />
                         {edu.location}
                       </motion.div>
+                      {edu.cgpa && (
+                        <motion.div 
+                          className="flex items-center text-sm text-muted-foreground mb-0 lg:justify-end"
+                          whileHover={{ scale: 1.05, x: -4 }}
+                          transition={{ type: "spring", stiffness: 300, damping: 20 }}
+                        >
+                          <GraduationCap className="w-4 h-4 mr-2" />
+                          CGPA: {edu.cgpa}
+                        </motion.div>
+                      )}
                     </div>
                   </div>
                 </TiltCard>
