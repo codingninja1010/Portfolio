@@ -8,6 +8,7 @@ import Volunteering from "@/components/Volunteering";
 import ScrollToTop from "@/components/ScrollToTop";
 import SectionDivider from "@/components/SectionDivider";
 import { motion } from "framer-motion";
+import Magnetic from "@/components/ui/Magnetic.jsx";
 import { Suspense, lazy, useEffect } from "react";
 
 const Projects = lazy(() => import("@/components/Projects"));
@@ -84,11 +85,19 @@ const Index = () => {
           <p className="text-muted-foreground">
             © {new Date().getFullYear()} Rakesh Vajrapu.
           </p>
-          <div className="mt-2 inline-block px-3 py-1 rounded-lg bg-white/5 border border-white/10">
-            <span className="font-tagline bg-gradient-primary bg-clip-text text-transparent text-sm sm:text-base">
-              Inventing Tomorrow, One Line of Code at a Time
-            </span>
-          </div>
+          <Magnetic className="mt-2 inline-block">
+            <motion.div
+              className="relative inline-flex items-center px-3 py-1 rounded-full border border-white/10 bg-white/5 btn-border-animate btn-shine group overflow-hidden"
+              whileHover={{ y: -1, scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
+            >
+              {/* Cursor-following spotlight */}
+              <span aria-hidden className="spotlight-overlay" />
+              <span className="font-tagline gradient-text-enhanced text-sm sm:text-base">
+                Inventing Tomorrow, One Line of Code at a Time
+              </span>
+            </motion.div>
+          </Magnetic>
         </div>
       </footer>
     </div>

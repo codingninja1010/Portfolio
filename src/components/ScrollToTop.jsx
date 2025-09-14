@@ -1,25 +1,53 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { ArrowUp } from "lucide-react";
+import { useReducedMotion } from "framer-motion";
 
 const ScrollToTop = () => {
+  const prefersReducedMotion = useReducedMotion();
   const [visible, setVisible] = useState(false);
   const [progress, setProgress] = useState(0);
+  const raf = useRef(0);
+  const pending = useRef(false);
 
   useEffect(() => {
-    const onScroll = () => {
-      const scrollTop = window.scrollY || document.documentElement.scrollTop;
-      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-      const pct = docHeight > 0 ? Math.min(100, Math.max(0, (scrollTop / docHeight) * 100)) : 0;
-      setProgress(pct);
-      setVisible(scrollTop > 300);
+    const root = document.documentElement;
+    const scrollEl = document.scrollingElement || root;
+
+    const compute = () => {
+      pending.current = false;
+      const scrollTop = scrollEl.scrollTop || window.pageYOffset || 0;
+      const max = Math.max(1, scrollEl.scrollHeight - scrollEl.clientHeight);
+      const ratio = Math.min(1, Math.max(0, scrollTop / max));
+      setProgress(ratio * 100);
+      // visible after 300px or > 8% scrolled on long pages
+      setVisible(scrollTop > 300 || ratio > 0.08);
     };
+
+    const onScroll = () => {
+      if (pending.current) return;
+      pending.current = true;
+      raf.current = requestAnimationFrame(compute);
+    };
+    const onResize = () => compute();
+
+    const ro = new ResizeObserver(() => compute());
+    ro.observe(document.body);
+
     window.addEventListener("scroll", onScroll, { passive: true });
-    onScroll();
-    return () => window.removeEventListener("scroll", onScroll);
+    window.addEventListener("resize", onResize);
+    compute();
+
+    return () => {
+      cancelAnimationFrame(raf.current);
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onResize);
+      ro.disconnect();
+    };
   }, []);
 
   const scrollTop = () => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
+    const behavior = prefersReducedMotion ? "auto" : "smooth";
+    window.scrollTo({ top: 0, behavior });
   };
 
   const radius = 18;
