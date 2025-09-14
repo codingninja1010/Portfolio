@@ -38,7 +38,7 @@ const Hero = () => {
   const yLarge = useTransform(scrollYProgress, [0, 1], [0, -120]);
 
   return (
-    <section className="min-h-screen flex items-center justify-center relative overflow-hidden mt-20">
+    <section className="min-h-screen flex items-center justify-center relative overflow-hidden pt-28 md:pt-32">
       {/* Animated background elements */}
       <div className="absolute inset-0 overflow-hidden">
         <motion.div style={{ y: ySmall }} className="absolute -top-40 -right-40 w-80 h-80 bg-primary/10 rounded-full blur-3xl animate-float" />
@@ -107,14 +107,11 @@ const Hero = () => {
           <div className="mb-8">
             {/* Greeting line: Hi, I'm Rakesh Vajrapu (name highlighted) */}
             <p className="text-2xl sm:text-3xl md:text-4xl font-semibold mb-4 text-foreground/90">
-              Hi, I'm <span className="text-primary">Rakesh Vajrapu</span>
+              Hi, I'm {" "}
+              <span className="bg-gradient-primary bg-clip-text text-transparent">Rakesh Vajrapu</span>
             </p>
-            {/* Name with image on the right */}
-            <div className="flex items-center justify-center gap-4 mb-4 flex-wrap sm:flex-nowrap">
-              <h1 className="text-5xl md:text-7xl font-bold text-primary">
-                Rakesh Vajrapu
-              </h1>
-              {/* Smaller circular photo on mobile next to the name */}
+            {/* Mobile-only small photo under the greeting */}
+            <div className="flex items-center justify-center mb-4">
               <img
                 src={rakeshPhoto}
                 alt="Rakesh Vajrapu"
@@ -155,6 +152,7 @@ const Hero = () => {
                       href="mailto:rakeshrb1411@gmail.com"
                       aria-label="Email"
                       className="icon-button glass rounded-lg hover:shadow-glow focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40"
+                      title="Mail"
                     >
                       <Mail className="w-7 h-7 text-primary" />
                     </a>
@@ -172,6 +170,7 @@ const Hero = () => {
                       rel="noopener noreferrer"
                       aria-label="LinkedIn"
                       className="icon-button glass rounded-lg hover:shadow-glow focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40"
+                      title="LinkedIn"
                     >
                       <Linkedin className="w-7 h-7 text-primary" />
                     </a>
@@ -189,6 +188,7 @@ const Hero = () => {
                       rel="noopener noreferrer"
                       aria-label="GitHub"
                       className="icon-button glass rounded-lg hover:shadow-glow focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40"
+                      title="GitHub"
                     >
                       <Github className="w-7 h-7 text-primary" />
                     </a>
@@ -206,6 +206,7 @@ const Hero = () => {
                       rel="noopener noreferrer"
                       aria-label="LeetCode"
                       className="icon-button glass rounded-lg hover:shadow-glow focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40"
+                      title="LeetCode"
                     >
                       <SiLeetcode className="w-7 h-7 text-primary" />
                     </a>
@@ -223,6 +224,7 @@ const Hero = () => {
                       rel="noopener noreferrer"
                       aria-label="CodeChef"
                       className="icon-button glass rounded-lg hover:shadow-glow focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40"
+                      title="CodeChef"
                     >
                       <SiCodechef className="w-7 h-7 text-primary" />
                     </a>

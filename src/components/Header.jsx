@@ -91,7 +91,7 @@ const Header = () => {
 
   return (
     <header 
-      className={`fixed top-0 w-full z-50 transition-all duration-300 ${
+      className={`fixed top-0 w-full z-[1000] transition-all duration-300 ${
         isScrolled ? "glass backdrop-blur-lg border-b border-border/50" : "bg-transparent"
       }`}
       style={{paddingTop: '4px'}}
