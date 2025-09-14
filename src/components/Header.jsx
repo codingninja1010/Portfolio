@@ -131,6 +131,7 @@ const Header = () => {
                     rel="noopener noreferrer"
                     aria-label="Download Resume"
                     className="group"
+                    download={RESUME_URL.startsWith("http") ? undefined : "Rakesh_Bhagavan_Vajrapu_Resume.pdf"}
                     whileHover={{}}
                   >
                     <Download className="w-4 h-4 mr-2 transition-transform duration-300 group-hover:rotate-[-12deg]" />
@@ -190,7 +191,7 @@ const Header = () => {
                   {RESUME_URL ? (
                     <motion.div whileHover={{ y: -1, scale: 1.02 }} whileTap={{ scale: 0.98 }}>
                       <Button asChild variant="outline" size="sm" className="w-full relative overflow-hidden border-primary/25 hover:bg-primary/10">
-                        <motion.a href={RESUME_URL} target={RESUME_URL.startsWith("http") ? "_blank" : undefined} rel="noopener noreferrer" aria-label="Download Resume" className="group">
+                        <motion.a href={RESUME_URL} target={RESUME_URL.startsWith("http") ? "_blank" : undefined} rel="noopener noreferrer" aria-label="Download Resume" className="group" download={RESUME_URL.startsWith("http") ? undefined : "Rakesh_Bhagavan_Vajrapu_Resume.pdf"}>
                           <Download className="w-4 h-4 mr-2 transition-transform duration-300 group-hover:rotate-[-12deg]" />
                           Download Resume
                         </motion.a>
