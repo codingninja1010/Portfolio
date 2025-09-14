@@ -136,6 +136,9 @@ All colors MUST be HSL.
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
   }
 
+  /* Footer tagline font utility */
+  .font-tagline { font-family: 'Sora', ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, 'Helvetica Neue', Arial, 'Noto Sans', 'Liberation Sans', sans-serif; }
+
   /* Ensure anchors and scrollIntoView leave space for the fixed header */
   html {
     /* Default fallback; will be updated dynamically by JS */

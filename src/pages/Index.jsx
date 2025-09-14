@@ -79,8 +79,13 @@ const Index = () => {
       <footer className="border-t border-border/50 py-8">
         <div className="container mx-auto px-6 text-center">
           <p className="text-muted-foreground">
-            © {new Date().getFullYear()} Rakesh Vajrapu. Built with React, JavaScript, and Tailwind CSS.
+            © {new Date().getFullYear()} Rakesh Vajrapu.
           </p>
+          <div className="mt-2 inline-block px-3 py-1 rounded-lg bg-white/5 border border-white/10">
+            <span className="font-tagline bg-gradient-primary bg-clip-text text-transparent text-sm sm:text-base">
+              Inventing Tomorrow, One Line of Code at a Time
+            </span>
+          </div>
         </div>
       </footer>
     </div>

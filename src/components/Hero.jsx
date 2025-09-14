@@ -134,20 +134,16 @@ const Hero = () => {
                 className="block md:hidden w-20 h-20 rounded-full object-cover border border-primary/30 shadow-sm bg-muted/30 transition-transform duration-300 ease-out hover:scale-105 active:scale-105"
               />
             </div>
-            {/* Tagline */}
-            <div className="inline-block px-4 py-2 rounded-xl bg-white/5 border border-white/10 shadow-sm mb-2">
-              <Typewriter
-                as="div"
-                className="text-lg sm:text-xl md:text-2xl font-semibold bg-gradient-primary bg-clip-text text-transparent tracking-wide"
-                text={"Inventing Tomorrow, One Line of Code at a Time"}
-                speed={55}
-                speedJitter={0.05}
-                delay={1600}
-                respectReducedMotion={false}
-                fancy
-                charStagger={0.012}
-              />
-            </div>
+            {/* Subtitle typewriter (restored previous) */}
+            <Typewriter
+              as="div"
+              className="text-xl sm:text-2xl md:text-3xl font-semibold text-muted-foreground tracking-wide italic mb-2"
+              text={"Full-Stack Developer & AI Enthusiast"}
+              speed={55}
+              speedJitter={0.05}
+              delay={1600}
+              respectReducedMotion={false}
+            />
           </div>
           
           <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto mb-6 leading-relaxed">
