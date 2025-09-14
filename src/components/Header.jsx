@@ -1,42 +1,11 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Menu, X, Download } from "lucide-react";
 
 const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [activeId, setActiveId] = useState("home");
-  const observerRef = useRef(null);
-
-  // Highlight the active section in the navbar based on scroll position
-  useEffect(() => {
-    const ids = [
-      "home",
-      "about",
-      "skills",
-      "experience",
-      "volunteering",
-      "projects",
-      "contact",
-    ];
-    const elements = ids
-      .map((id) => document.getElementById(id))
-      .filter(Boolean);
-
-    if (observerRef.current) observerRef.current.disconnect();
-    const observer = new IntersectionObserver(
-      (entries) => {
-        const visible = entries
-          .filter((e) => e.isIntersecting)
-          .sort((a, b) => b.intersectionRatio - a.intersectionRatio);
-        if (visible[0]?.target?.id) setActiveId(visible[0].target.id);
-      },
-      { root: null, rootMargin: "-40% 0px -55% 0px", threshold: [0, 0.25, 0.5, 0.75, 1] }
-    );
-    elements.forEach((el) => observer.observe(el));
-    observerRef.current = observer;
-    return () => observer.disconnect();
-  }, []);
+  // (Removed active section observer to restore previous simple behavior)
 
   // Lock body scroll when mobile menu is open
   useEffect(() => {
@@ -121,30 +90,17 @@ const Header = () => {
   };
 
   return (
-    <header
-      className={`fixed top-0 w-full z-50 transition-colors duration-300`}
-      style={{ paddingTop: "4px" }}
+    <header 
+      className={`fixed top-0 w-full z-50 transition-all duration-300 ${
+        isScrolled ? "glass backdrop-blur-lg border-b border-border/50" : "bg-transparent"
+      }`}
+      style={{paddingTop: '4px'}}
     >
-      {/* Glassy transparent bar with subtle radial highlights */}
-      <div className={`absolute inset-0 -z-10 ${
-        isScrolled ? "bg-black/40" : "bg-black/30"
-      } backdrop-blur-xl border-b border-white/10`}>
-        <div
-          className="pointer-events-none absolute inset-0 opacity-60"
-          style={{
-            background:
-              "radial-gradient(280px 120px at 10% 50%, rgba(255,255,255,0.08), transparent 60%)," +
-              "radial-gradient(280px 120px at 50% 50%, rgba(255,255,255,0.08), transparent 60%)," +
-              "radial-gradient(280px 120px at 90% 50%, rgba(255,255,255,0.08), transparent 60%)",
-          }}
-        />
-      </div>
       <div className="container mx-auto px-6">
         <div className="flex items-center justify-between h-16">
           {/* Logo (text only) */}
-          <div className="text-base md:text-xl font-semibold text-white/90 tracking-wide uppercase mr-8">
+          <div className="text-xl font-bold bg-gradient-primary bg-clip-text text-transparent mr-8">
             Rakesh Vajrapu
-            <div className="h-[2px] w-full bg-white/80 mt-1" />
           </div>
 
           {/* Desktop Navigation */}
@@ -153,27 +109,17 @@ const Header = () => {
               <button
                 key={item.name}
                 onClick={() => scrollToSection(item.href)}
-                className={`text-xs md:text-sm font-semibold tracking-wide uppercase transition-colors duration-300 relative group ${
-                  activeId === item.href.slice(1)
-                    ? "text-white"
-                    : "text-white/80 hover:text-white"
-                }`}
+                className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors duration-300 relative group"
               >
                 {item.name}
-                <span
-                  className={`absolute -bottom-1 left-0 h-0.5 transition-all duration-300 ${
-                    activeId === item.href.slice(1)
-                      ? "w-full bg-white"
-                      : "w-full bg-white/60 group-hover:bg-white"
-                  }`}
-                />
+                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-full"></span>
               </button>
             ))}
           </nav>
 
           {/* Desktop CTA */}
           <div className="hidden md:block">
-            <Button variant="outline" size="sm" className="border-white/30 text-white/90 hover:bg-white/10">
+            <Button variant="outline" size="sm" className="border-primary/20 hover:bg-primary/10">
               <Download className="w-4 h-4 mr-2" />
               Resume
             </Button>

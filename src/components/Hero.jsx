@@ -105,6 +105,10 @@ const Hero = () => {
           transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
         >
           <div className="mb-8">
+            {/* Greeting line: Hi, I'm Rakesh Vajrapu (name highlighted) */}
+            <p className="text-2xl sm:text-3xl md:text-4xl font-semibold mb-4 text-foreground/90">
+              Hi, I'm <span className="text-primary">Rakesh Vajrapu</span>
+            </p>
             {/* Name with image on the right */}
             <div className="flex items-center justify-center gap-4 mb-4 flex-wrap sm:flex-nowrap">
               <h1 className="text-5xl md:text-7xl font-bold text-primary">
