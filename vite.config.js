@@ -9,8 +9,8 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 export default defineConfig(({ mode }) => ({
   server: {
     host: "127.0.0.1",
-    port: 8080,
-    strictPort: true,
+    port: Number(process.env.PORT) || 5173,
+    strictPort: false,
     open: true,
   },
   plugins: [

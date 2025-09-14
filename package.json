@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "vite",
     "dev:open": "vite --open",
-    "dev:8080": "vite --port 8080 --strictPort --open",
+    "dev:8080": "vite --port 8080 --open",
     "start": "vite",
     "build": "vite build",
     "build:dev": "vite build --mode development",

@@ -1,4 +1,4 @@
-import { motion, useScroll, useSpring, useTransform, useReducedMotion } from "framer-motion";
+import { motion, useScroll, useSpring, useTransform, useReducedMotion, useMotionTemplate } from "framer-motion";
 
 export default function ScrollProgress() {
   const { scrollYProgress } = useScroll();
@@ -9,13 +9,13 @@ export default function ScrollProgress() {
 
   // Fade in the bar after a tiny scroll, and slightly grow its thickness
   const opacity = useTransform(scrollYProgress, [0, 0.02], [0, 1]);
-  const scaleY = prefersReducedMotion
-    ? 1
-    : useTransform(scrollYProgress, [0, 0.2], [0.7, 1]);
+  // Always create the MotionValue, swap to a static number if reduced motion
+  const scaleYMV = useTransform(scrollYProgress, [0, 0.2], [0.7, 1]);
 
   // Animate gradient position / hue subtly as you scroll
   const bgPosX = useTransform(scrollYProgress, (v) => `${v * 100}%`);
   const hueMV = useTransform(scrollYProgress, [0, 1], [0, 90]);
+  const filterMV = useMotionTemplate`hue-rotate(${hueMV}deg)`;
 
   // Dot indicator position at the end of the bar
   const dotLeft = useTransform(scrollYProgress, (v) => `${v * 100}%`);
@@ -24,27 +24,27 @@ export default function ScrollProgress() {
     <div className="fixed inset-x-0 top-0 z-[1200] pointer-events-none select-none">
       <motion.div
         className="relative mx-auto h-1.5 w-full"
-        style={{ opacity, scaleY, originY: 0 }}
+        style={{ opacity, scaleY: prefersReducedMotion ? 1 : scaleYMV, originY: 0 }}
       >
-        {/* Track */}
-        <div className="absolute inset-0 bg-black/15 backdrop-blur-[1px]" />
+  {/* Track */}
+  <div className="absolute inset-0 bg-white/6 dark:bg-white/10 backdrop-blur-[1px]" />
 
         {/* Fill with animated gradient */}
         <motion.div
-          className="absolute inset-y-0 left-0 origin-left"
+          className="absolute inset-y-0 left-0 right-0 origin-left"
           style={{
             scaleX,
             backgroundImage:
               "linear-gradient(90deg, hsl(var(--primary)), hsl(var(--secondary)), hsl(var(--accent)))",
             backgroundSize: "200% 100%",
             backgroundPositionX: prefersReducedMotion ? "50%" : bgPosX,
-            filter: prefersReducedMotion ? "none" : hueMV.to((h) => `hue-rotate(${h}deg)`),
+            filter: prefersReducedMotion ? "none" : filterMV,
           }}
         />
 
         {/* Soft glow under the fill */}
         <motion.div
-          className="absolute inset-y-0 left-0 origin-left"
+          className="absolute inset-y-0 left-0 right-0 origin-left"
           style={{
             scaleX,
             boxShadow: "0 6px 18px hsl(var(--primary) / 0.35)",
