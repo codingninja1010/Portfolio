@@ -5,14 +5,12 @@ export default function ScrollProgress() {
   const { scrollYProgress } = useScroll();
   const prefersReducedMotion = useReducedMotion();
 
-  // Smooth progress value for width
-  const progress = useSpring(scrollYProgress, { stiffness: 200, damping: 28, mass: 0.25 });
-  const widthMV = useTransform(progress, (v) => `${v * 100}%`);
+  // ACCURATE width tracking: use raw scrollYProgress for width (no spring lag)
+  const widthMV = useTransform(scrollYProgress, (v) => `${(v * 100).toFixed(3)}%`);
 
-  // Fade in the bar after a tiny scroll, and slightly grow its thickness
-  const opacity = useTransform(scrollYProgress, [0, 0.02], [0, 1]);
-  // Always create the MotionValue, swap to a static number if reduced motion
-  const scaleYMV = useTransform(scrollYProgress, [0, 0.2], [0.7, 1]);
+  // Always visible; optionally grow thickness slightly in the first 1% of scroll
+  const opacity = 1;
+  const scaleYMV = useTransform(scrollYProgress, [0, 0.01], [0.85, 1]);
 
   // Animate gradient position / hue subtly as you scroll
   const bgPosX = useTransform(scrollYProgress, (v) => `${v * 100}%`);
@@ -49,6 +47,17 @@ export default function ScrollProgress() {
             backgroundPositionX: prefersReducedMotion ? "50%" : bgPosX,
             filter: prefersReducedMotion ? "none" : filterMV,
           }}
+        />
+
+        {/* Leading-edge glint */}
+        <motion.div
+          className="absolute top-0 h-full w-3 rounded-full pointer-events-none"
+          style={{ left: widthMV, translateX: "-50%",
+            background:
+              "radial-gradient(10px 8px at 50% 50%, rgba(255,255,255,0.65), rgba(255,255,255,0.1) 60%, rgba(255,255,255,0))"
+          }}
+          animate={prefersReducedMotion ? undefined : { opacity: [0.7, 1, 0.7] }}
+          transition={prefersReducedMotion ? undefined : { duration: 1.2, repeat: Infinity, ease: "easeInOut" }}
         />
 
         {/* Soft glow under the fill */}
