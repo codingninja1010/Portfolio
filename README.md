@@ -93,7 +93,5 @@ This project is licensed under the MIT License. If `LICENSE` is not present, fee
 
 ## Links
 
-- Portfolio: [your-portfolio.example.com](https://your-portfolio.example.com)
-- Website/Blog: [your-website.example.com](https://your-website.example.com)
-- LinkedIn: [linkedin.com/in/your-handle](https://www.linkedin.com/in/your-handle)
-- GitHub: [github.com/your-handle](https://github.com/your-handle)
+- LinkedIn: [linkedin.com/in/your-handle](https://www.linkedin.com/in/rakeshvajrapu/)
+- GitHub: [github.com/your-handle](https://github.com/rakesh-vajrapu)
