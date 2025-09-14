@@ -1,4 +1,7 @@
 import { GraduationCap, Calendar, MapPin } from "lucide-react";
+import { motion } from "framer-motion";
+import TiltCard from "./ui/TiltCard.jsx";
+import Magnetic from "./ui/Magnetic.jsx";
 
 const Education = () => {
   const education = [
@@ -37,39 +40,74 @@ const Education = () => {
           </p>
         </div>
 
-        <div className="max-w-4xl mx-auto space-y-8">
+        <motion.div 
+          className="max-w-4xl mx-auto space-y-8"
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true, margin: "-100px" }}
+          transition={{ staggerChildren: 0.1 }}
+        >
           {education.map((edu, index) => (
-            <div 
+            <motion.div
               key={index}
-              className="glass rounded-xl p-8 hover:shadow-glow transition-all duration-500 animate-fadeInUp hover:scale-105"
-              style={{ animationDelay: `${index * 0.2}s` }}
+              variants={{ hidden: { opacity: 0, y: 20 }, show: { opacity: 1, y: 0 } }}
             >
-              <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between">
-                <div className="flex items-start mb-4 lg:mb-0">
-                  <div className="p-3 bg-gradient-primary rounded-lg mr-4 flex-shrink-0">
-                    <GraduationCap className="w-6 h-6 text-white" />
-                  </div>
-                  <div>
-                    <h3 className="text-xl font-bold mb-2">{edu.degree}</h3>
-                    <h4 className="text-lg font-semibold text-primary mb-2">{edu.institution}</h4>
-                    <p className="text-muted-foreground text-sm leading-relaxed">{edu.description}</p>
-                  </div>
-                </div>
+              <Magnetic className="block">
+                <TiltCard className="education-card glass rounded-xl p-8 hover:shadow-glow transition-all duration-500 relative overflow-hidden group">
+                  {/* Decorative aurora beams */}
+                  <span aria-hidden className="aurora aurora-edu-a" />
+                  <span aria-hidden className="aurora aurora-edu-b" />
+                  {/* Floating degree badge */}
+                  <span aria-hidden className="degree-badge">
+                    <GraduationCap className="w-4 h-4" />
+                  </span>
+                  {/* Timeline dot */}
+                  <span aria-hidden className="timeline-dot" />
+                  
+                  <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between relative z-[2]">
+                    <div className="flex items-start mb-4 lg:mb-0">
+                      <div className="icon-ring p-3 bg-gradient-primary rounded-lg mr-4 flex-shrink-0">
+                        <motion.span
+                          whileHover={{ rotate: 12, scale: 1.1 }}
+                          transition={{ type: "spring", stiffness: 200, damping: 15 }}
+                          className="inline-block"
+                        >
+                          <GraduationCap className="w-6 h-6 text-white" />
+                        </motion.span>
+                        {/* Rotating halo ring around icon */}
+                        <span aria-hidden className="ring-spin" />
+                      </div>
+                      <div>
+                        <h3 className="text-xl font-bold mb-2">{edu.degree}</h3>
+                        <h4 className="text-lg font-semibold text-primary mb-2">{edu.institution}</h4>
+                        <p className="text-muted-foreground text-sm leading-relaxed">{edu.description}</p>
+                      </div>
+                    </div>
 
-                <div className="lg:text-right lg:ml-6">
-                  <div className="flex items-center text-sm text-muted-foreground mb-2 lg:justify-end">
-                    <Calendar className="w-4 h-4 mr-2" />
-                    {edu.period}
+                    <div className="lg:text-right lg:ml-6">
+                      <motion.div 
+                        className="flex items-center text-sm text-muted-foreground mb-2 lg:justify-end"
+                        whileHover={{ scale: 1.05, x: -4 }}
+                        transition={{ type: "spring", stiffness: 300, damping: 20 }}
+                      >
+                        <Calendar className="w-4 h-4 mr-2" />
+                        {edu.period}
+                      </motion.div>
+                      <motion.div 
+                        className="flex items-center text-sm text-muted-foreground mb-2 lg:justify-end"
+                        whileHover={{ scale: 1.05, x: -4 }}
+                        transition={{ type: "spring", stiffness: 300, damping: 20 }}
+                      >
+                        <MapPin className="w-4 h-4 mr-2" />
+                        {edu.location}
+                      </motion.div>
+                    </div>
                   </div>
-                  <div className="flex items-center text-sm text-muted-foreground mb-2 lg:justify-end">
-                    <MapPin className="w-4 h-4 mr-2" />
-                    {edu.location}
-                  </div>
-                </div>
-              </div>
-            </div>
+                </TiltCard>
+              </Magnetic>
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
       </div>
     </section>
   );

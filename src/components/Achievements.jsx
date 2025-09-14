@@ -1,4 +1,7 @@
 import { Award, Trophy, Star, Users } from "lucide-react";
+import { motion } from "framer-motion";
+import TiltCard from "./ui/TiltCard.jsx";
+import Magnetic from "./ui/Magnetic.jsx";
 import pythonLogo from "@/assets/python-logo.png";
 // Import as URL with a version query to bust browser cache
 import azureLogo from "@/assets/azure-logo.png?url&v=5";
@@ -69,51 +72,79 @@ const Achievements = () => {
         </div>
 
         {/* Major Achievements */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
+        <motion.div 
+          className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16"
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true, margin: "-100px" }}
+          transition={{ staggerChildren: 0.1 }}
+        >
           {achievements.map((achievement, index) => {
             const Icon = achievement.icon;
             const achievementCard = (
-              <div 
-                className="glass rounded-xl p-6 text-center hover:shadow-glow transition-all duration-500 animate-fadeInUp group hover:scale-105"
-                style={{ animationDelay: `${index * 0.1}s` }}
-              >
-                <div className="mb-6">
-                  <div className="w-16 h-16 bg-gradient-primary rounded-full flex items-center justify-center mx-auto mb-4 group-hover:animate-glow">
-                    <Icon className="w-8 h-8 text-white" />
+              <Magnetic className="block h-full">
+                <TiltCard className="achievement-card glass rounded-xl p-6 text-center hover:shadow-glow transition-all duration-500 group h-full relative overflow-hidden">
+                  {/* Aurora beams */}
+                  <span aria-hidden className="aurora aurora-ach-a" />
+                  <span aria-hidden className="aurora aurora-ach-b" />
+                  {/* Medal shine effect */}
+                  <span aria-hidden className="medal-shine" />
+                  
+                  <div className="mb-6 relative z-[2]">
+                    <div className="trophy-container w-16 h-16 bg-gradient-primary rounded-full flex items-center justify-center mx-auto mb-4 group-hover:animate-glow relative">
+                      <motion.span
+                        whileHover={{ rotate: 12, scale: 1.1 }}
+                        transition={{ type: "spring", stiffness: 200, damping: 15 }}
+                        className="inline-block"
+                      >
+                        <Icon className="w-8 h-8 text-white" />
+                      </motion.span>
+                      {/* Rotating halo ring */}
+                      <span aria-hidden className="ring-spin" />
+                    </div>
+                    <motion.span 
+                      className="text-sm font-medium text-accent bg-accent/10 px-3 py-1 rounded-full"
+                      whileHover={{ scale: 1.05 }}
+                    >
+                      {achievement.category}
+                    </motion.span>
                   </div>
-                  <span className="text-sm font-medium text-accent bg-accent/10 px-3 py-1 rounded-full">
-                    {achievement.category}
-                  </span>
-                </div>
-                
-                <h3 className="text-xl font-bold mb-3">{achievement.title}</h3>
-                <p className="text-muted-foreground text-sm mb-4 leading-relaxed">
-                  {achievement.description}
-                </p>
-                
-                <div className="text-2xl font-bold bg-gradient-secondary bg-clip-text text-transparent">
-                  {achievement.highlight}
-                </div>
-              </div>
+                  
+                  <h3 className="text-xl font-bold mb-3 relative z-[2]">{achievement.title}</h3>
+                  <p className="text-muted-foreground text-sm mb-4 leading-relaxed relative z-[2]">
+                    {achievement.description}
+                  </p>
+                  
+                  <div className="text-2xl font-bold bg-gradient-secondary bg-clip-text text-transparent relative z-[2]">
+                    {achievement.highlight}
+                  </div>
+                </TiltCard>
+              </Magnetic>
             );
 
-            return achievement.link ? (
-              <a 
+            return (
+              <motion.div 
                 key={achievement.title}
-                href={achievement.link}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="block hover:no-underline"
+                variants={{ hidden: { opacity: 0, y: 20 }, show: { opacity: 1, y: 0 } }}
               >
-                {achievementCard}
-              </a>
-            ) : (
-              <div key={achievement.title}>
-                {achievementCard}
-              </div>
+                {achievement.link ? (
+                  <a 
+                    href={achievement.link}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="block hover:no-underline h-full"
+                  >
+                    {achievementCard}
+                  </a>
+                ) : (
+                  <div className="h-full">
+                    {achievementCard}
+                  </div>
+                )}
+              </motion.div>
             );
           })}
-        </div>
+        </motion.div>
 
         {/* Certifications Section */}
         <div className="max-w-4xl mx-auto">

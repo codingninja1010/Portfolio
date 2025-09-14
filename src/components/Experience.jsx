@@ -1,4 +1,7 @@
 import { Calendar, MapPin, Briefcase } from "lucide-react";
+import { motion } from "framer-motion";
+import TiltCard from "./ui/TiltCard.jsx";
+import Magnetic from "./ui/Magnetic.jsx";
 
 const Experience = () => {
   const experiences = [
@@ -45,73 +48,117 @@ const Experience = () => {
           </p>
         </div>
 
-        <div className="max-w-4xl mx-auto">
+        <motion.div 
+          className="max-w-4xl mx-auto"
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true, margin: "-100px" }}
+          transition={{ staggerChildren: 0.12 }}
+        >
           {experiences.map((exp, index) => (
-            <div 
+            <motion.div 
               key={index}
-              className="relative mb-12 last:mb-0 animate-fadeInUp"
-              style={{ animationDelay: `${index * 0.2}s` }}
+              className="relative mb-12 last:mb-0"
+              variants={{ hidden: { opacity: 0, y: 24 }, show: { opacity: 1, y: 0 } }}
             >
-              {/* Timeline line */}
+              {/* Glowing timeline line */}
               {index !== experiences.length - 1 && (
-                <div className="absolute left-6 top-20 w-0.5 h-full bg-gradient-primary opacity-20"></div>
+                <div className="timeline-connector absolute left-6 top-20 w-0.5 h-full"></div>
               )}
               
               <div className="flex flex-col md:flex-row gap-6">
-                {/* Timeline dot */}
+                {/* Enhanced timeline dot */}
                 <div className="flex-shrink-0">
-                  <div className="w-12 h-12 bg-gradient-primary rounded-full flex items-center justify-center shadow-primary">
+                  <motion.div 
+                    className="timeline-icon w-12 h-12 bg-gradient-primary rounded-full flex items-center justify-center shadow-primary relative"
+                    whileHover={{ scale: 1.1, rotate: 8 }}
+                    transition={{ type: "spring", stiffness: 200, damping: 15 }}
+                  >
                     <Briefcase className="w-6 h-6 text-white" />
-                  </div>
+                    {/* Pulsing ring */}
+                    <span className="pulse-ring absolute inset-0 rounded-full border-2 border-primary opacity-75" />
+                  </motion.div>
                 </div>
 
-                {/* Experience card */}
-                <div className="flex-1 glass rounded-xl p-6 hover:shadow-glow transition-all duration-500">
-                  <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-4">
-                    <div>
-                      <h3 className="text-xl font-bold text-primary mb-1">{exp.title}</h3>
-                      <h4 className="text-lg font-semibold mb-2">{exp.company}</h4>
-                      <p className="text-muted-foreground mb-2">{exp.description}</p>
-                    </div>
-                    <div className="text-right">
-                      <div className="flex items-center text-sm text-muted-foreground mb-1">
-                        <Calendar className="w-4 h-4 mr-1" />
-                        {exp.period}
+                {/* Enhanced experience card */}
+                <div className="flex-1">
+                  <Magnetic className="block">
+                    <TiltCard className="experience-card glass rounded-xl p-6 hover:shadow-glow transition-all duration-500 relative overflow-hidden group">
+                      {/* Aurora overlays */}
+                      <span aria-hidden className="aurora aurora-exp-a" />
+                      <span aria-hidden className="aurora aurora-exp-b" />
+                      {/* Company logo placeholder glow */}
+                      <span aria-hidden className="company-glow" />
+                      
+                      <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-4 relative z-[2]">
+                        <div>
+                          <h3 className="text-xl font-bold text-primary mb-1">{exp.title}</h3>
+                          <h4 className="text-lg font-semibold mb-2">{exp.company}</h4>
+                          <p className="text-muted-foreground mb-2">{exp.description}</p>
+                        </div>
+                        <div className="text-right">
+                          <motion.div 
+                            className="flex items-center text-sm text-muted-foreground mb-1"
+                            whileHover={{ scale: 1.05, x: -4 }}
+                          >
+                            <Calendar className="w-4 h-4 mr-1" />
+                            {exp.period}
+                          </motion.div>
+                          <motion.div 
+                            className="flex items-center text-sm text-muted-foreground mb-1"
+                            whileHover={{ scale: 1.05, x: -4 }}
+                          >
+                            <MapPin className="w-4 h-4 mr-1" />
+                            {exp.location}
+                          </motion.div>
+                          <motion.span 
+                            className="experience-badge inline-flex items-center px-2 py-1 rounded-full text-xs bg-primary/20 text-primary"
+                            whileHover={{ scale: 1.05 }}
+                            whileTap={{ scale: 0.98 }}
+                          >
+                            {exp.type}
+                          </motion.span>
+                        </div>
                       </div>
-                      <div className="flex items-center text-sm text-muted-foreground mb-1">
-                        <MapPin className="w-4 h-4 mr-1" />
-                        {exp.location}
+
+                      <ul className="space-y-2 mb-4 relative z-[2]">
+                        {exp.achievements.map((achievement, achIndex) => (
+                          <motion.li 
+                            key={achIndex} 
+                            className="flex items-start"
+                            initial={{ opacity: 0, x: -10 }}
+                            whileInView={{ opacity: 1, x: 0 }}
+                            viewport={{ once: true }}
+                            transition={{ delay: achIndex * 0.08 }}
+                          >
+                            <div className="w-2 h-2 bg-secondary rounded-full mt-2 mr-3 flex-shrink-0"></div>
+                            <span className="text-sm text-muted-foreground">{achievement}</span>
+                          </motion.li>
+                        ))}
+                      </ul>
+
+                      <div className="flex flex-wrap gap-2 relative z-[2]">
+                        {exp.technologies.map((tech, techIndex) => (
+                          <motion.span 
+                            key={tech}
+                            className="tech-chip px-3 py-1 bg-muted/20 rounded-full text-xs hover:bg-primary/20 transition-colors duration-300"
+                            initial={{ opacity: 0, scale: 0.9 }}
+                            whileInView={{ opacity: 1, scale: 1 }}
+                            viewport={{ once: true }}
+                            transition={{ delay: techIndex * 0.05 }}
+                            whileHover={{ scale: 1.05, y: -1 }}
+                          >
+                            {tech}
+                          </motion.span>
+                        ))}
                       </div>
-                      <span className="inline-flex items-center px-2 py-1 rounded-full text-xs bg-primary/20 text-primary">
-                        {exp.type}
-                      </span>
-                    </div>
-                  </div>
-
-                  <ul className="space-y-2 mb-4">
-                    {exp.achievements.map((achievement, achIndex) => (
-                      <li key={achIndex} className="flex items-start">
-                        <div className="w-2 h-2 bg-secondary rounded-full mt-2 mr-3 flex-shrink-0"></div>
-                        <span className="text-sm text-muted-foreground">{achievement}</span>
-                      </li>
-                    ))}
-                  </ul>
-
-                  <div className="flex flex-wrap gap-2">
-                    {exp.technologies.map((tech) => (
-                      <span 
-                        key={tech}
-                        className="px-3 py-1 bg-muted/20 rounded-full text-xs hover:bg-primary/20 transition-colors duration-300"
-                      >
-                        {tech}
-                      </span>
-                    ))}
-                  </div>
+                    </TiltCard>
+                  </Magnetic>
                 </div>
               </div>
-            </div>
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
       </div>
     </section>
   );
