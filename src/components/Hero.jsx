@@ -44,12 +44,18 @@ const Hero = () => {
           ref={containerRef}
           onMouseMove={handleMouseMove}
           onMouseLeave={handleMouseLeave}
-          className="hero-photo-3d relative inline-block will-change-transform overflow-hidden rounded-full"
+          className="hero-photo-3d relative inline-block will-change-transform overflow-hidden rounded-full animate-photo-enter photo-float"
           style={{
             transform: `perspective(700px) rotateX(${tilt.rx}deg) rotateY(${tilt.ry}deg)`,
-            transition: "transform 150ms ease-out",
+            transition: "transform 220ms ease-out",
           }}
         >
+          {/* Ripple rings behind the photo */}
+          <div className="ripple-rings" aria-hidden="true">
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
           {/* Rotating rainbow gradient ring */}
           <div className="glow-ring" aria-hidden="true" />
           {/* Inner subtle ring */}
@@ -76,7 +82,8 @@ const Hero = () => {
             alt="Rakesh Vajrapu"
             onLoad={() => setImgLoaded(true)}
             className={`w-40 h-40 md:w-44 md:h-44 lg:w-56 lg:h-56 xl:w-64 xl:h-64 rounded-full object-cover ring-2 ring-primary/40 shadow-primary bg-muted/30 
-              transition-transform duration-400 ease-out hover:scale-110 hover:shadow-glow motion-reduce:transform-none ${imgLoaded ? 'opacity-100' : 'opacity-0'}`}
+              transition-transform duration-500 ease-out hover:scale-110 hover:shadow-glow motion-reduce:transform-none 
+              ${imgLoaded ? 'opacity-100' : 'opacity-0'}`}
           />
         </div>
       </div>
@@ -130,7 +137,7 @@ const Hero = () => {
                     aria-label="Email"
                     className="icon-button glass rounded-lg hover:shadow-glow focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40"
                   >
-                    <Mail className="w-6 h-6 text-primary" />
+                    <Mail className="w-7 h-7 text-primary" />
                   </a>
                 </TooltipTrigger>
                 <TooltipContent>Mail</TooltipContent>
@@ -145,7 +152,7 @@ const Hero = () => {
                     aria-label="LinkedIn"
                     className="icon-button glass rounded-lg hover:shadow-glow focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40"
                   >
-                    <Linkedin className="w-6 h-6 text-primary" />
+                    <Linkedin className="w-7 h-7 text-primary" />
                   </a>
                 </TooltipTrigger>
                 <TooltipContent>LinkedIn</TooltipContent>
@@ -160,7 +167,7 @@ const Hero = () => {
                     aria-label="GitHub"
                     className="icon-button glass rounded-lg hover:shadow-glow focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40"
                   >
-                    <Github className="w-6 h-6 text-primary" />
+                    <Github className="w-7 h-7 text-primary" />
                   </a>
                 </TooltipTrigger>
                 <TooltipContent>GitHub</TooltipContent>
@@ -175,7 +182,7 @@ const Hero = () => {
                     aria-label="LeetCode"
                     className="icon-button glass rounded-lg hover:shadow-glow focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40"
                   >
-                    <SiLeetcode className="w-6 h-6 text-primary" />
+                    <SiLeetcode className="w-7 h-7 text-primary" />
                   </a>
                 </TooltipTrigger>
                 <TooltipContent>LeetCode</TooltipContent>
@@ -190,7 +197,7 @@ const Hero = () => {
                     aria-label="CodeChef"
                     className="icon-button glass rounded-lg hover:shadow-glow focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40"
                   >
-                    <SiCodechef className="w-6 h-6 text-primary" />
+                    <SiCodechef className="w-7 h-7 text-primary" />
                   </a>
                 </TooltipTrigger>
                 <TooltipContent>CodeChef</TooltipContent>
