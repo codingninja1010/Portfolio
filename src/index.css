@@ -352,6 +352,9 @@ All colors MUST be HSL.
   }
   .btn-border-animate:hover::after { opacity: 1; animation: spinBorder 2.4s linear infinite; }
 
+  /* Keep animated border active even without hover when a control is downloading */
+  .btn-border-animate.is-downloading::after { opacity: 1; animation: spinBorder 1.8s linear infinite; }
+
   .btn-shine {
     position: relative;
     overflow: hidden;
@@ -370,6 +373,16 @@ All colors MUST be HSL.
     pointer-events: none;
   }
   .btn-shine:hover::before { transform: rotate(25deg) translateX(260%); }
+
+  /* Continuous shine sweep while downloading */
+  @keyframes shineSweep {
+    0% { transform: rotate(25deg) translateX(-120%); }
+    50% { transform: rotate(25deg) translateX(80%); }
+    100% { transform: rotate(25deg) translateX(260%); }
+  }
+  .btn-shine.is-downloading::before {
+    animation: shineSweep 1.6s ease-in-out infinite;
+  }
 
   /* Hover gradient fill for outline buttons */
   .btn-gradient-hover { transition: background 220ms ease, color 220ms ease, border-color 220ms ease, box-shadow 220ms ease; }
