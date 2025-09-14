@@ -4,7 +4,7 @@ import TiltCard from "./ui/TiltCard.jsx";
 import Magnetic from "./ui/Magnetic.jsx";
 import pythonLogo from "@/assets/python-logo.png";
 // Import as URL with a version query to bust browser cache
-import azureLogo from "@/assets/azure-logo.png?url&v=5";
+import azureLogo from "@/assets/azure-logo.png";
 import metaLogo from "@/assets/meta-logo.png";
 import udacityLogo from "@/assets/udacity-logo.png";
 
@@ -202,6 +202,9 @@ const Achievements = () => {
                           <motion.img 
                             src={cert.logo} 
                             alt={`${cert.title} logo`}
+                            width="32"
+                            height="32"
+                            loading="lazy"
                             className="w-8 h-8 object-contain mr-4 flex-shrink-0"
                             whileHover={{ rotate: 5, scale: 1.1 }}
                             transition={{ type: "spring", stiffness: 200, damping: 15 }}

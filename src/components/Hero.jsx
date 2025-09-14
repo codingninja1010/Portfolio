@@ -1,15 +1,16 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import Typewriter from "@/components/ui/Typewriter";
 import { Github, Linkedin, Mail } from "lucide-react";
 import { SiLeetcode, SiCodechef } from "react-icons/si";
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import rakeshPhoto from "@/assets/rakesh-photo.jpg";
 import Magnetic from "@/components/ui/Magnetic";
 
 const Hero = () => {
   // state kept in case future interactions are needed
-  const [imgLoaded, setImgLoaded] = useState(false);
+  // Track image load only for optional effects; don't hide the image before it loads to avoid perceived lag
+  const [imgLoaded, setImgLoaded] = useState(true);
   const containerRef = useRef(null);
   const [tilt, setTilt] = useState({ rx: 0, ry: 0, tx: 0, ty: 0 });
 
@@ -36,6 +37,20 @@ const Hero = () => {
   const ySmall = useTransform(scrollYProgress, [0, 1], [0, -40]);
   const yMedium = useTransform(scrollYProgress, [0, 1], [0, -80]);
   const yLarge = useTransform(scrollYProgress, [0, 1], [0, -120]);
+
+  // Preload the main profile image to reduce perceived load time
+  useEffect(() => {
+    const link = document.createElement('link');
+    link.rel = 'preload';
+    link.as = 'image';
+    link.href = rakeshPhoto;
+    // @ts-ignore fetchPriority is supported in modern Chromium
+    link.fetchPriority = 'high';
+    document.head.appendChild(link);
+    return () => {
+      try { document.head.removeChild(link); } catch {}
+    };
+  }, []);
 
   return (
   <section className="min-h-screen flex items-center justify-center relative overflow-hidden pt-28 md:pt-32 pb-8">
@@ -93,9 +108,9 @@ const Hero = () => {
             fetchPriority="high"
             width="256"
             height="256"
+            loading="eager"
             className={`w-40 h-40 md:w-44 md:h-44 lg:w-56 lg:h-56 xl:w-64 xl:h-64 rounded-full object-cover ring-2 ring-primary/40 shadow-primary bg-muted/30 
-              transition-transform duration-500 ease-out hover:scale-110 hover:shadow-glow motion-reduce:transform-none 
-              ${imgLoaded ? 'opacity-100' : 'opacity-0'}`}
+              transition-transform duration-500 ease-out hover:scale-110 hover:shadow-glow motion-reduce:transform-none`}
           />
         </div>
       </div>
@@ -136,6 +151,7 @@ const Hero = () => {
                 src={rakeshPhoto}
                 alt="Rakesh Vajrapu"
                 decoding="async"
+                loading="lazy"
                 width="80"
                 height="80"
                 className="block md:hidden w-20 h-20 rounded-full object-cover border border-primary/30 shadow-sm bg-muted/30 transition-transform duration-300 ease-out hover:scale-105 active:scale-105"
@@ -157,8 +173,7 @@ const Hero = () => {
             Software Engineer specializing in Python, JavaScript, and AI/ML. I build scalable, data-driven products that turn complex problems into elegant, reliable solutions.
           </p>
 
-          {/* Icon row placed where the button was */}
-          <TooltipProvider delayDuration={0} skipDelayDuration={0}>
+          {/* Icon row placed where the button was (App already wraps with TooltipProvider) */}
             <div className="flex justify-center space-x-6 mt-4 md:mt-6 mb-16">
               <Tooltip>
                 <TooltipTrigger asChild>
@@ -248,7 +263,7 @@ const Hero = () => {
                 <TooltipContent>CodeChef</TooltipContent>
               </Tooltip>
             </div>
-          </TooltipProvider>
+          
 
           {/* (Icons moved above) */}
         </motion.div>
