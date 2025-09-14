@@ -299,13 +299,13 @@ All colors MUST be HSL.
     position: absolute;
     inset: 0;
     border-radius: inherit;
-    padding: 1px;
+    padding: 1.5px; /* slightly thicker animated border for visibility */
     background: conic-gradient(
       from 0deg,
       hsl(var(--primary) / 0),
-      hsl(var(--primary) / 0.8) 20%,
-      hsl(var(--secondary) / 0.8) 55%,
-      hsl(var(--accent) / 0.8) 80%,
+      hsl(var(--primary) / 0.7) 20%,
+      hsl(var(--secondary) / 0.7) 55%,
+      hsl(var(--accent) / 0.7) 80%,
       hsl(var(--primary) / 0) 100%
     );
     -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
@@ -326,15 +326,25 @@ All colors MUST be HSL.
     position: absolute;
     top: -50%;
     left: -30%;
-    width: 40%;
-    height: 200%;
+    width: 55%;
+    height: 220%;
     transform: rotate(25deg) translateX(-120%);
-    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.25), transparent);
-    filter: blur(2px);
-    transition: transform 600ms ease;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.35), transparent);
+    filter: blur(1.5px);
+    transition: transform 700ms ease;
     pointer-events: none;
   }
   .btn-shine:hover::before { transform: rotate(25deg) translateX(260%); }
+
+  /* Hover gradient fill for outline buttons */
+  .btn-gradient-hover { transition: background 220ms ease, color 220ms ease, border-color 220ms ease, box-shadow 220ms ease; }
+  .btn-gradient-hover:hover {
+    /* Softer, low-contrast gradient fill so animations stay visible */
+    background: linear-gradient(135deg, hsl(var(--primary) / 0.12), hsl(var(--secondary) / 0.12));
+    color: inherit;
+    border-color: hsl(var(--primary) / 0.35);
+    box-shadow: 0 6px 18px hsl(var(--primary) / 0.25);
+  }
 
   /* Gradient text utility with enhanced visibility */
   .gradient-text-enhanced {
