@@ -18,45 +18,64 @@ export default function Typewriter({
   showCaret = true,
   caretClassName = "",
   onDone,
+  // If true, respect the user's reduced-motion setting and skip animation.
+  // Set to false to force the typewriter effect regardless of OS/browser setting.
+  respectReducedMotion = true,
 }) {
   const prefersReducedMotion = useReducedMotion();
-  const [idx, setIdx] = useState(prefersReducedMotion ? text.length : 0);
-  const startedRef = useRef(false);
+  const shouldReduce = respectReducedMotion && prefersReducedMotion;
+  const [idx, setIdx] = useState(shouldReduce ? text.length : 0);
   const timerRef = useRef(null);
 
   useEffect(() => {
-    if (!start || startedRef.current || prefersReducedMotion) return;
-    startedRef.current = true;
+    // Respect reduced motion: immediately show full text
+    if (shouldReduce) {
+      setIdx(text.length);
+      return;
+    }
+
+    if (!start) {
+      // Not started yet; keep reset state
+      setIdx(0);
+      return;
+    }
+
+    // Strict Mode-safe: schedule typing and cleanup properly.
+    // Always reset to 0 when (re)starting the animation.
+    setIdx(0);
+    let cancelled = false;
 
     const kickoff = () => {
+      if (cancelled) return;
+      const intervalMs = Math.max(8, speed);
       timerRef.current = setInterval(() => {
         setIdx((i) => {
           const next = i + 1;
           if (next >= text.length) {
-            clearInterval(timerRef.current);
+            if (timerRef.current) clearInterval(timerRef.current);
             timerRef.current = null;
             onDone?.();
           }
           return Math.min(next, text.length);
         });
-      }, Math.max(8, speed));
+      }, intervalMs);
     };
 
+    let timeoutId = null;
     if (delay > 0) {
-      const d = setTimeout(kickoff, delay);
-      return () => {
-        clearTimeout(d);
-        if (timerRef.current) clearInterval(timerRef.current);
-      };
+      timeoutId = setTimeout(kickoff, delay);
     } else {
       kickoff();
-      return () => {
-        if (timerRef.current) clearInterval(timerRef.current);
-      };
     }
-  }, [start, delay, speed, text.length, prefersReducedMotion, onDone]);
 
-  const visible = prefersReducedMotion ? text : text.slice(0, idx);
+    return () => {
+      cancelled = true;
+      if (timeoutId) clearTimeout(timeoutId);
+      if (timerRef.current) clearInterval(timerRef.current);
+    };
+  }, [start, delay, speed, text, text.length, shouldReduce, onDone]);
+
+  const visible = shouldReduce ? text : text.slice(0, idx);
   const done = idx >= text.length;
 
   return (

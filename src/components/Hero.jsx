@@ -113,6 +113,7 @@ const Hero = () => {
                 speed={28}
                 delay={200}
                 showCaret={false}
+                respectReducedMotion={false}
               />
               <Typewriter
                 as="span"
@@ -120,6 +121,7 @@ const Hero = () => {
                 text={"Rakesh Vajrapu"}
                 speed={28}
                 delay={500}
+                respectReducedMotion={false}
               />
             </p>
             {/* Mobile-only small photo under the greeting */}
@@ -137,6 +139,7 @@ const Hero = () => {
               text={"Full-Stack Developer & AI Enthusiast"}
               speed={22}
               delay={1600}
+              respectReducedMotion={false}
             />
           </div>
           
