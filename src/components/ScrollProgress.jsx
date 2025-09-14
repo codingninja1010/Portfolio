@@ -15,7 +15,7 @@ export default function ScrollProgress() {
 
   // Animate gradient position / hue subtly as you scroll
   const bgPosX = useTransform(scrollYProgress, (v) => `${v * 100}%`);
-  const hue = prefersReducedMotion ? 0 : useTransform(scrollYProgress, [0, 1], [0, 90]);
+  const hueMV = useTransform(scrollYProgress, [0, 1], [0, 90]);
 
   // Dot indicator position at the end of the bar
   const dotLeft = useTransform(scrollYProgress, (v) => `${v * 100}%`);
@@ -38,7 +38,7 @@ export default function ScrollProgress() {
               "linear-gradient(90deg, hsl(var(--primary)), hsl(var(--secondary)), hsl(var(--accent)))",
             backgroundSize: "200% 100%",
             backgroundPositionX: prefersReducedMotion ? "50%" : bgPosX,
-            filter: prefersReducedMotion ? "none" : hue.to((h) => `hue-rotate(${h}deg)`),
+            filter: prefersReducedMotion ? "none" : hueMV.to((h) => `hue-rotate(${h}deg)`),
           }}
         />
 
