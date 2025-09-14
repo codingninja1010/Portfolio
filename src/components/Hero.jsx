@@ -39,7 +39,7 @@ const Hero = () => {
   const yLarge = useTransform(scrollYProgress, [0, 1], [0, -120]);
 
   return (
-    <section className="min-h-screen flex items-center justify-center relative overflow-hidden pt-28 md:pt-32">
+  <section className="min-h-screen flex items-center justify-center relative overflow-hidden pt-28 md:pt-32 pb-8">
       {/* Animated background elements */}
       <div className="absolute inset-0 overflow-hidden">
         <motion.div style={{ y: ySmall }} className="absolute -top-40 -right-40 w-80 h-80 bg-primary/10 rounded-full blur-3xl animate-float" />

@@ -180,7 +180,8 @@ All colors MUST be HSL.
 
   /* Use a much lighter shadow for compact glass icon buttons to avoid a visible seam when several are aligned in a row */
   .icon-button.glass {
-    box-shadow: 0 2px 10px hsl(var(--background) / 0.35), inset 0 1px 0 hsl(var(--foreground) / 0.05);
+    /* Softer external shadow; remove inner top highlight that can align into a seam */
+    box-shadow: 0 6px 14px hsl(var(--background) / 0.28);
     border-color: hsl(var(--border) / 0.55);
     position: relative;
     overflow: hidden;
@@ -189,7 +190,7 @@ All colors MUST be HSL.
   /* If combined with .glass, avoid global glass hover scale here to prevent double-scaling */
   .icon-button.glass:hover {
     transform: none !important;
-    box-shadow: 0 4px 14px hsl(var(--background) / 0.4), inset 0 1px 0 hsl(var(--foreground) / 0.06);
+    box-shadow: 0 8px 18px hsl(var(--background) / 0.34);
     /* slight tint to base */
     background: linear-gradient(180deg, hsl(var(--foreground) / 0.02), hsl(var(--foreground) / 0.01));
   }
