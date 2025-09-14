@@ -87,13 +87,10 @@ const Skills = () => {
                     {/* Shine sweep */}
                     <span aria-hidden className="shine-rect" />
 
-                    {/* Category count badge */}
-                    <div className="skill-count absolute top-3 right-3 z-[2] select-none">
-                      {category.skills.length} skills
-                    </div>
+                    {/* Removed skills count badge as requested */}
 
                     <div className="flex items-center mb-5 relative z-[2]">
-                      <div className="p-3 rounded-lg bg-gradient-primary mr-4 shadow-primary/40 shadow-inner">
+                      <div className="icon-ring p-3 rounded-lg bg-gradient-primary mr-4 shadow-primary/40 shadow-inner relative overflow-visible">
                         <motion.span
                           whileHover={{ rotate: 8, scale: 1.05 }}
                           transition={{ type: "spring", stiffness: 220, damping: 16 }}
@@ -101,6 +98,8 @@ const Skills = () => {
                         >
                           <Icon className="w-6 h-6 text-white drop-shadow" />
                         </motion.span>
+                        {/* Rotating halo ring around icon */}
+                        <span aria-hidden className="ring-spin" />
                       </div>
                       <h3 className="text-xl font-semibold tracking-tight">
                         {category.title}
