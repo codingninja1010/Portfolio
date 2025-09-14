@@ -1,5 +1,7 @@
 import { Code, Database, Cloud, Cpu, Globe, GitBranch } from "lucide-react";
 import { motion } from "framer-motion";
+import TiltCard from "./ui/TiltCard.jsx";
+import Magnetic from "./ui/Magnetic.jsx";
 
 const Skills = () => {
   const skillCategories = [
@@ -41,6 +43,11 @@ const Skills = () => {
     }
   ];
 
+  const cardVariants = {
+    hidden: { opacity: 0, y: 16 },
+    show: { opacity: 1, y: 0, transition: { type: "spring", stiffness: 140, damping: 18 } },
+  };
+
   return (
     <section className="py-20 relative">
       <div className="container mx-auto px-6">
@@ -63,30 +70,66 @@ const Skills = () => {
           {skillCategories.map((category) => {
             const Icon = category.icon;
             return (
-              <motion.div
-                key={category.title}
-                variants={{ hidden: { opacity: 0, y: 16 }, show: { opacity: 1, y: 0 } }}
-                whileHover={{ y: -2 }}
-                className="glass rounded-xl p-6 hover:shadow-glow transition-all duration-300"
-              >
-                <div className="flex items-center mb-4">
-                  <div className={`p-3 rounded-lg bg-gradient-primary mr-4`}>
-                    <Icon className="w-6 h-6 text-white" />
-                  </div>
-                  <h3 className="text-xl font-semibold">{category.title}</h3>
-                </div>
-                
-                <div className="flex flex-wrap gap-2">
-                  {category.skills.map((skill, skillIndex) => (
-                    <span 
-                      key={skill}
-                      className="px-3 py-1 bg-muted/30 rounded-full text-sm transition-all duration-300 hover:bg-primary/20 hover:scale-105"
-                      style={{ animationDelay: `${skillIndex * 0.03}s` }}
-                    >
-                      {skill}
-                    </span>
-                  ))}
-                </div>
+              <motion.div key={category.title} variants={cardVariants}>
+                <Magnetic className="block">
+                  <TiltCard className="skill-card glass group rounded-xl p-6 hover:shadow-glow transition-all duration-300 relative overflow-hidden">
+                    {/* Decorative drifting grid background */}
+                    <span aria-hidden className="card-grid" />
+                    {/* Ambient soft dots */}
+                    <span aria-hidden className="ambient-dot top-3 right-4" />
+                    <span aria-hidden className="ambient-dot bottom-4 left-5" />
+                    {/* Aurora beams */}
+                    <span aria-hidden className="aurora aurora-a" />
+                    <span aria-hidden className="aurora aurora-b" />
+                    {/* Floating blurry orbs */}
+                    <span aria-hidden className="orb orb-1" />
+                    <span aria-hidden className="orb orb-2" />
+                    {/* Shine sweep */}
+                    <span aria-hidden className="shine-rect" />
+
+                    {/* Category count badge */}
+                    <div className="skill-count absolute top-3 right-3 z-[2] select-none">
+                      {category.skills.length} skills
+                    </div>
+
+                    <div className="flex items-center mb-5 relative z-[2]">
+                      <div className="p-3 rounded-lg bg-gradient-primary mr-4 shadow-primary/40 shadow-inner">
+                        <motion.span
+                          whileHover={{ rotate: 8, scale: 1.05 }}
+                          transition={{ type: "spring", stiffness: 220, damping: 16 }}
+                          className="inline-block"
+                        >
+                          <Icon className="w-6 h-6 text-white drop-shadow" />
+                        </motion.span>
+                      </div>
+                      <h3 className="text-xl font-semibold tracking-tight">
+                        {category.title}
+                      </h3>
+                    </div>
+
+                    {/* Large faint watermark icon */}
+                    <div className="card-watermark" aria-hidden>
+                      <Icon className="w-full h-full" />
+                    </div>
+
+                    <div className="flex flex-wrap gap-2 relative z-[2]">
+                      {category.skills.map((skill, skillIndex) => (
+                        <motion.span
+                          key={skill}
+                          initial={{ opacity: 0, y: 8, scale: 0.96 }}
+                          whileInView={{ opacity: 1, y: 0, scale: 1 }}
+                          viewport={{ once: true }}
+                          transition={{ delay: 0.05 * skillIndex, type: "spring", stiffness: 260, damping: 20 }}
+                          whileHover={{ y: -2, scale: 1.05 }}
+                          whileTap={{ scale: 0.98 }}
+                          className="skill-chip px-3 py-1 rounded-full text-sm"
+                        >
+                          {skill}
+                        </motion.span>
+                      ))}
+                    </div>
+                  </TiltCard>
+                </Magnetic>
               </motion.div>
             );
           })}
