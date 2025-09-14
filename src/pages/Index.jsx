@@ -7,6 +7,7 @@ import Contact from "@/components/Contact";
 import Volunteering from "@/components/Volunteering";
 import ScrollToTop from "@/components/ScrollToTop";
 import SectionDivider from "@/components/SectionDivider";
+import ScrollDown from "@/components/ScrollDown";
 import { motion } from "framer-motion";
 import { Suspense, lazy } from "react";
 
@@ -23,6 +24,7 @@ const Index = () => {
     <div className="min-h-screen">
       <Header />
       <ScrollToTop />
+  <ScrollDown />
       
       <main>
         <motion.div
