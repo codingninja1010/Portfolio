@@ -104,7 +104,7 @@ const Hero = () => {
           viewport={{ once: true, amount: 0.6 }}
           transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
         >
-          <div className="mb-8">
+          <div className="mb-6">
             {/* Greeting line with typewriter; name uses gradient like before */}
             <p className="text-2xl sm:text-3xl md:text-4xl font-semibold mb-4 text-foreground/90">
               <Typewriter
@@ -140,13 +140,13 @@ const Hero = () => {
             />
           </div>
           
-          <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto mb-8 leading-relaxed">
+          <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto mb-6 leading-relaxed">
             Software Engineer specializing in Python, JavaScript, and AI/ML. I build scalable, data-driven products that turn complex problems into elegant, reliable solutions.
           </p>
 
           {/* Icon row placed where the button was */}
           <TooltipProvider delayDuration={0} skipDelayDuration={0}>
-            <div className="flex justify-center space-x-6 mb-8">
+            <div className="flex justify-center space-x-6 mb-16">
               <Tooltip>
                 <TooltipTrigger asChild>
                   <Magnetic whileHover={{ y: -4, scale: 1.05 }} whileTap={{ scale: 0.98 }}>
