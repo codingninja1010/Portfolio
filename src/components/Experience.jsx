@@ -37,10 +37,11 @@ const Experience = () => {
   ];
 
   return (
-    <section className="py-20 relative">
+    <section className="pt-16 pb-8 relative">
+      <span aria-hidden className="section-blob blob-exp" />
       <div className="container mx-auto px-6">
-        <div className="text-center mb-16 pt-4">
-          <h2 className="text-4xl md:text-5xl font-bold mb-4 bg-gradient-primary bg-clip-text text-transparent">
+        <div className="text-center mb-10 pt-2">
+          <h2 className="text-4xl md:text-5xl font-bold mb-4 bg-gradient-primary bg-clip-text text-transparent section-heading">
             Work Experience
           </h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
@@ -58,7 +59,7 @@ const Experience = () => {
           {experiences.map((exp, index) => (
             <motion.div 
               key={index}
-              className="relative mb-12 last:mb-0"
+              className="relative mb-10 last:mb-0"
               variants={{ hidden: { opacity: 0, y: 24 }, show: { opacity: 1, y: 0 } }}
             >
               {/* Glowing timeline line */}
@@ -87,6 +88,9 @@ const Experience = () => {
                       {/* Aurora overlays */}
                       <span aria-hidden className="aurora aurora-exp-a" />
                       <span aria-hidden className="aurora aurora-exp-b" />
+                      {/* Additional graphics */}
+                      <span aria-hidden className="exp-diag-lines" />
+                      <span aria-hidden className="exp-particles" />
                       {/* Company logo placeholder glow */}
                       <span aria-hidden className="company-glow" />
                       

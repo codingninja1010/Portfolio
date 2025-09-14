@@ -49,7 +49,7 @@ const Contact = () => {
     <section className="py-20 relative">
       <div className="container mx-auto px-6">
   <div className="text-center mb-16 pt-4">
-          <h2 className="text-4xl md:text-5xl font-bold mb-4 bg-gradient-primary bg-clip-text text-transparent">
+          <h2 className="text-4xl md:text-5xl font-bold mb-4 bg-gradient-primary bg-clip-text text-transparent section-heading">
             Let's Connect
           </h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">

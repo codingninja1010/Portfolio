@@ -29,10 +29,11 @@ const Education = () => {
   ];
 
   return (
-    <section className="py-20 relative">
+    <section className="pt-16 pb-8 relative">
+      <span aria-hidden className="section-blob blob-edu" />
       <div className="container mx-auto px-6">
-  <div className="text-center mb-16 pt-4">
-          <h2 className="text-4xl md:text-5xl font-bold mb-4 bg-gradient-primary bg-clip-text text-transparent">
+  <div className="text-center mb-10 pt-2">
+          <h2 className="text-4xl md:text-5xl font-bold mb-4 bg-gradient-primary bg-clip-text text-transparent section-heading">
             Education
           </h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
@@ -41,7 +42,7 @@ const Education = () => {
         </div>
 
         <motion.div 
-          className="max-w-4xl mx-auto space-y-8"
+          className="max-w-4xl mx-auto space-y-6"
           initial="hidden"
           whileInView="show"
           viewport={{ once: true, margin: "-100px" }}
@@ -54,10 +55,13 @@ const Education = () => {
               className="h-full"
             >
               <Magnetic className="block h-full">
-                <TiltCard className="education-card glass rounded-xl p-8 hover:shadow-glow transition-all duration-500 relative overflow-hidden group h-full">
+                <TiltCard className="education-card glass rounded-xl p-6 hover:shadow-glow transition-all duration-500 relative overflow-hidden group h-full w-full min-h-[180px]">
                   {/* Decorative aurora beams */}
                   <span aria-hidden className="aurora aurora-edu-a" />
                   <span aria-hidden className="aurora aurora-edu-b" />
+                  {/* Chalk grid + sparkles */}
+                  <span aria-hidden className="edu-grid" />
+                  <span aria-hidden className="edu-sparkles" />
                   {/* Timeline dot */}
                   <span aria-hidden className="timeline-dot" />
                   
@@ -76,8 +80,8 @@ const Education = () => {
                       </div>
                       <div>
                         <h3 className="text-xl font-bold mb-2">{edu.degree}</h3>
-                        <h4 className="text-lg font-semibold text-primary mb-2">{edu.institution}</h4>
-                        <p className="text-muted-foreground text-sm leading-relaxed">{edu.description}</p>
+                        <h4 className="text-lg font-semibold text-primary mb-2 edu-underline">{edu.institution}</h4>
+                        <p className="text-muted-foreground text-sm leading-relaxed line-clamp-2">{edu.description}</p>
                       </div>
                     </div>
 

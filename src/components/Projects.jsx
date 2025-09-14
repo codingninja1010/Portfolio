@@ -39,10 +39,11 @@ const Projects = () => {
   ];
 
   return (
-    <section className="py-20 relative">
+    <section className="pt-16 pb-8 relative">
+      <span aria-hidden className="section-blob blob-proj" />
       <div className="container mx-auto px-6">
-  <div className="text-center mb-16 pt-4">
-          <h2 className="text-4xl md:text-5xl font-bold mb-4 bg-gradient-primary bg-clip-text text-transparent">
+  <div className="text-center mb-10 pt-2">
+          <h2 className="text-4xl md:text-5xl font-bold mb-4 bg-gradient-primary bg-clip-text text-transparent section-heading">
             Featured Projects
           </h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
@@ -51,7 +52,7 @@ const Projects = () => {
         </div>
 
         <motion.div
-          className="grid grid-cols-1 lg:grid-cols-2 gap-8 max-w-6xl mx-auto"
+          className="grid grid-cols-1 lg:grid-cols-2 gap-6 max-w-6xl mx-auto"
           initial="hidden"
           whileInView="show"
           viewport={{ once: true, margin: "-100px" }}
@@ -62,10 +63,14 @@ const Projects = () => {
             return (
               <motion.div key={project.title} variants={{ hidden: { opacity: 0, y: 20 }, show: { opacity: 1, y: 0 } }}>
                 <Magnetic className="block">
-                  <TiltCard className="project-card glass rounded-xl p-8 hover:shadow-glow transition-all duration-300 group relative overflow-hidden">
+                  <TiltCard className="project-card glass rounded-xl p-6 hover:shadow-glow transition-all duration-300 group relative overflow-hidden">
                     {/* Aurora beams */}
                     <span aria-hidden className="aurora aurora-proj-a" />
                     <span aria-hidden className="aurora aurora-proj-b" />
+                    {/* Tech scanlines + neon brackets */}
+                    <span aria-hidden className="proj-scanlines" />
+                    <span aria-hidden className="corner-bracket tl" />
+                    <span aria-hidden className="corner-bracket br" />
                     {/* Category badge floating */}
                     <span aria-hidden className="category-badge absolute top-4 right-4 z-[1] text-xs px-2 py-1 rounded-full bg-gradient-primary/20 text-primary border border-primary/30">
                       {project.category}
