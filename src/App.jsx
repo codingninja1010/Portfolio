@@ -9,6 +9,9 @@ import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 import ScrollProgress from "@/components/ScrollProgress";
 import PageTransition from "@/components/PageTransition";
+import CursorSpotlight from "@/components/CursorSpotlight";
+import AuroraBackground from "@/components/AuroraBackground";
+import BackgroundOrbs from "@/components/BackgroundOrbs";
 
 const queryClient = new QueryClient();
 
@@ -31,6 +34,9 @@ const App = () => (
       <Toaster />
       <Sonner />
       <BrowserRouter>
+  <AuroraBackground />
+  <BackgroundOrbs />
+        <CursorSpotlight />
         <ScrollProgress />
         <AnimatedRoutes />
       </BrowserRouter>

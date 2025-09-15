@@ -10,15 +10,14 @@ import SectionDivider from "@/components/SectionDivider";
 import { motion } from "framer-motion";
 import Magnetic from "@/components/ui/Magnetic.jsx";
 import { Suspense, lazy, useEffect } from "react";
+import { staggerContainer, revealVariant } from "@/lib/motion";
+import ParallaxAccent from "@/components/ParallaxAccent";
 
 const Projects = lazy(() => import("@/components/Projects"));
 const Achievements = lazy(() => import("@/components/Achievements"));
 
 const Index = () => {
-  const sectionVariants = {
-    hidden: { opacity: 0, y: 24 },
-    show: { opacity: 1, y: 0 },
-  };
+  const sectionVariants = revealVariant(24, 0.6);
 
   return (
     <div className="min-h-screen">
@@ -28,52 +27,60 @@ const Index = () => {
       {/** This runs only on the client and won't block the first paint. */}
       <PrefetchLazyChunks />
       
-      <main>
+      <main className="relative">
         <motion.div
+          variants={staggerContainer(0.08)}
           initial="hidden"
-          whileInView="show"
+          whileInView="visible"
           viewport={{ once: true, margin: "-100px" }}
-          transition={{ staggerChildren: 0.08 }}
         >
-          <motion.section id="home" className="scroll-mt-32 md:scroll-mt-40 section-anchor cv-auto" variants={sectionVariants}>
+          <motion.section id="home" className="relative scroll-mt-32 md:scroll-mt-40 section-anchor cv-auto" variants={sectionVariants}>
+            <ParallaxAccent className="-z-10" />
             <Hero />
           </motion.section>
         
-          <motion.section id="about" className="scroll-mt-32 md:scroll-mt-40 section-anchor cv-auto" variants={sectionVariants}>
+          <motion.section id="about" className="relative scroll-mt-32 md:scroll-mt-40 section-anchor cv-auto" variants={sectionVariants}>
+            <ParallaxAccent className="-z-10" offsetX={120} offsetY={40} />
             <Education />
           </motion.section>
         <SectionDivider />
         
-          <motion.section id="skills" className="scroll-mt-32 md:scroll-mt-40 section-anchor cv-auto" variants={sectionVariants}>
+          <motion.section id="skills" className="relative scroll-mt-32 md:scroll-mt-40 section-anchor cv-auto" variants={sectionVariants}>
+            <ParallaxAccent className="-z-10" offsetX={-60} offsetY={-20} intensity={30} />
             <Skills />
           </motion.section>
         <SectionDivider />
         
-          <motion.section id="experience" className="scroll-mt-32 md:scroll-mt-40 section-anchor cv-auto" variants={sectionVariants}>
+          <motion.section id="experience" className="relative scroll-mt-32 md:scroll-mt-40 section-anchor cv-auto" variants={sectionVariants}>
+            <ParallaxAccent className="-z-10" offsetX={140} offsetY={-30} intensity={36} />
             <Experience />
           </motion.section>
         <SectionDivider />
         
-          <motion.section id="volunteering" className="scroll-mt-32 md:scroll-mt-40 section-anchor cv-auto" variants={sectionVariants}>
+          <motion.section id="volunteering" className="relative scroll-mt-32 md:scroll-mt-40 section-anchor cv-auto" variants={sectionVariants}>
+            <ParallaxAccent className="-z-10" offsetX={-100} offsetY={20} intensity={32} />
             <Volunteering />
           </motion.section>
         <SectionDivider />
 
-          <motion.section id="projects" className="scroll-mt-32 md:scroll-mt-40 section-anchor cv-auto" variants={sectionVariants}>
+          <motion.section id="projects" className="relative scroll-mt-32 md:scroll-mt-40 section-anchor cv-auto" variants={sectionVariants}>
+            <ParallaxAccent className="-z-10" offsetX={60} offsetY={-10} intensity={28} />
             <Suspense fallback={<div className="container mx-auto px-6 py-8">Loading projects…</div>}>
               <Projects />
             </Suspense>
           </motion.section>
         <SectionDivider />
         
-          <motion.section id="achievements" className="scroll-mt-32 md:scroll-mt-40 section-anchor cv-auto" variants={sectionVariants}>
+          <motion.section id="achievements" className="relative scroll-mt-32 md:scroll-mt-40 section-anchor cv-auto" variants={sectionVariants}>
+            <ParallaxAccent className="-z-10" offsetX={-40} offsetY={-40} intensity={34} />
             <Suspense fallback={<div className="container mx-auto px-6 py-8">Loading achievements…</div>}>
               <Achievements />
             </Suspense>
           </motion.section>
         <SectionDivider />
         
-          <motion.section id="contact" className="scroll-mt-32 md:scroll-mt-40 section-anchor cv-auto" variants={sectionVariants}>
+          <motion.section id="contact" className="relative scroll-mt-32 md:scroll-mt-40 section-anchor cv-auto" variants={sectionVariants}>
+            <ParallaxAccent className="-z-10" offsetX={100} offsetY={10} intensity={30} />
             <Contact />
           </motion.section>
         </motion.div>

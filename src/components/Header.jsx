@@ -153,8 +153,8 @@ const Header = () => {
                 onClick={() => scrollToSection(item.href)}
                 className={`px-3 py-2 text-sm font-medium rounded-lg border transition-colors duration-200 ${
                   activeId === item.href.replace("#", "")
-                    ? "text-primary border-primary/40 bg-primary/5"
-                    : "text-muted-foreground border-transparent hover:text-primary hover:border-primary/40 hover:bg-primary/5"
+                    ? "text-primary border-primary/30 bg-primary/5"
+                    : "text-foreground/80 border-transparent hover:text-primary hover:border-primary/30 hover:bg-primary/5"
                 }`}
               >
                 {item.name}
@@ -162,8 +162,10 @@ const Header = () => {
             ))}
           </nav>
 
+          {/* Section mini-map removed per request */}
+
           {/* Desktop CTA */}
-          <div className="hidden md:block">
+          <div className="hidden md:flex items-center gap-3">
             {RESUME_URL && (
               <motion.div className="inline-block" whileHover={{ y: -2, scale: 1.03 }} whileTap={{ scale: 0.98 }}>
                 <AnimatedDownloadButton

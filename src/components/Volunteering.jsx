@@ -1,6 +1,8 @@
 import { Calendar, Award, Users } from "lucide-react";
 import TiltCard from "./ui/TiltCard.jsx";
 import Magnetic from "./ui/Magnetic.jsx";
+import { motion } from "framer-motion";
+import { useScrollReveal } from "@/hooks/use-scroll-reveal";
 
 const Volunteering = () => {
   const items = [
@@ -53,11 +55,13 @@ const Volunteering = () => {
         </div>
 
   {/* Cards container: vertical single-column stack, centered via container, children stretch full width */}
-  <div className="max-w-5xl mx-auto flex flex-col items-stretch space-y-8">
+  {(() => { const { ref, motionProps } = useScrollReveal({ amount: 0.3, y: 18, duration: 0.55 }); return (
+  <motion.div ref={ref} {...motionProps} className="max-w-5xl mx-auto flex flex-col items-stretch space-y-8">
           {items.map((item, index) => {
             const Icon = item.icon || Users;
             return (
-              <Magnetic key={index} className="w-full">
+              <motion.div key={index} variants={{ hidden: { opacity: 0, y: 18 }, visible: { opacity: 1, y: 0 } }}>
+              <Magnetic className="w-full">
                 <TiltCard
                   className="volunteer-card glass glow-border rounded-xl p-6 hover:shadow-glow transition-all duration-500 animate-fadeInUp relative overflow-hidden group w-full h-auto flex flex-col max-w-full"
                   style={{ animationDelay: `${index * 0.15}s` }}
@@ -104,9 +108,10 @@ const Volunteering = () => {
                   )}
                 </TiltCard>
               </Magnetic>
+              </motion.div>
             );
           })}
-        </div>
+        </motion.div> ); })()}
       </div>
     </section>
   );

@@ -8,6 +8,7 @@ import azureLogo from "@/assets/azure-logo.png";
 import metaLogo from "@/assets/meta-logo.png";
 import udacityLogo from "@/assets/udacity-logo.png";
 import { useScrollReveal } from "@/hooks/use-scroll-reveal";
+import AnimatedNumber from "@/components/ui/AnimatedNumber.jsx";
 
 const Achievements = ({ items, certs }) => {
   const achievements = items || [
@@ -119,7 +120,18 @@ const Achievements = ({ items, certs }) => {
                   </p>
                   
                   <div className="text-2xl font-bold bg-gradient-secondary bg-clip-text text-transparent relative z-[2]">
-                    {achievement.highlight}
+                    {(() => {
+                      // Extract first number in highlight if present, else show as text
+                      const match = String(achievement.highlight).match(/([0-9][0-9,]*)/);
+                      if (!match) return achievement.highlight;
+                      const numeric = Number(match[1].replaceAll(',', ''));
+                      const suffix = String(achievement.highlight).slice(match.index + match[1].length);
+                      return (
+                        <>
+                          <AnimatedNumber value={numeric} />{suffix}
+                        </>
+                      );
+                    })()}
                   </div>
                 </TiltCard>
               </Magnetic>

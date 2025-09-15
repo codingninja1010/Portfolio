@@ -1,39 +1,84 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 /**
  * useActiveSection
- * Observe sections by their ids and return the currently active section id based on viewport intersection.
- * Useful for nav highlighting. SSR-safe and degrades gracefully.
+ * Robust active section detection based on a viewport reference line (center by default).
+ * This avoids cases where the first section stays active due to IntersectionObserver quirks,
+ * and works reliably with tall sections.
  */
-export function useActiveSection(sectionIds, options = {}) {
-  const { rootMargin = "-40% 0px -50% 0px" } = options;
-  const [active, setActive] = useState(sectionIds?.[0] || null);
+export function useActiveSection(sectionIds = [], options = {}) {
+  const {
+    // Line position as a fraction of the viewport height (0 = top, 0.5 = middle)
+    line = 0.38,
+    // Extra offset in pixels to account for a fixed header
+    headerOffset = undefined,
+  } = options;
+
+  const [active, setActive] = useState(null);
+  const rafRef = useRef(0);
 
   useEffect(() => {
-    if (typeof window === "undefined" || !("IntersectionObserver" in window)) {
-      setActive(sectionIds?.[0] || null);
-      return;
-    }
-    const sections = (sectionIds || [])
+    if (typeof window === "undefined") return;
+
+    const getHeaderOffset = () => {
+      if (typeof headerOffset === "number") return headerOffset;
+      const headerEl = document.querySelector("header");
+      const h = headerEl ? headerEl.offsetHeight : 72;
+      // plus a little breathing room so headings aren't flush
+      return h + 20;
+    };
+
+    const els = (sectionIds || [])
       .map((id) => document.getElementById(id) || document.querySelector(`#${id}`))
       .filter(Boolean);
+    if (!els.length) return;
 
-    if (!sections.length) return;
+    const compute = () => {
+      const vpH = window.innerHeight || 1;
+      const refLine = Math.max(0, Math.min(1, line)) * vpH; // y in viewport coords
+      const offset = getHeaderOffset();
 
-    const observer = new IntersectionObserver(
-      (entries) => {
-        // Find the entry with the highest intersection ratio that's intersecting
-        const visible = entries
-          .filter((e) => e.isIntersecting)
-          .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
-        if (visible?.target?.id) setActive(visible.target.id);
-      },
-      { root: null, rootMargin, threshold: [0.1, 0.25, 0.5, 0.75, 1] }
-    );
+      // Determine which section crosses the reference line
+      let currentId = null;
+      let closestDist = Infinity;
+      for (const el of els) {
+        const rect = el.getBoundingClientRect();
+        // Consider header offset by shifting the rect up
+        const top = rect.top - offset;
+        const bottom = rect.bottom - offset;
 
-    sections.forEach((el) => observer.observe(el));
-    return () => observer.disconnect();
-  }, [JSON.stringify(sectionIds), rootMargin]);
+        // If the line is within the section bounds, it's the active one
+        if (top <= refLine && bottom >= refLine) {
+          currentId = el.id || null;
+          closestDist = 0;
+          break;
+        }
+
+        // Otherwise pick the section whose center is closest to the line
+        const center = (top + bottom) / 2;
+        const dist = Math.abs(center - refLine);
+        if (dist < closestDist) {
+          closestDist = dist;
+          currentId = el.id || null;
+        }
+      }
+      setActive(currentId);
+    };
+
+    const onScroll = () => {
+      cancelAnimationFrame(rafRef.current);
+      rafRef.current = requestAnimationFrame(compute);
+    };
+
+    compute();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll);
+    return () => {
+      cancelAnimationFrame(rafRef.current);
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
+    };
+  }, [JSON.stringify(sectionIds), line, headerOffset]);
 
   return active;
 }
