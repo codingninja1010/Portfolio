@@ -1,11 +1,12 @@
 import { useRef, forwardRef } from "react";
-import { motion, useMotionValue, useSpring, useReducedMotion } from "framer-motion";
+import { motion, useMotionValue, useSpring } from "framer-motion";
+import { usePrefersReducedMotion } from "@/hooks/use-reduced-motion";
 
 const Magnetic = forwardRef(function Magnetic(
   { children, strength = 0.25, className = "", style, onMouseMove, onMouseLeave, ...rest },
   forwardedRef
 ) {
-  const prefersReducedMotion = useReducedMotion();
+  const prefersReducedMotion = usePrefersReducedMotion();
   const localRef = useRef(null);
   const x = useMotionValue(0);
   const y = useMotionValue(0);

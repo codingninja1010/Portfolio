@@ -1,11 +1,13 @@
 import { useEffect, useRef, useState } from "react";
-import { motion, useScroll, useTransform } from "framer-motion";
+import { motion, useScroll, useTransform, useReducedMotion } from "framer-motion";
 import Typewriter from "@/components/ui/Typewriter";
 import { Github, Linkedin, Mail } from "lucide-react";
 import { SiLeetcode, SiCodechef } from "react-icons/si";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import rakeshPhoto from "@/assets/rakesh-photo.jpg";
 import Magnetic from "@/components/ui/Magnetic";
+import { RESUME_URL } from "@/config/site";
+import AnimatedDownloadButton from "@/components/ui/AnimatedDownloadButton";
 
 const Hero = () => {
   // state kept in case future interactions are needed
@@ -33,10 +35,11 @@ const Hero = () => {
   const handleMouseLeave = () => setTilt({ rx: 0, ry: 0, tx: 0, ty: 0 });
 
   // Scroll-based parallax for background orbs
+  const prefersReducedMotion = useReducedMotion();
   const { scrollYProgress } = useScroll();
-  const ySmall = useTransform(scrollYProgress, [0, 1], [0, -40]);
-  const yMedium = useTransform(scrollYProgress, [0, 1], [0, -80]);
-  const yLarge = useTransform(scrollYProgress, [0, 1], [0, -120]);
+  const ySmall = useTransform(scrollYProgress, [0, 1], [0, prefersReducedMotion ? -10 : -40]);
+  const yMedium = useTransform(scrollYProgress, [0, 1], [0, prefersReducedMotion ? -20 : -80]);
+  const yLarge = useTransform(scrollYProgress, [0, 1], [0, prefersReducedMotion ? -30 : -120]);
 
   // Preload the main profile image to reduce perceived load time
   useEffect(() => {
@@ -52,13 +55,15 @@ const Hero = () => {
     };
   }, []);
 
+  // Inline mobile-only resume button using shared AnimatedDownloadButton
+
   return (
   <section className="min-h-screen flex items-center justify-center relative overflow-hidden pt-28 md:pt-32 pb-8">
       {/* Animated background elements */}
       <div className="absolute inset-0 overflow-hidden">
-        <motion.div style={{ y: ySmall }} className="absolute -top-40 -right-40 w-80 h-80 bg-primary/10 rounded-full blur-3xl animate-float" />
-        <motion.div style={{ y: yMedium }} className="absolute -bottom-40 -left-40 w-80 h-80 bg-secondary/10 rounded-full blur-3xl animate-float" />
-        <motion.div style={{ y: yLarge }} className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-accent/5 rounded-full blur-3xl animate-float" />
+        <motion.div style={{ y: ySmall }} className={`absolute -top-40 -right-40 w-80 h-80 bg-primary/10 rounded-full blur-3xl ${prefersReducedMotion ? '' : 'animate-float'}`} />
+        <motion.div style={{ y: yMedium }} className={`absolute -bottom-40 -left-40 w-80 h-80 bg-secondary/10 rounded-full blur-3xl ${prefersReducedMotion ? '' : 'animate-float'}`} />
+        <motion.div style={{ y: yLarge }} className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-accent/5 rounded-full blur-3xl ${prefersReducedMotion ? '' : 'animate-float'}`} />
       </div>
 
       {/* Big circular profile photo aligned to the right on desktop */}
@@ -106,8 +111,8 @@ const Hero = () => {
             onLoad={() => setImgLoaded(true)}
             decoding="async"
             fetchPriority="high"
-            width="256"
-            height="256"
+            width={256}
+            height={256}
             loading="eager"
             className={`w-40 h-40 md:w-44 md:h-44 lg:w-56 lg:h-56 xl:w-64 xl:h-64 rounded-full object-cover ring-2 ring-primary/40 shadow-primary bg-muted/30 
               transition-transform duration-500 ease-out hover:scale-110 hover:shadow-glow motion-reduce:transform-none`}
@@ -152,8 +157,8 @@ const Hero = () => {
                 alt="Rakesh Vajrapu"
                 decoding="async"
                 loading="lazy"
-                width="80"
-                height="80"
+                width={80}
+                height={80}
                 className="block md:hidden w-20 h-20 rounded-full object-cover border border-primary/30 shadow-sm bg-muted/30 transition-transform duration-300 ease-out hover:scale-105 active:scale-105"
               />
             </div>
@@ -266,6 +271,21 @@ const Hero = () => {
           
 
           {/* (Icons moved above) */}
+          {/* Inline mobile-only Download Resume CTA below icon bar */}
+          {RESUME_URL && (
+            <div className="md:hidden flex justify-center mt-2">
+              <motion.div whileHover={{ y: -1, scale: 1.02 }} whileTap={{ scale: 0.98 }}>
+                <AnimatedDownloadButton
+                  href={RESUME_URL}
+                  filename="Rakesh_Bhagavan_Vajrapu_Resume.pdf"
+                  size="md"
+                  className="relative overflow-hidden border-primary/25 hover:bg-primary/10 btn-border-animate btn-shine"
+                >
+                  Download Resume
+                </AnimatedDownloadButton>
+              </motion.div>
+            </div>
+          )}
         </motion.div>
       </div>
     </section>

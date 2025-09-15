@@ -1,15 +1,26 @@
 import { useState, useEffect } from "react";
-import { Button } from "@/components/ui/button";
-import { toast } from "@/components/ui/sonner";
 import { RESUME_URL } from "@/config/site";
-import { Menu, X, Download, Loader2, Check } from "lucide-react";
+import { Menu, X } from "lucide-react";
 import { motion } from "framer-motion";
+import AnimatedDownloadButton from "@/components/ui/AnimatedDownloadButton";
 
 const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [dlState, setDlState] = useState("idle"); // idle | downloading | done
-  // (Removed active section observer to restore previous simple behavior)
+  // (Active section observer intentionally omitted for simple behavior)
+  const [isDownloading, setIsDownloading] = useState(false);
+
+  // Listen for global download events emitted by AnimatedDownloadButton
+  useEffect(() => {
+    const onStart = () => setIsDownloading(true);
+    const onEnd = () => setIsDownloading(false);
+    window.addEventListener("resume-download:start", onStart);
+    window.addEventListener("resume-download:end", onEnd);
+    return () => {
+      window.removeEventListener("resume-download:start", onStart);
+      window.removeEventListener("resume-download:end", onEnd);
+    };
+  }, []);
 
   // Lock body scroll when mobile menu is open
   useEffect(() => {
@@ -94,57 +105,7 @@ const Header = () => {
     setIsMobileMenuOpen(false);
   };
 
-  const isExternalResume = typeof RESUME_URL === 'string' && RESUME_URL.startsWith("http");
-
-  const triggerLocalDownload = () => {
-    const a = document.createElement('a');
-    a.href = RESUME_URL;
-    a.setAttribute('download', 'Rakesh_Bhagavan_Vajrapu_Resume.pdf');
-    document.body.appendChild(a);
-    a.click();
-    a.remove();
-  };
-
-  const onResumeClick = (e) => {
-    if (!RESUME_URL) return;
-    if (dlState === 'downloading') { e.preventDefault(); return; }
-    if (isExternalResume) {
-      // Let the browser open the link in a new tab normally
-      return;
-    }
-    // Intercept local file to add animation + keep same behavior
-    e.preventDefault();
-    setDlState('downloading');
-    try { toast("Downloading resume…", { description: "Your download will start shortly." }); } catch {}
-    // Kick off the download immediately
-    triggerLocalDownload();
-    // Show spinner briefly, then a success check, then return to idle
-    setTimeout(() => {
-      setDlState('done');
-      try { toast("Download started", { description: "Check your browser downloads." }); } catch {}
-      setTimeout(() => setDlState('idle'), 1200);
-    }, 1200);
-  };
-
-  const renderDesktopResumeContent = () => {
-    if (dlState === 'downloading') {
-      return <><Loader2 className="w-4 h-4 mr-2 animate-spin" />Downloading…</>;
-    }
-    if (dlState === 'done') {
-      return <><Check className="w-4 h-4 mr-2 text-green-400" />Downloaded</>;
-    }
-    return <><Download className="w-4 h-4 mr-2 transition-transform duration-300 group-hover:rotate-[-12deg]" />Resume</>;
-  };
-
-  const renderMobileResumeContent = () => {
-    if (dlState === 'downloading') {
-      return <><Loader2 className="w-4 h-4 mr-2 animate-spin" />Downloading…</>;
-    }
-    if (dlState === 'done') {
-      return <><Check className="w-4 h-4 mr-2 text-green-400" />Downloaded</>;
-    }
-    return <><Download className="w-4 h-4 mr-2 transition-transform duration-300 group-hover:rotate-[-12deg]" />Download Resume</>;
-  };
+  // Resume button content handled by AnimatedDownloadButton
 
   return (
     <header 
@@ -153,14 +114,14 @@ const Header = () => {
       }`}
       style={{paddingTop: '4px'}}
     >
-      {/* Top inline progress bar when downloading */}
-      {dlState === 'downloading' && (
-        <div className="absolute left-0 right-0 top-0 h-0.5 overflow-hidden">
+      {/* Global top progress bar while downloading local resume */}
+      {isDownloading && (
+        <div className="absolute left-0 right-0 top-0 h-[2px] overflow-hidden">
           <motion.div
-            className="h-full bg-primary"
+            className="h-full bg-gradient-to-r from-primary via-secondary to-accent"
             initial={{ scaleX: 0 }}
-            animate={{ scaleX: [0.1, 0.6, 0.9] }}
-            transition={{ duration: 1.2, ease: "easeInOut", repeat: Infinity }}
+            animate={{ scaleX: [0.15, 0.7, 1] }}
+            transition={{ duration: 0.9, ease: "easeInOut", repeat: Infinity }}
             style={{ transformOrigin: '0% 50%' }}
           />
         </div>
@@ -187,34 +148,16 @@ const Header = () => {
 
           {/* Desktop CTA */}
           <div className="hidden md:block">
-            {RESUME_URL ? (
+            {RESUME_URL && (
               <motion.div className="inline-block" whileHover={{ y: -2, scale: 1.03 }} whileTap={{ scale: 0.98 }}>
-                <Button asChild variant="outline" size="sm" className={`relative overflow-hidden border-primary/25 hover:bg-primary/10 btn-border-animate btn-shine ${dlState === 'downloading' ? 'is-downloading' : ''}`}>
-                  <motion.a
-                    href={RESUME_URL}
-                    target={isExternalResume ? "_blank" : undefined}
-                    rel="noopener noreferrer"
-                    aria-label="Download Resume"
-                    className={`group ${dlState === 'downloading' ? 'pointer-events-none' : ''}`}
-                    download={isExternalResume ? undefined : "Rakesh_Bhagavan_Vajrapu_Resume.pdf"}
-                    onClick={onResumeClick}
-                    whileHover={{}}
-                  >
-                    {renderDesktopResumeContent()}
-                  </motion.a>
-                </Button>
-              </motion.div>
-            ) : (
-              <motion.div className="inline-block" whileHover={{ y: -2, scale: 1.03 }} whileTap={{ scale: 0.98 }}>
-                <Button
-                  variant="outline"
-                  size="sm"
-                  className="relative overflow-hidden border-primary/25 hover:bg-primary/10"
-                  onClick={() => toast("Resume unavailable", { description: "Set RESUME_URL in src/config/site.js" })}
+                <AnimatedDownloadButton
+                  href={RESUME_URL}
+                  filename="Rakesh_Bhagavan_Vajrapu_Resume.pdf"
+                  size="md"
+                  className="relative overflow-hidden border-primary/25 hover:bg-primary/10 btn-border-animate btn-shine"
                 >
-                  <Download className="w-4 h-4 mr-2 transition-transform duration-300" />
                   Resume
-                </Button>
+                </AnimatedDownloadButton>
               </motion.div>
             )}
           </div>
@@ -253,33 +196,16 @@ const Header = () => {
                   </button>
                 ))}
                 <div className="px-6 py-4">
-                  {RESUME_URL ? (
+                  {RESUME_URL && (
                     <motion.div whileHover={{ y: -1, scale: 1.02 }} whileTap={{ scale: 0.98 }}>
-                      <Button asChild variant="outline" size="sm" className={`w-full relative overflow-hidden border-primary/25 hover:bg-primary/10 btn-border-animate btn-shine ${dlState === 'downloading' ? 'is-downloading' : ''}`}>
-                        <motion.a
-                          href={RESUME_URL}
-                          target={isExternalResume ? "_blank" : undefined}
-                          rel="noopener noreferrer"
-                          aria-label="Download Resume"
-                          className={`group ${dlState === 'downloading' ? 'pointer-events-none' : ''}`}
-                          download={isExternalResume ? undefined : "Rakesh_Bhagavan_Vajrapu_Resume.pdf"}
-                          onClick={onResumeClick}
-                        >
-                          {renderMobileResumeContent()}
-                        </motion.a>
-                      </Button>
-                    </motion.div>
-                  ) : (
-                    <motion.div whileHover={{ y: -1, scale: 1.02 }} whileTap={{ scale: 0.98 }}>
-                      <Button
-                        variant="outline"
-                        size="sm"
-                        className="w-full relative overflow-hidden border-primary/25 hover:bg-primary/10"
-                        onClick={() => toast("Resume unavailable", { description: "Set RESUME_URL in src/config/site.js" })}
+                      <AnimatedDownloadButton
+                        href={RESUME_URL}
+                        filename="Rakesh_Bhagavan_Vajrapu_Resume.pdf"
+                        size="md"
+                        className="w-full relative overflow-hidden border-primary/25 hover:bg-primary/10 btn-border-animate btn-shine"
                       >
-                        <Download className="w-4 h-4 mr-2 transition-transform duration-300" />
                         Download Resume
-                      </Button>
+                      </AnimatedDownloadButton>
                     </motion.div>
                   )}
                 </div>

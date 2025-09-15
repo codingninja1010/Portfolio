@@ -409,6 +409,12 @@ All colors MUST be HSL.
     filter: drop-shadow(0 0 1px rgba(59, 130, 246, 0.3));
   }
 
+  /* Performance: Avoid rendering off-screen content until scrolled near */
+  .cv-auto {
+    content-visibility: auto;
+    contain-intrinsic-size: 1px 1000px; /* reserve space to reduce layout shift */
+  }
+
   /* ==================== Section heading + backdrop ==================== */
   .section-heading { position: relative; display: inline-block; }
   .section-heading::after {

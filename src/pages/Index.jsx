@@ -35,45 +35,45 @@ const Index = () => {
           viewport={{ once: true, margin: "-100px" }}
           transition={{ staggerChildren: 0.08 }}
         >
-          <motion.section id="home" className="scroll-mt-32 md:scroll-mt-40 section-anchor" variants={sectionVariants}>
+          <motion.section id="home" className="scroll-mt-32 md:scroll-mt-40 section-anchor cv-auto" variants={sectionVariants}>
             <Hero />
           </motion.section>
         
-          <motion.section id="about" className="scroll-mt-32 md:scroll-mt-40 section-anchor" variants={sectionVariants}>
+          <motion.section id="about" className="scroll-mt-32 md:scroll-mt-40 section-anchor cv-auto" variants={sectionVariants}>
             <Education />
           </motion.section>
         <SectionDivider />
         
-          <motion.section id="skills" className="scroll-mt-32 md:scroll-mt-40 section-anchor" variants={sectionVariants}>
+          <motion.section id="skills" className="scroll-mt-32 md:scroll-mt-40 section-anchor cv-auto" variants={sectionVariants}>
             <Skills />
           </motion.section>
         <SectionDivider />
         
-          <motion.section id="experience" className="scroll-mt-32 md:scroll-mt-40 section-anchor" variants={sectionVariants}>
+          <motion.section id="experience" className="scroll-mt-32 md:scroll-mt-40 section-anchor cv-auto" variants={sectionVariants}>
             <Experience />
           </motion.section>
         <SectionDivider />
         
-          <motion.section id="volunteering" className="scroll-mt-32 md:scroll-mt-40 section-anchor" variants={sectionVariants}>
+          <motion.section id="volunteering" className="scroll-mt-32 md:scroll-mt-40 section-anchor cv-auto" variants={sectionVariants}>
             <Volunteering />
           </motion.section>
         <SectionDivider />
 
-          <motion.section id="projects" className="scroll-mt-32 md:scroll-mt-40 section-anchor" variants={sectionVariants}>
+          <motion.section id="projects" className="scroll-mt-32 md:scroll-mt-40 section-anchor cv-auto" variants={sectionVariants}>
             <Suspense fallback={<div className="container mx-auto px-6 py-8">Loading projects…</div>}>
               <Projects />
             </Suspense>
           </motion.section>
         <SectionDivider />
         
-          <motion.section id="achievements" className="scroll-mt-32 md:scroll-mt-40 section-anchor" variants={sectionVariants}>
+          <motion.section id="achievements" className="scroll-mt-32 md:scroll-mt-40 section-anchor cv-auto" variants={sectionVariants}>
             <Suspense fallback={<div className="container mx-auto px-6 py-8">Loading achievements…</div>}>
               <Achievements />
             </Suspense>
           </motion.section>
         <SectionDivider />
         
-          <motion.section id="contact" className="scroll-mt-32 md:scroll-mt-40 section-anchor" variants={sectionVariants}>
+          <motion.section id="contact" className="scroll-mt-32 md:scroll-mt-40 section-anchor cv-auto" variants={sectionVariants}>
             <Contact />
           </motion.section>
         </motion.div>
