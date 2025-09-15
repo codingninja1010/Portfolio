@@ -2,12 +2,12 @@
 
 Modern, fast, and accessible personal portfolio built with React, Vite, Tailwind CSS, and Framer Motion.
 
-- Live Site: [your-portfolio.example.com](https://rakeshvajrapu.netlify.app/)
-- Contact: [your.email@example.com](mailto:rakeshrb1411@gmail.com)
+- Live Site: [rakeshvajrapu.netlify.app](https://rakeshvajrapu.netlify.app/)
+- Contact: [rakeshrb1411@gmail.com](mailto:rakeshrb1411@gmail.com)
 
 ## Overview
 
-This repository contains the source code for my portfolio website. It showcases my skills, experience, projects, achievements, education, and contact information. The site is a single-page app with smooth section navigation, subtle animations, and a strong focus on performance and accessibility.
+This repository contains the source code for my portfolio website. It showcases my skills, experience, projects, achievements, education, and contact information. The site is a single‑page app with smooth section navigation, subtle animations, and a strong focus on performance and accessibility.
 
 ## Features
 
@@ -23,7 +23,7 @@ This repository contains the source code for my portfolio website. It showcases 
 
 - React 18 + Vite 5
 - Tailwind CSS 3 + tailwindcss-animate
-- Framer Motion 10/12 for animations
+- Framer Motion for animations
 - Radix UI primitives via custom components
 - React Router v6 (client‑side routing)
 - @tanstack/react-query (ready for data fetching/caching)
@@ -51,10 +51,9 @@ npm run build
 npm run preview
 ```
 
-Optional installs (if not already installed):
+Deployment notes:
 
-- react-icons – icons used in various components
-- framer-motion – animation library (already declared in package.json)
+- Ensure public assets exist in `public/` (e.g., `/favicon.svg`, `/og-image.png`, `/rakesh-photo.jpg`).
 
 ## Usage
 
@@ -88,8 +87,3 @@ Contributions, suggestions, and bug reports are welcome.
 ## License
 
 This project is licensed under the MIT License. If `LICENSE` is not present, feel free to add one.
-
-## Links
-
-- LinkedIn: [linkedin.com/in/your-handle](https://www.linkedin.com/in/rakeshvajrapu/)
-- GitHub: [github.com/your-handle](https://github.com/rakesh-vajrapu)

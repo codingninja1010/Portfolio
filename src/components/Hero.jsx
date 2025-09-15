@@ -4,7 +4,8 @@ import Typewriter from "@/components/ui/Typewriter";
 import { Github, Linkedin, Mail } from "lucide-react";
 import { SiLeetcode, SiCodechef } from "react-icons/si";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
-import rakeshPhoto from "@/assets/rakesh-photo.jpg";
+import rakeshPhotoWebp from "@/assets/rakesh-photo.jpg?format=webp&as=src&quality=70";
+import rakeshPhotoJpg from "@/assets/rakesh-photo.jpg?as=src&quality=78";
 import Magnetic from "@/components/ui/Magnetic";
 import { RESUME_URL } from "@/config/site";
 import AnimatedDownloadButton from "@/components/ui/AnimatedDownloadButton";
@@ -46,13 +47,11 @@ const Hero = () => {
     const link = document.createElement('link');
     link.rel = 'preload';
     link.as = 'image';
-    link.href = rakeshPhoto;
+  link.href = rakeshPhotoWebp;
     // @ts-ignore fetchPriority is supported in modern Chromium
     link.fetchPriority = 'high';
     document.head.appendChild(link);
-    return () => {
-      try { document.head.removeChild(link); } catch {}
-    };
+    return () => { try { document.head.removeChild(link); } catch {} };
   }, []);
 
   // Inline mobile-only resume button using shared AnimatedDownloadButton
@@ -105,18 +104,21 @@ const Hero = () => {
             />
           </div>
 
-          <img
-            src={rakeshPhoto}
-            alt="Rakesh Vajrapu"
-            onLoad={() => setImgLoaded(true)}
-            decoding="async"
-            fetchpriority="high"
-            width={256}
-            height={256}
-            loading="eager"
-            className={`w-40 h-40 md:w-44 md:h-44 lg:w-56 lg:h-56 xl:w-64 xl:h-64 rounded-full object-cover ring-2 ring-primary/40 shadow-primary bg-muted/30 
-              transition-transform duration-500 ease-out hover:scale-110 hover:shadow-glow motion-reduce:transform-none`}
-          />
+          <picture>
+            <source type="image/webp" srcSet={rakeshPhotoWebp} />
+            <img
+              src={rakeshPhotoJpg}
+              alt="Rakesh Vajrapu"
+              onLoad={() => setImgLoaded(true)}
+              decoding="async"
+              fetchpriority="high"
+              width={256}
+              height={256}
+              loading="eager"
+              className={`w-40 h-40 md:w-44 md:h-44 lg:w-56 lg:h-56 xl:w-64 xl:h-64 rounded-full object-cover ring-2 ring-primary/40 shadow-primary bg-muted/30 
+                transition-transform duration-500 ease-out hover:scale-110 hover:shadow-glow motion-reduce:transform-none`}
+            />
+          </picture>
         </div>
       </div>
 
@@ -152,15 +154,18 @@ const Hero = () => {
             </p>
             {/* Mobile-only small photo under the greeting */}
             <div className="flex items-center justify-center mb-4">
-              <img
-                src={rakeshPhoto}
-                alt="Rakesh Vajrapu"
-                decoding="async"
-                loading="lazy"
-                width={80}
-                height={80}
-                className="block md:hidden w-20 h-20 rounded-full object-cover border border-primary/30 shadow-sm bg-muted/30 transition-transform duration-300 ease-out hover:scale-105 active:scale-105"
-              />
+              <picture>
+                <source type="image/webp" srcSet={rakeshPhotoWebp} />
+                <img
+                  src={rakeshPhotoJpg}
+                  alt="Rakesh Vajrapu"
+                  decoding="async"
+                  loading="lazy"
+                  width={80}
+                  height={80}
+                  className="block md:hidden w-20 h-20 rounded-full object-cover border border-primary/30 shadow-sm bg-muted/30 transition-transform duration-300 ease-out hover:scale-105 active:scale-105"
+                />
+              </picture>
             </div>
             {/* Subtitle typewriter (restored previous) */}
             <Typewriter
