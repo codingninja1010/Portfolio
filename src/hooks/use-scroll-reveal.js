@@ -11,12 +11,13 @@ import { useReducedMotion } from "framer-motion";
 export function useScrollReveal(options = {}) {
   const {
     once = true,
-    amount = 0.25, // similar to Framer's viewport.amount
-    rootMargin = "0px 0px -10% 0px",
-    duration = 0.6,
+    amount = 0.2, // reveal with less visible content by default
+    // Expand bottom margin so elements start revealing slightly before they enter the viewport
+    rootMargin = "0px 0px 18% 0px",
+    duration = 0.4,
     delay = 0,
     ease = [0.22, 1, 0.36, 1],
-    y = 20,
+    y = 14,
     blur = 0,
     scaleFrom = 1,
   } = options;
@@ -45,7 +46,9 @@ export function useScrollReveal(options = {}) {
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
-          const isVisible = entry.intersectionRatio >= (typeof amount === "number" ? amount : 0.25) || entry.isIntersecting;
+          // Decide visible: either IO says intersecting or ratio above target amount
+          const targetAmount = typeof amount === "number" ? amount : 0.2;
+          const isVisible = entry.isIntersecting || entry.intersectionRatio >= targetAmount;
           if (isVisible) {
             setInView(true);
             hasRevealedRef.current = true;
@@ -57,7 +60,8 @@ export function useScrollReveal(options = {}) {
       },
       {
         threshold: buildThresholds(amount),
-        rootMargin,
+        // Some browsers are picky about spaces/percent; normalize the margin string
+        rootMargin: String(rootMargin || "0px 0px 18% 0px"),
       }
     );
 

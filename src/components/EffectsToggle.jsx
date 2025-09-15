@@ -9,7 +9,7 @@ const modes = [
 ];
 
 export default function EffectsToggle({ className = "" }) {
-  const [mode, setMode] = useState(() => localStorage.getItem("fx-mode") || "standard");
+  const [mode, setMode] = useState(() => localStorage.getItem("fx-mode") || "low");
 
   useEffect(() => {
     const root = document.documentElement;

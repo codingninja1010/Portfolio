@@ -6,7 +6,7 @@ export default function ScrollProgress() {
 
   // Motion value we control manually for pixel-perfect accuracy
   const progress = useMotionValue(0);
-  const opacity = 1;
+  const opacity = 0.95;
 
   // Animate gradient position / hue subtly as you scroll
   const bgPosX = useTransform(progress, (v) => `${v * 100}%`);
@@ -80,31 +80,27 @@ export default function ScrollProgress() {
           }}
         />
 
-        {/* Leading-edge glint */}
+        {/* Leading-edge glint (lightweight) */}
         <motion.div
-          className="absolute top-0 h-full w-3 rounded-full pointer-events-none"
+          className="absolute top-0 h-full w-2 rounded-full pointer-events-none"
           style={{
             left: useTransform(progress, (v) => `${(v * 100).toFixed(3)}%`),
             translateX: "-50%",
             background:
-              "radial-gradient(10px 8px at 50% 50%, rgba(255,255,255,0.65), rgba(255,255,255,0.1) 60%, rgba(255,255,255,0))"
+              "radial-gradient(8px 6px at 50% 50%, rgba(255,255,255,0.55), rgba(255,255,255,0.05) 60%, rgba(255,255,255,0))"
           }}
-          animate={prefersReducedMotion ? undefined : { opacity: [0.7, 1, 0.7] }}
-          transition={prefersReducedMotion ? undefined : { duration: 1.2, repeat: Infinity, ease: "easeInOut" }}
         />
 
-        {/* Soft glow under the fill */}
+        {/* Soft glow under the fill (static) */}
         <motion.div
           className="absolute inset-y-0 left-0 w-full origin-left rounded-full pointer-events-none"
           style={{
             scaleX: progress,
             transformOrigin: "left center",
             willChange: "transform",
-            boxShadow: "0 6px 18px hsl(var(--primary) / 0.35)",
-            opacity: 0.5,
+            boxShadow: "0 4px 14px hsl(var(--primary) / 0.3)",
+            opacity: 0.4,
           }}
-          animate={prefersReducedMotion ? undefined : { opacity: [0.35, 0.6, 0.35] }}
-          transition={prefersReducedMotion ? undefined : { duration: 2.2, repeat: Infinity, ease: "easeInOut" }}
         />
       </motion.div>
     </div>

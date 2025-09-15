@@ -37,10 +37,10 @@ export default function ParallaxAccent({
           height: size,
           left: `max(0px, ${size * -0.3}px)`,
           top: `max(0px, ${size * -0.2}px)`,
-          background: `radial-gradient(${size * 0.8}px ${size * 0.6}px at center, hsl(${colorFrom} / 0.18), transparent 70%)`,
-          filter: "blur(28px)",
+          background: `radial-gradient(${size * 0.8}px ${size * 0.6}px at center, hsl(${colorFrom} / 0.16), transparent 70%)`,
+          filter: "blur(18px)",
           mixBlendMode: "screen",
-          opacity: 0.45,
+          opacity: 0.36,
         }}
       />
       <motion.div
@@ -52,10 +52,10 @@ export default function ParallaxAccent({
           right: `max(0px, ${size * -0.2}px)`,
           bottom: `max(0px, ${size * -0.15}px)`,
           position: "absolute",
-          background: `radial-gradient(${size * 0.6}px ${size * 0.45}px at center, hsl(${colorTo} / 0.18), transparent 70%)`,
-          filter: "blur(26px)",
+          background: `radial-gradient(${size * 0.6}px ${size * 0.45}px at center, hsl(${colorTo} / 0.15), transparent 70%)`,
+          filter: "blur(16px)",
           mixBlendMode: "screen",
-          opacity: 0.38,
+          opacity: 0.3,
         }}
       />
     </div>

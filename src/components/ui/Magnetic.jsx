@@ -12,6 +12,9 @@ const Magnetic = forwardRef(function Magnetic(
   const y = useMotionValue(0);
   const sx = useSpring(x, { stiffness: 200, damping: 18, mass: 0.25 });
   const sy = useSpring(y, { stiffness: 200, damping: 18, mass: 0.25 });
+  const raf = useRef(0);
+  const pending = useRef(false);
+  const lastPos = useRef({ px: 0, py: 0, r: { left: 0, top: 0, width: 1, height: 1 } });
 
   const setRefs = (node) => {
     localRef.current = node;
@@ -22,25 +25,35 @@ const Magnetic = forwardRef(function Magnetic(
   const handleMove = (e) => {
     onMouseMove?.(e);
     if (prefersReducedMotion) return;
+    if (window.matchMedia && !window.matchMedia('(pointer: fine)').matches) return;
     const el = localRef.current;
     if (!el) return;
     const r = el.getBoundingClientRect();
-    const px = (e.clientX - r.left) / r.width - 0.5;
-    const py = (e.clientY - r.top) / r.height - 0.5;
-    const d = Math.hypot(px, py);
-    const m = Math.min(1, d * 2) * strength * 40; // max px
-    x.set(px * m);
-    y.set(py * m);
-    // Update spotlight CSS vars on both wrapper and first child (anchor/button)
-    const mx = e.clientX - r.left;
-    const my = e.clientY - r.top;
-    el.style.setProperty("--mx", `${mx}px`);
-    el.style.setProperty("--my", `${my}px`);
-    const child = el.firstElementChild;
-    if (child) {
-      child.style.setProperty("--mx", `${mx}px`);
-      child.style.setProperty("--my", `${my}px`);
-    }
+    lastPos.current.r = r;
+    lastPos.current.px = (e.clientX - r.left) / r.width - 0.5;
+    lastPos.current.py = (e.clientY - r.top) / r.height - 0.5;
+
+    const update = () => {
+      pending.current = false;
+      const { px, py, r } = lastPos.current;
+      const d = Math.hypot(px, py);
+      const m = Math.min(1, d * 2) * strength * 40; // max px
+      x.set(px * m);
+      y.set(py * m);
+      const mx = (px + 0.5) * r.width;
+      const my = (py + 0.5) * r.height;
+      el.style.setProperty("--mx", `${mx}px`);
+      el.style.setProperty("--my", `${my}px`);
+      const child = el.firstElementChild;
+      if (child) {
+        child.style.setProperty("--mx", `${mx}px`);
+        child.style.setProperty("--my", `${my}px`);
+      }
+    };
+
+    if (pending.current) return;
+    pending.current = true;
+    raf.current = requestAnimationFrame(update);
   };
 
   const handleLeave = (e) => {
