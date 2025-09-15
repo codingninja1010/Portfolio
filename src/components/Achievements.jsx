@@ -8,8 +8,8 @@ import azureLogo from "@/assets/azure-logo.png";
 import metaLogo from "@/assets/meta-logo.png";
 import udacityLogo from "@/assets/udacity-logo.png";
 
-const Achievements = () => {
-  const achievements = [
+const Achievements = ({ items, certs }) => {
+  const achievements = items || [
     {
       title: "AWS AI/ML Scholarship",
       description: "Awarded the prestigious AWS AI/ML Scholarship sponsored by AWS from a competitive pool of over 50,000+ applicants",
@@ -36,7 +36,7 @@ const Achievements = () => {
     }
   ];
 
-  const certifications = [
+  const certifications = certs || [
     {
       title: "Python Certification by Infosys Springboard",
       logo: pythonLogo,

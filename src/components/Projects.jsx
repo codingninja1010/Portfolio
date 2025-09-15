@@ -4,8 +4,8 @@ import { motion } from "framer-motion";
 import TiltCard from "@/components/ui/TiltCard.jsx";
 import Magnetic from "@/components/ui/Magnetic.jsx";
 
-const Projects = () => {
-  const projects = [
+const Projects = ({ items }) => {
+  const projects = items || [
     {
       title: "ShopSmart - React E-Commerce Platform",
       description: "Built a responsive shopping platform allowing users to explore products, manage carts, and simulate purchases.",
