@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
 import TiltCard from "@/components/ui/TiltCard.jsx";
 import Magnetic from "@/components/ui/Magnetic.jsx";
-import { useScrollReveal } from "@/hooks/use-scroll-reveal";
+import Reveal from "@/components/ui/Reveal";
 
 const Projects = ({ items }) => {
   const projects = items || [
@@ -52,15 +52,7 @@ const Projects = ({ items }) => {
           </p>
         </div>
 
-        {(() => {
-          const { ref, motionProps } = useScrollReveal({ amount: 0.3, duration: 0.6, y: 20 });
-          return (
-            <motion.div
-              ref={ref}
-              className="grid grid-cols-1 lg:grid-cols-2 gap-6 max-w-6xl mx-auto"
-              {...motionProps}
-              transition={{ staggerChildren: 0.12 }}
-            >
+  <Reveal amount={0.18} duration={0.24} y={12} className="grid grid-cols-1 lg:grid-cols-2 gap-6 max-w-6xl mx-auto" transition={{ staggerChildren: 0.06 }}>
           {projects.map((project) => {
             const Icon = project.icon;
             return (
@@ -184,9 +176,7 @@ const Projects = ({ items }) => {
               </motion.div>
             );
           })}
-            </motion.div>
-          );
-        })()}
+        </Reveal>
       </div>
     </section>
   );

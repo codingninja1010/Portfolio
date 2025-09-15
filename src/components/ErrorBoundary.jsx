@@ -27,9 +27,7 @@ export default class ErrorBoundary extends React.Component {
         // eslint-disable-next-line no-self-assign
         window.location.href = window.location.href;
       }
-    } catch (e) {
-      // Swallow navigation errors in test environments.
-    }
+    } catch { /* Swallow navigation errors in test environments. */ }
   }
 
   render() {

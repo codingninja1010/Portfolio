@@ -11,13 +11,13 @@ import { useReducedMotion } from "framer-motion";
 export function useScrollReveal(options = {}) {
   const {
     once = true,
-    amount = 0.2, // reveal with less visible content by default
-    // Expand bottom margin so elements start revealing slightly before they enter the viewport
-    rootMargin = "0px 0px 18% 0px",
-    duration = 0.4,
+    amount = 0.1, // trigger earlier with minimal visibility
+    // Expand bottom margin so elements start revealing well before entering the viewport
+    rootMargin = "0px 0px 45% 0px",
+    duration = 0.25,
     delay = 0,
-    ease = [0.22, 1, 0.36, 1],
-    y = 14,
+    ease = [0.33, 1, 0.68, 1],
+    y = 12,
     blur = 0,
     scaleFrom = 1,
   } = options;

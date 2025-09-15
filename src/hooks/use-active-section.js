@@ -78,7 +78,7 @@ export function useActiveSection(sectionIds = [], options = {}) {
       window.removeEventListener("scroll", onScroll);
       window.removeEventListener("resize", onScroll);
     };
-  }, [JSON.stringify(sectionIds), line, headerOffset]);
+  }, [sectionIds, line, headerOffset]);
 
   return active;
 }

@@ -9,12 +9,11 @@ import rakeshPhotoJpg from "@/assets/rakesh-photo.jpg?as=src&quality=78";
 import Magnetic from "@/components/ui/Magnetic";
 import { RESUME_URL } from "@/config/site";
 import AnimatedDownloadButton from "@/components/ui/AnimatedDownloadButton";
-import { useScrollReveal } from "@/hooks/use-scroll-reveal";
+import Reveal from "@/components/ui/Reveal";
 
 const Hero = () => {
-  // state kept in case future interactions are needed
-  // Track image load only for optional effects; don't hide the image before it loads to avoid perceived lag
-  const [imgLoaded, setImgLoaded] = useState(true);
+  // Track image load only for optional effects; value not used for rendering
+  const [, setImgLoaded] = useState(true);
   const containerRef = useRef(null);
   const [tilt, setTilt] = useState({ rx: 0, ry: 0, tx: 0, ty: 0 });
 
@@ -48,11 +47,10 @@ const Hero = () => {
     const link = document.createElement('link');
     link.rel = 'preload';
     link.as = 'image';
-  link.href = rakeshPhotoWebp;
-    // @ts-ignore fetchPriority is supported in modern Chromium
-    link.fetchPriority = 'high';
+    link.href = rakeshPhotoWebp;
+  try { link.fetchPriority = 'high'; } catch { /* ignore unsupported browsers */ }
     document.head.appendChild(link);
-    return () => { try { document.head.removeChild(link); } catch {} };
+  return () => { try { document.head.removeChild(link); } catch { /* ignore */ } };
   }, []);
 
   // Inline mobile-only resume button using shared AnimatedDownloadButton
@@ -112,7 +110,7 @@ const Hero = () => {
               alt="Rakesh Vajrapu"
               onLoad={() => setImgLoaded(true)}
               decoding="async"
-              fetchpriority="high"
+              fetchPriority="high"
               width={256}
               height={256}
               loading="eager"
@@ -124,10 +122,7 @@ const Hero = () => {
       </div>
 
       <div className="container mx-auto px-6 relative z-10">
-        {(() => {
-          const { ref, motionProps } = useScrollReveal({ amount: 0.6, duration: 0.6, y: 24 });
-          return (
-            <motion.div ref={ref} className="text-center" {...motionProps}>
+        <Reveal amount={0.6} duration={0.6} y={24} className="text-center">
           <div className="mb-6">
             {/* Greeting line with typewriter; name uses gradient like before */}
             <p className="text-2xl sm:text-3xl md:text-4xl font-semibold mb-4 text-foreground/90">
@@ -289,9 +284,7 @@ const Hero = () => {
               </motion.div>
             </div>
           )}
-            </motion.div>
-          );
-        })()}
+        </Reveal>
       </div>
     </section>
   );

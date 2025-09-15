@@ -2,7 +2,7 @@ import { Code, Database, Cloud, Cpu, Globe, GitBranch } from "lucide-react";
 import { motion } from "framer-motion";
 import TiltCard from "./ui/TiltCard.jsx";
 import Magnetic from "./ui/Magnetic.jsx";
-import { useScrollReveal } from "@/hooks/use-scroll-reveal";
+import Reveal from "@/components/ui/Reveal";
 
 const Skills = () => {
   const skillCategories = [
@@ -61,15 +61,7 @@ const Skills = () => {
           </p>
         </div>
 
-        {(() => {
-          const { ref, motionProps } = useScrollReveal({ amount: 0.3, y: 16, duration: 0.5 });
-          return (
-            <motion.div
-              ref={ref}
-              className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 auto-rows-fr gap-8 items-stretch"
-              {...motionProps}
-              transition={{ staggerChildren: 0.08 }}
-            >
+  <Reveal amount={0.18} y={10} duration={0.22} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 auto-rows-fr gap-8 items-stretch" transition={{ staggerChildren: 0.05 }}>
           {skillCategories.map((category) => {
             const Icon = category.icon;
             return (
@@ -135,9 +127,7 @@ const Skills = () => {
               </motion.div>
             );
           })}
-            </motion.div>
-          );
-        })()}
+        </Reveal>
       </div>
     </section>
   );

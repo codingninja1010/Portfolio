@@ -2,7 +2,7 @@ import { GraduationCap, Calendar, MapPin } from "lucide-react";
 import { motion } from "framer-motion";
 import TiltCard from "./ui/TiltCard.jsx";
 import Magnetic from "./ui/Magnetic.jsx";
-import { useScrollReveal } from "@/hooks/use-scroll-reveal";
+import Reveal from "@/components/ui/Reveal";
 
 const Education = () => {
   const education = [
@@ -43,15 +43,7 @@ const Education = () => {
           </p>
         </div>
 
-        {(() => {
-          const { ref, motionProps } = useScrollReveal({ amount: 0.3, duration: 0.6, y: 20 });
-          return (
-            <motion.div 
-              ref={ref}
-              className="max-w-4xl mx-auto space-y-6"
-              {...motionProps}
-              transition={{ staggerChildren: 0.1 }}
-            >
+  <Reveal amount={0.18} duration={0.22} y={12} className="max-w-4xl mx-auto space-y-6" transition={{ staggerChildren: 0.06 }}>
           {education.map((edu, index) => (
             <motion.div
               key={index}
@@ -125,9 +117,7 @@ const Education = () => {
               </Magnetic>
             </motion.div>
           ))}
-            </motion.div>
-          );
-        })()}
+        </Reveal>
       </div>
     </section>
   );

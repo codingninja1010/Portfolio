@@ -19,13 +19,11 @@ export default function ParallaxAccent({
   const ref = useRef(null);
   const prefersReducedMotion = useReducedMotion();
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "end start"] });
-
-  const y = prefersReducedMotion
-    ? 0
-    : useTransform(scrollYProgress, [0, 1], [offsetY - intensity, offsetY + intensity]);
-  const x = prefersReducedMotion
-    ? 0
-    : useTransform(scrollYProgress, [0, 1], [offsetX - intensity * 0.6, offsetX + intensity * 0.6]);
+  // Create transforms unconditionally to satisfy hooks rules.
+  const yTransform = useTransform(scrollYProgress, [0, 1], [offsetY - intensity, offsetY + intensity]);
+  const xTransform = useTransform(scrollYProgress, [0, 1], [offsetX - intensity * 0.6, offsetX + intensity * 0.6]);
+  const y = prefersReducedMotion ? 0 : yTransform;
+  const x = prefersReducedMotion ? 0 : xTransform;
 
   return (
     <div ref={ref} aria-hidden className={`pointer-events-none absolute inset-0 ${className}`}>

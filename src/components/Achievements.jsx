@@ -7,7 +7,7 @@ import pythonLogo from "@/assets/python-logo.png";
 import azureLogo from "@/assets/azure-logo.png";
 import metaLogo from "@/assets/meta-logo.png";
 import udacityLogo from "@/assets/udacity-logo.png";
-import { useScrollReveal } from "@/hooks/use-scroll-reveal";
+import Reveal from "@/components/ui/Reveal";
 import AnimatedNumber from "@/components/ui/AnimatedNumber.jsx";
 
 const Achievements = ({ items, certs }) => {
@@ -74,15 +74,7 @@ const Achievements = ({ items, certs }) => {
         </div>
 
         {/* Major Achievements */}
-        {(() => {
-          const { ref, motionProps } = useScrollReveal({ amount: 0.3, duration: 0.6, y: 20 });
-          return (
-            <motion.div 
-              ref={ref}
-              className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16"
-              {...motionProps}
-              transition={{ staggerChildren: 0.1 }}
-            >
+  <Reveal amount={0.2} duration={0.22} y={12} className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16" transition={{ staggerChildren: 0.05 }}>
           {achievements.map((achievement) => {
             const Icon = achievement.icon;
             const achievementCard = (
@@ -159,20 +151,10 @@ const Achievements = ({ items, certs }) => {
               </motion.div>
             );
           })}
-            </motion.div>
-          );
-        })()}
+        </Reveal>
 
         {/* Certifications Section */}
-        {(() => {
-          const { ref, motionProps } = useScrollReveal({ amount: 0.2, duration: 0.6, y: 18 });
-          return (
-            <motion.div 
-              ref={ref}
-              className="max-w-4xl mx-auto"
-              {...motionProps}
-              transition={{ delay: 0.2 }}
-            >
+  <Reveal amount={0.15} duration={0.22} y={10} className="max-w-4xl mx-auto">
           <Magnetic className="block">
             <TiltCard className="certification-card glass rounded-xl p-8 relative overflow-hidden">
               {/* Aurora beams */}
@@ -237,9 +219,7 @@ const Achievements = ({ items, certs }) => {
               </motion.div>
             </TiltCard>
           </Magnetic>
-            </motion.div>
-          );
-        })()}
+        </Reveal>
       </div>
     </section>
   );

@@ -47,9 +47,9 @@ export default function AnimatedDownloadButton({
     }
 
     // Trigger local file download with animations
-    try { window.dispatchEvent(new CustomEvent("resume-download:start")); } catch {}
+  try { window.dispatchEvent(new CustomEvent("resume-download:start")); } catch { /* no-op */ }
     setState("downloading");
-    try { toast("Downloading resume…", { description: "Your download will start shortly." }); } catch {}
+  try { toast("Downloading resume…", { description: "Your download will start shortly." }); } catch { /* no toast available */ }
     const link = document.createElement("a");
     link.href = href;
     link.download = filename;
@@ -91,10 +91,10 @@ export default function AnimatedDownloadButton({
 
     // End event after short delay (rough indicator for UI)
     const endId = setTimeout(() => {
-      try { window.dispatchEvent(new CustomEvent("resume-download:end")); } catch {}
+    try { window.dispatchEvent(new CustomEvent("resume-download:end")); } catch { /* no-op */ }
       if (!mountedRef.current) return;
       setState("done");
-      try { toast("Download started", { description: "Check your browser downloads." }); } catch {}
+  try { toast("Download started", { description: "Check your browser downloads." }); } catch { /* no toast available */ }
       const idleId = setTimeout(() => { if (mountedRef.current) setState("idle"); }, DONE_VISIBLE_MS);
       timersRef.current.push(idleId);
     }, DOWNLOAD_SPIN_MS);

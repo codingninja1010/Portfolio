@@ -2,7 +2,7 @@ import { Calendar, MapPin, Briefcase } from "lucide-react";
 import { motion } from "framer-motion";
 import TiltCard from "./ui/TiltCard.jsx";
 import Magnetic from "./ui/Magnetic.jsx";
-import { useScrollReveal } from "@/hooks/use-scroll-reveal";
+import Reveal from "@/components/ui/Reveal";
 
 const Experience = () => {
   const experiences = [
@@ -50,15 +50,7 @@ const Experience = () => {
           </p>
         </div>
 
-        {(() => {
-          const { ref, motionProps } = useScrollReveal({ amount: 0.3, duration: 0.6, y: 24 });
-          return (
-            <motion.div 
-              ref={ref}
-              className="max-w-4xl mx-auto"
-              {...motionProps}
-              transition={{ staggerChildren: 0.12 }}
-            >
+  <Reveal amount={0.18} duration={0.24} y={12} className="max-w-4xl mx-auto" transition={{ staggerChildren: 0.06 }}>
           {experiences.map((exp, index) => (
             <motion.div 
               key={index}
@@ -168,9 +160,7 @@ const Experience = () => {
               </div>
             </motion.div>
           ))}
-            </motion.div>
-          );
-        })()}
+        </Reveal>
       </div>
     </section>
   );

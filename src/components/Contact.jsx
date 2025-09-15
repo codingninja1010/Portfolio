@@ -1,7 +1,7 @@
 import { Mail, Linkedin, Github, MapPin, Send } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
-import { useScrollReveal } from "@/hooks/use-scroll-reveal";
+import Reveal from "@/components/ui/Reveal";
 
 // Optional env injection for testability (defaults to window)
 const Contact = ({ env = window }) => {
@@ -32,15 +32,11 @@ const Contact = ({ env = window }) => {
         env.open(mailto);
         return;
       }
-    } catch (_) {
-      // ignore and try the next strategy
-    }
+    } catch { /* ignore and try the next strategy */ }
 
     try {
       env.location.assign(mailto);
-    } catch (_) {
-      env.location.href = mailto;
-    }
+    } catch { env.location.href = mailto; }
   };
   const contactInfo = [
     {
@@ -79,17 +75,7 @@ const Contact = ({ env = window }) => {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
             {/* Contact Information */}
             <div className="space-y-6">
-              {(() => {
-                const { ref, motionProps } = useScrollReveal({ amount: 0.4, duration: 0.5, y: 16 });
-                return (
-                  <motion.div
-                    ref={ref}
-                className="glass rounded-xl p-8 hover:shadow-glow"
-                    {...motionProps}
-                    transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-                whileHover={{ y: -4, scale: 1.01 }}
-                whileTap={{ scale: 0.995 }}
-              >
+              <Reveal amount={0.2} duration={0.2} y={10} className="glass rounded-xl p-8 hover:shadow-glow" transition={{ duration: 0.25, ease: [0.33, 1, 0.68, 1] }} whileHover={{ y: -4, scale: 1.01 }} whileTap={{ scale: 0.995 }}>
                 <h3 className="text-2xl font-bold mb-6">Get In Touch</h3>
                 <p className="text-muted-foreground mb-8 leading-relaxed">
                   I'm always interested in hearing about new opportunities, innovative projects, 
@@ -119,23 +105,11 @@ const Contact = ({ env = window }) => {
                     );
                   })}
                 </div>
-                  </motion.div>
-                );
-              })()}
+              </Reveal>
             </div>
 
             {/* Quick Contact Form */}
-            {(() => {
-              const { ref, motionProps } = useScrollReveal({ amount: 0.4, duration: 0.55, y: 24, delay: 0.1 });
-              return (
-                <motion.div
-                  ref={ref}
-              className="glass rounded-xl p-8 hover:shadow-glow"
-                  {...motionProps}
-                  transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1], delay: 0.1 }}
-              whileHover={{ y: -4, scale: 1.01 }}
-              whileTap={{ scale: 0.997 }}
-            >
+            <Reveal amount={0.2} duration={0.24} y={12} className="glass rounded-xl p-8 hover:shadow-glow" transition={{ duration: 0.28, ease: [0.33, 1, 0.68, 1] }} whileHover={{ y: -4, scale: 1.01 }} whileTap={{ scale: 0.997 }}>
               <h3 className="text-2xl font-bold mb-6">Send a Message</h3>
               <form className="space-y-6" onSubmit={handleSubmit}>
                 <div>
@@ -176,9 +150,7 @@ const Contact = ({ env = window }) => {
                   Send Message
                 </Button>
               </form>
-                </motion.div>
-              );
-            })()}
+            </Reveal>
           </div>
 
           {/* Call to Action */}
