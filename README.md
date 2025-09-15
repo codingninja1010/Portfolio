@@ -2,10 +2,8 @@
 
 Modern, fast, and accessible personal portfolio built with React, Vite, Tailwind CSS, and Framer Motion.
 
-- Live Site: [your-portfolio.example.com](https://your-portfolio.example.com)
-- Website/Blog: [your-website.example.com](https://your-website.example.com)
-- Portfolio: [your-portfolio.example.com](https://your-portfolio.example.com)
-- Contact: [your.email@example.com](mailto:your.email@example.com)
+- Live Site: [your-portfolio.example.com](https://rakeshvajrapu.netlify.app/)
+- Contact: [your.email@example.com](mailto:rakeshrb1411@gmail.com)
 
 ## Overview
 

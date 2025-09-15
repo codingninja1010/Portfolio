@@ -116,7 +116,7 @@ const Header = () => {
     >
       {/* Global top progress bar while downloading local resume */}
       {isDownloading && (
-        <div className="absolute left-0 right-0 top-0 h-[2px] overflow-hidden">
+        <div className="absolute left-0 right-0 top-0 h-[2px] overflow-hidden" data-testid="resume-download-progress">
           <motion.div
             className="h-full bg-gradient-to-r from-primary via-secondary to-accent"
             initial={{ scaleX: 0 }}

@@ -2,7 +2,8 @@ import { Mail, Linkedin, Github, MapPin, Send } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
 
-const Contact = () => {
+// Optional env injection for testability (defaults to window)
+const Contact = ({ env = window }) => {
   // Submit handler to open the user's email client with a prefilled message
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -23,7 +24,22 @@ const Contact = () => {
     const mailto = `mailto:rakeshrb1411@gmail.com?subject=${subject}&body=${body}`;
 
     // Open default mail client
-    window.location.href = mailto;
+    // Prefer env.open (easy to mock in tests and widely supported for mailto),
+    // then fall back to env.location.assign and finally direct href change.
+    try {
+      if (typeof env.open === 'function') {
+        env.open(mailto);
+        return;
+      }
+    } catch (_) {
+      // ignore and try the next strategy
+    }
+
+    try {
+      env.location.assign(mailto);
+    } catch (_) {
+      env.location.href = mailto;
+    }
   };
   const contactInfo = [
     {
