@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
 import TiltCard from "@/components/ui/TiltCard.jsx";
 import Magnetic from "@/components/ui/Magnetic.jsx";
+import { useScrollReveal } from "@/hooks/use-scroll-reveal";
 
 const Projects = ({ items }) => {
   const projects = items || [
@@ -51,17 +52,22 @@ const Projects = ({ items }) => {
           </p>
         </div>
 
-        <motion.div
-          className="grid grid-cols-1 lg:grid-cols-2 gap-6 max-w-6xl mx-auto"
-          initial="hidden"
-          whileInView="show"
-          viewport={{ once: true, margin: "-100px" }}
-          transition={{ staggerChildren: 0.12 }}
-        >
+        {(() => {
+          const { ref, motionProps } = useScrollReveal({ amount: 0.3, duration: 0.6, y: 20 });
+          return (
+            <motion.div
+              ref={ref}
+              className="grid grid-cols-1 lg:grid-cols-2 gap-6 max-w-6xl mx-auto"
+              {...motionProps}
+              transition={{ staggerChildren: 0.12 }}
+            >
           {projects.map((project) => {
             const Icon = project.icon;
             return (
-              <motion.div key={project.title} variants={{ hidden: { opacity: 0, y: 20 }, show: { opacity: 1, y: 0 } }}>
+              <motion.div
+                key={project.title}
+                variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }}
+              >
                 <Magnetic className="block">
                   <TiltCard className="project-card glass glow-border rounded-xl p-6 hover:shadow-glow transition-all duration-300 group relative overflow-hidden">
                     {/* Aurora beams */}
@@ -178,7 +184,9 @@ const Projects = ({ items }) => {
               </motion.div>
             );
           })}
-        </motion.div>
+            </motion.div>
+          );
+        })()}
       </div>
     </section>
   );

@@ -3,6 +3,7 @@ import { RESUME_URL } from "@/config/site";
 import { Menu, X } from "lucide-react";
 import { motion } from "framer-motion";
 import AnimatedDownloadButton from "@/components/ui/AnimatedDownloadButton";
+import { useActiveSection } from "@/hooks/use-active-section";
 
 const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -92,6 +93,17 @@ const Header = () => {
     { name: "Contact", href: "#contact" }
   ];
 
+  const activeId = useActiveSection([
+    "home",
+    "about",
+    "skills",
+    "experience",
+    "volunteering",
+    "projects",
+    "achievements",
+    "contact",
+  ]);
+
   const scrollToSection = (href) => {
     const element = document.querySelector(href);
     if (element) {
@@ -139,7 +151,11 @@ const Header = () => {
               <button
                 key={item.name}
                 onClick={() => scrollToSection(item.href)}
-                className="px-3 py-2 text-sm font-medium text-muted-foreground rounded-lg border border-transparent hover:text-primary hover:border-primary/40 hover:bg-primary/5 transition-colors duration-200"
+                className={`px-3 py-2 text-sm font-medium rounded-lg border transition-colors duration-200 ${
+                  activeId === item.href.replace("#", "")
+                    ? "text-primary border-primary/40 bg-primary/5"
+                    : "text-muted-foreground border-transparent hover:text-primary hover:border-primary/40 hover:bg-primary/5"
+                }`}
               >
                 {item.name}
               </button>
@@ -190,7 +206,11 @@ const Header = () => {
                   <button
                     key={item.name}
                     onClick={() => scrollToSection(item.href)}
-                    className="block w-full text-left px-6 py-4 text-base font-medium text-foreground/90 hover:text-primary hover:bg-primary/10 transition-colors"
+                    className={`block w-full text-left px-6 py-4 text-base font-medium transition-colors ${
+                      activeId === item.href.replace("#", "")
+                        ? "text-primary bg-primary/10"
+                        : "text-foreground/90 hover:text-primary hover:bg-primary/10"
+                    }`}
                   >
                     {item.name}
                   </button>

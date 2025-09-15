@@ -9,6 +9,7 @@ import rakeshPhotoJpg from "@/assets/rakesh-photo.jpg?as=src&quality=78";
 import Magnetic from "@/components/ui/Magnetic";
 import { RESUME_URL } from "@/config/site";
 import AnimatedDownloadButton from "@/components/ui/AnimatedDownloadButton";
+import { useScrollReveal } from "@/hooks/use-scroll-reveal";
 
 const Hero = () => {
   // state kept in case future interactions are needed
@@ -123,13 +124,10 @@ const Hero = () => {
       </div>
 
       <div className="container mx-auto px-6 relative z-10">
-        <motion.div
-          className="text-center"
-          initial={{ opacity: 0, y: 24 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.6 }}
-          transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-        >
+        {(() => {
+          const { ref, motionProps } = useScrollReveal({ amount: 0.6, duration: 0.6, y: 24 });
+          return (
+            <motion.div ref={ref} className="text-center" {...motionProps}>
           <div className="mb-6">
             {/* Greeting line with typewriter; name uses gradient like before */}
             <p className="text-2xl sm:text-3xl md:text-4xl font-semibold mb-4 text-foreground/90">
@@ -291,7 +289,9 @@ const Hero = () => {
               </motion.div>
             </div>
           )}
-        </motion.div>
+            </motion.div>
+          );
+        })()}
       </div>
     </section>
   );

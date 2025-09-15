@@ -2,6 +2,7 @@ import { Code, Database, Cloud, Cpu, Globe, GitBranch } from "lucide-react";
 import { motion } from "framer-motion";
 import TiltCard from "./ui/TiltCard.jsx";
 import Magnetic from "./ui/Magnetic.jsx";
+import { useScrollReveal } from "@/hooks/use-scroll-reveal";
 
 const Skills = () => {
   const skillCategories = [
@@ -60,17 +61,19 @@ const Skills = () => {
           </p>
         </div>
 
-        <motion.div
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 auto-rows-fr gap-8 items-stretch"
-          initial="hidden"
-          whileInView="show"
-          viewport={{ once: true, margin: "-100px" }}
-          transition={{ staggerChildren: 0.08 }}
-        >
+        {(() => {
+          const { ref, motionProps } = useScrollReveal({ amount: 0.3, y: 16, duration: 0.5 });
+          return (
+            <motion.div
+              ref={ref}
+              className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 auto-rows-fr gap-8 items-stretch"
+              {...motionProps}
+              transition={{ staggerChildren: 0.08 }}
+            >
           {skillCategories.map((category) => {
             const Icon = category.icon;
             return (
-              <motion.div key={category.title} variants={cardVariants}>
+              <motion.div key={category.title} variants={{ hidden: cardVariants.hidden, visible: cardVariants.show }}>
                 <Magnetic className="block w-full h-full">
                   <TiltCard className="skill-card glass group rounded-xl p-6 hover:shadow-glow transition-all duration-300 relative overflow-hidden w-full h-full">
                     {/* Decorative drifting grid background */}
@@ -132,7 +135,9 @@ const Skills = () => {
               </motion.div>
             );
           })}
-        </motion.div>
+            </motion.div>
+          );
+        })()}
       </div>
     </section>
   );

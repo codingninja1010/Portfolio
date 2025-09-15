@@ -1,6 +1,7 @@
 import { Mail, Linkedin, Github, MapPin, Send } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
+import { useScrollReveal } from "@/hooks/use-scroll-reveal";
 
 // Optional env injection for testability (defaults to window)
 const Contact = ({ env = window }) => {
@@ -78,12 +79,14 @@ const Contact = ({ env = window }) => {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
             {/* Contact Information */}
             <div className="space-y-6">
-              <motion.div
+              {(() => {
+                const { ref, motionProps } = useScrollReveal({ amount: 0.4, duration: 0.5, y: 16 });
+                return (
+                  <motion.div
+                    ref={ref}
                 className="glass rounded-xl p-8 hover:shadow-glow"
-                initial={{ opacity: 0, y: 16 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, amount: 0.4 }}
-                transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+                    {...motionProps}
+                    transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
                 whileHover={{ y: -4, scale: 1.01 }}
                 whileTap={{ scale: 0.995 }}
               >
@@ -116,16 +119,20 @@ const Contact = ({ env = window }) => {
                     );
                   })}
                 </div>
-              </motion.div>
+                  </motion.div>
+                );
+              })()}
             </div>
 
             {/* Quick Contact Form */}
-            <motion.div
+            {(() => {
+              const { ref, motionProps } = useScrollReveal({ amount: 0.4, duration: 0.55, y: 24, delay: 0.1 });
+              return (
+                <motion.div
+                  ref={ref}
               className="glass rounded-xl p-8 hover:shadow-glow"
-              initial={{ opacity: 0, y: 24 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.4 }}
-              transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1], delay: 0.1 }}
+                  {...motionProps}
+                  transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1], delay: 0.1 }}
               whileHover={{ y: -4, scale: 1.01 }}
               whileTap={{ scale: 0.997 }}
             >
@@ -169,7 +176,9 @@ const Contact = ({ env = window }) => {
                   Send Message
                 </Button>
               </form>
-            </motion.div>
+                </motion.div>
+              );
+            })()}
           </div>
 
           {/* Call to Action */}

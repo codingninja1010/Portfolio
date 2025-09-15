@@ -75,6 +75,29 @@ Styling:
 
 - Global theme and utilities live in `src/index.css` (Tailwind + custom CSS)
 
+New animation utilities:
+
+- `src/hooks/use-scroll-reveal.js` — A reusable IntersectionObserver-based hook that returns a ref and motion props for reveal-on-scroll animations. Honors `prefers-reduced-motion` and is SSR-safe.
+  Example:
+
+  ```jsx
+  import { motion } from 'framer-motion'
+  import { useScrollReveal } from '@/hooks/use-scroll-reveal'
+
+  function Section() {
+    const { ref, motionProps } = useScrollReveal({ amount: 0.3, y: 20, duration: 0.6 })
+    return (
+      <motion.div ref={ref} {...motionProps}>
+        {/* content */}
+      </motion.div>
+    )
+  }
+  ```
+
+- `src/hooks/use-active-section.js` — Observe section ids and get the currently active section. Used in the header to highlight the active nav item while scrolling.
+
+- `src/lib/motion.js` — Small helpers with consistent reveal and stagger variants (optional).
+
 ## Contributing
 
 Contributions, suggestions, and bug reports are welcome.

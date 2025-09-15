@@ -7,6 +7,7 @@ import pythonLogo from "@/assets/python-logo.png";
 import azureLogo from "@/assets/azure-logo.png";
 import metaLogo from "@/assets/meta-logo.png";
 import udacityLogo from "@/assets/udacity-logo.png";
+import { useScrollReveal } from "@/hooks/use-scroll-reveal";
 
 const Achievements = ({ items, certs }) => {
   const achievements = items || [
@@ -72,13 +73,15 @@ const Achievements = ({ items, certs }) => {
         </div>
 
         {/* Major Achievements */}
-        <motion.div 
-          className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16"
-          initial="hidden"
-          whileInView="show"
-          viewport={{ once: true, margin: "-100px" }}
-          transition={{ staggerChildren: 0.1 }}
-        >
+        {(() => {
+          const { ref, motionProps } = useScrollReveal({ amount: 0.3, duration: 0.6, y: 20 });
+          return (
+            <motion.div 
+              ref={ref}
+              className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16"
+              {...motionProps}
+              transition={{ staggerChildren: 0.1 }}
+            >
           {achievements.map((achievement) => {
             const Icon = achievement.icon;
             const achievementCard = (
@@ -125,7 +128,7 @@ const Achievements = ({ items, certs }) => {
             return (
               <motion.div 
                 key={achievement.title}
-                variants={{ hidden: { opacity: 0, y: 20 }, show: { opacity: 1, y: 0 } }}
+                variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }}
               >
                 {achievement.link ? (
                   <a 
@@ -144,16 +147,20 @@ const Achievements = ({ items, certs }) => {
               </motion.div>
             );
           })}
-        </motion.div>
+            </motion.div>
+          );
+        })()}
 
         {/* Certifications Section */}
-        <motion.div 
-          className="max-w-4xl mx-auto"
-          initial="hidden"
-          whileInView="show"
-          viewport={{ once: true, margin: "-100px" }}
-          transition={{ delay: 0.2 }}
-        >
+        {(() => {
+          const { ref, motionProps } = useScrollReveal({ amount: 0.2, duration: 0.6, y: 18 });
+          return (
+            <motion.div 
+              ref={ref}
+              className="max-w-4xl mx-auto"
+              {...motionProps}
+              transition={{ delay: 0.2 }}
+            >
           <Magnetic className="block">
             <TiltCard className="certification-card glass rounded-xl p-8 relative overflow-hidden">
               {/* Aurora beams */}
@@ -162,7 +169,7 @@ const Achievements = ({ items, certs }) => {
               
               <motion.div 
                 className="flex items-center mb-6 relative z-[2]"
-                variants={{ hidden: { opacity: 0, x: -20 }, show: { opacity: 1, x: 0 } }}
+                variants={{ hidden: { opacity: 0, x: -20 }, visible: { opacity: 1, x: 0 } }}
               >
                 <div className="icon-ring p-3 bg-gradient-secondary rounded-lg mr-4">
                   <motion.span
@@ -180,12 +187,12 @@ const Achievements = ({ items, certs }) => {
               
               <motion.div 
                 className="grid grid-cols-1 md:grid-cols-2 gap-4 relative z-[2]"
-                variants={{ hidden: { opacity: 0 }, show: { opacity: 1, transition: { staggerChildren: 0.08 } } }}
+                variants={{ hidden: { opacity: 0 }, visible: { opacity: 1, transition: { staggerChildren: 0.08 } } }}
               >
                 {certifications.map((cert) => (
                   <motion.div
                     key={cert.title}
-                    variants={{ hidden: { opacity: 0, y: 10 }, show: { opacity: 1, y: 0 } }}
+                    variants={{ hidden: { opacity: 0, y: 10 }, visible: { opacity: 1, y: 0 } }}
                   >
                     <Magnetic>
                       <a 
@@ -218,7 +225,9 @@ const Achievements = ({ items, certs }) => {
               </motion.div>
             </TiltCard>
           </Magnetic>
-        </motion.div>
+            </motion.div>
+          );
+        })()}
       </div>
     </section>
   );

@@ -2,6 +2,7 @@ import { GraduationCap, Calendar, MapPin } from "lucide-react";
 import { motion } from "framer-motion";
 import TiltCard from "./ui/TiltCard.jsx";
 import Magnetic from "./ui/Magnetic.jsx";
+import { useScrollReveal } from "@/hooks/use-scroll-reveal";
 
 const Education = () => {
   const education = [
@@ -42,17 +43,19 @@ const Education = () => {
           </p>
         </div>
 
-        <motion.div 
-          className="max-w-4xl mx-auto space-y-6"
-          initial="hidden"
-          whileInView="show"
-          viewport={{ once: true, margin: "-100px" }}
-          transition={{ staggerChildren: 0.1 }}
-        >
+        {(() => {
+          const { ref, motionProps } = useScrollReveal({ amount: 0.3, duration: 0.6, y: 20 });
+          return (
+            <motion.div 
+              ref={ref}
+              className="max-w-4xl mx-auto space-y-6"
+              {...motionProps}
+              transition={{ staggerChildren: 0.1 }}
+            >
           {education.map((edu, index) => (
             <motion.div
               key={index}
-              variants={{ hidden: { opacity: 0, y: 20 }, show: { opacity: 1, y: 0 } }}
+              variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }}
               className="h-full"
             >
               <Magnetic className="block w-full h-full">
@@ -122,7 +125,9 @@ const Education = () => {
               </Magnetic>
             </motion.div>
           ))}
-        </motion.div>
+            </motion.div>
+          );
+        })()}
       </div>
     </section>
   );
