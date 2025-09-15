@@ -15,4 +15,16 @@ describe('ScrollDown behavior', () => {
     const arg = window.scrollTo.mock.calls[0][0];
     expect(arg.behavior).toBe('smooth');
   });
+
+  it('uses scrollIntoView when #about is present', () => {
+    const about = document.createElement('div');
+    about.id = 'about';
+    about.scrollIntoView = jest.fn();
+    document.body.appendChild(about);
+
+    render(<ScrollDown />);
+    const btn = screen.getByRole('button', { name: /scroll down to about/i });
+    fireEvent.click(btn);
+    expect(about.scrollIntoView).toHaveBeenCalledWith({ behavior: 'smooth', block: 'start' });
+  });
 });

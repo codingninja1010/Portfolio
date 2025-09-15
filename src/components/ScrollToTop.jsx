@@ -46,7 +46,12 @@ const ScrollToTop = () => {
   }, []);
 
   const scrollTop = () => {
-    const behavior = prefersReducedMotion ? "auto" : "smooth";
+    // Also consult matchMedia to avoid any timing lag from useReducedMotion updates
+    const prefersReduceMedia =
+      typeof window !== "undefined" &&
+      typeof window.matchMedia === "function" &&
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const behavior = prefersReducedMotion || prefersReduceMedia ? "auto" : "smooth";
     window.scrollTo({ top: 0, behavior });
   };
 
